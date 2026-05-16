@@ -6,6 +6,11 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { MODELS, SCENARIOS } from './data/scenarios.js'
+import { DOMAINS } from './data/domains.js'
+
+// Active scenario set — defaults to the abstract set, swapped when user picks a domain
+let activeDomain = 'abstract'
+let activeScenarios = SCENARIOS  // starts as the original 8 abstract scenarios
 
 // ─── RULE ENGINE ─────────────────────────────────────────────────────────────
 // This is the core of the proof of concept.
@@ -126,14 +131,16 @@ function renderLog() {
   if (!log) return
   log.innerHTML = ''
 
-  for (let i = 0; i < 8; i++) {
+  const total = activeScenarios.length
+
+  for (let i = 0; i < total; i++) {
     const row = document.createElement('div')
     row.className = 'run-row' + (i >= runIndex ? ' empty' : '')
     const cfg = MODELS[currentModel]
 
     if (i < runResults.length) {
       const r = runResults[i]
-      const s = SCENARIOS[i]
+      const s = activeScenarios[i]
       row.innerHTML = `
         <span class="run-num">#${i + 1}</span>
         <span class="run-model-badge ${cfg.badgeClass}">${cfg.name}</span>
@@ -142,7 +149,7 @@ function renderLog() {
         <span class="score-chip ${r.score >= 80 ? 'score-high' : r.score >= 45 ? 'score-mid' : 'score-low'}">${r.score}</span>
       `
     } else {
-      const s = SCENARIOS[i]
+      const s = activeScenarios[i]
       row.innerHTML = `
         <span class="run-num">#${i + 1}</span>
         <span class="run-model-badge" style="color:var(--text3);font-size:0.66rem">—</span>
@@ -239,11 +246,8 @@ function resetLog() {
 }
 
 // ─── ACTIONS: RUN NEXT ────────────────────────────────────────────────────────
-// Runs one scenario at a time. The 480ms delay is intentional —
-// it gives the user a moment to see the "Running…" state before results appear.
-
 export function runNext() {
-  if (runIndex >= 8 || running) return
+  if (runIndex >= activeScenarios.length || running) return
   running = true
   const btn = document.getElementById('run-btn')
   btn.textContent = 'Running…'
@@ -251,7 +255,7 @@ export function runNext() {
   btn.classList.add('running')
 
   setTimeout(() => {
-    const result = runScenario(currentModel, SCENARIOS[runIndex])
+    const result = runScenario(currentModel, activeScenarios[runIndex])
     runResults.push(result)
     runIndex++
     renderLog()
@@ -261,7 +265,7 @@ export function runNext() {
 
     running = false
     btn.classList.remove('running')
-    if (runIndex >= 8) {
+    if (runIndex >= activeScenarios.length) {
       btn.textContent = 'All runs complete'
       btn.disabled = true
     } else {
@@ -272,15 +276,13 @@ export function runNext() {
 }
 
 // ─── ACTIONS: RUN ALL ─────────────────────────────────────────────────────────
-// Runs all 8 scenarios in sequence with a short animated delay between each.
-
 export function runAll() {
   if (running) return
   resetLog()
   let i = 0
   function step() {
-    if (i >= 8) return
-    const result = runScenario(currentModel, SCENARIOS[i])
+    if (i >= activeScenarios.length) return
+    const result = runScenario(currentModel, activeScenarios[i])
     runResults.push(result)
     runIndex = i + 1
     renderLog()
@@ -295,11 +297,35 @@ export function runAll() {
   if (btn) { btn.disabled = true; btn.textContent = 'All runs complete' }
 }
 
-// ─── INIT ─────────────────────────────────────────────────────────────────────
-// Called once when the page loads. Sets the initial config panel state
-// and renders the empty run log placeholders.
+// ─── ACTIONS: SELECT DOMAIN ───────────────────────────────────────────────────
+// Called when the visitor picks a domain from the selector.
+// Swaps the active scenario set and resets the log — rule engine unchanged.
 
+export function selectDomain(domainKey) {
+  activeDomain = domainKey
+  const domain = DOMAINS[domainKey]
+  activeScenarios = domain.scenarios
+
+  // Update the domain description text below the selector
+  const descEl = document.getElementById('domain-desc')
+  if (descEl) descEl.textContent = domain.description
+
+  // Update run count label
+  const countEl = document.getElementById('run-count')
+  if (countEl) countEl.textContent = `Run all ${domain.scenarios.length} →`
+
+  // Highlight the active domain button
+  document.querySelectorAll('.domain-btn').forEach(b => {
+    b.classList.remove('active')
+    if (b.dataset.domain === domainKey) b.classList.add('active')
+  })
+
+  resetLog()
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
 export function initSimulator() {
   updateConfig()
   renderLog()
 }
+

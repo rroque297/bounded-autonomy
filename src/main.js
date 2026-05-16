@@ -13,24 +13,31 @@
 import './style.css'
 
 // Import the initialisation functions from our two feature modules.
-import { initSimulator, selectModel, runNext, runAll } from './simulator.js'
+import { initSimulator, selectModel, runNext, runAll, selectDomain } from './simulator.js'
 import { initResults } from './results.js'
+import { DOMAINS, DOMAIN_KEYS } from './data/domains.js'
 
-// ─── ATTACH FUNCTIONS TO window ───────────────────────────────────────────────
-// The HTML uses onclick="selectModel(...)" and onclick="runNext()" directly
-// in the markup. For those to work, the functions need to be accessible
-// globally (on the window object). When using ES modules, functions are
-// scoped by default — so we explicitly attach them here.
-
+// Attach to window so onclick handlers in HTML can reach them
 window.selectModel = selectModel
 window.runNext = runNext
 window.runAll = runAll
-
-// ─── INITIALISE ON PAGE LOAD ──────────────────────────────────────────────────
-// Wait until the HTML is fully parsed before trying to find elements by ID.
-// "DOMContentLoaded" fires at that exact moment.
+window.selectDomain = selectDomain
 
 document.addEventListener('DOMContentLoaded', () => {
-  initSimulator()  // sets up the simulator panel and empty run log
-  initResults()    // pre-computes and renders the full Results section
+  // Build the domain selector buttons dynamically from domains.js
+  const selectorEl = document.getElementById('domain-selector')
+  if (selectorEl) {
+    DOMAIN_KEYS.forEach(key => {
+      const d = DOMAINS[key]
+      const btn = document.createElement('button')
+      btn.className = 'domain-btn' + (key === 'abstract' ? ' active' : '')
+      btn.dataset.domain = key
+      btn.onclick = () => selectDomain(key)
+      btn.innerHTML = `<span class="domain-icon">${d.icon}</span><span class="domain-label">${d.label}</span>`
+      selectorEl.appendChild(btn)
+    })
+  }
+
+  initSimulator()
+  initResults()
 })

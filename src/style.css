@@ -515,3 +515,36 @@ footer a { color: var(--cyan); text-decoration: none; }
 .method-icon { font-family: var(--mono); font-size: 0.72rem; color: var(--cyan); flex-shrink: 0; padding-top: 2px; }
 .method-text { font-size: 0.85rem; color: var(--text2); line-height: 1.7; }
 .method-text strong { color: var(--text); font-weight: 500; }
+
+/* ─── DOMAIN SELECTOR ─── */
+.domain-bar {
+  background: var(--ink); border-bottom: 1px solid var(--border);
+  padding: 1rem 1.5rem;
+}
+.domain-bar-label {
+  font-family: var(--mono); font-size: 0.68rem; color: var(--text3);
+  letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.75rem;
+}
+.domain-selector {
+  display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem;
+}
+.domain-btn {
+  font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.04em;
+  padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border);
+  background: var(--surface3); color: var(--text3);
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 6px;
+}
+.domain-btn:hover { border-color: var(--border2); color: var(--text); }
+.domain-btn.active {
+  background: rgba(0,229,200,0.08); color: var(--cyan);
+  border-color: rgba(0,229,200,0.35);
+}
+.domain-icon { font-size: 0.8rem; opacity: 0.85; }
+.domain-label { white-space: nowrap; }
+.domain-desc {
+  font-family: var(--sans); font-size: 0.8rem; color: var(--text3);
+  line-height: 1.6; font-style: italic;
+  border-left: 2px solid var(--border2); padding-left: 0.75rem;
+  transition: color 0.3s;
+}
