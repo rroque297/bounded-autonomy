@@ -168,20 +168,32 @@ let running = false   // prevents double-clicks during the animation delay
 function updateConfig() {
   const cfg = MODELS[currentModel]
 
-  function setVal(id, val) {
+  function setVal(id, val, isGood) {
     const el = document.getElementById(id)
     if (!el) return
     el.textContent = val
     el.className = 'config-val'
-    if (val === 'On' || val === 'Full' || val === 'Bounded') el.classList.add('on')
-    else if (val === 'Off') el.classList.add('off')
-    else el.classList.add('partial-val')
+    if (isGood)      el.classList.add('on')
+    else if (!isGood && val !== '—') el.classList.add('off')
+    else             el.classList.add('partial-val')
   }
 
-  setVal('cfg-delegation', cfg.delegation)
-  setVal('cfg-boundaries', cfg.boundaries)
-  setVal('cfg-reversibility', cfg.reversibility)
-  setVal('cfg-intervention', cfg.intervention)
+  // Delegation: low is good (tightly scoped), high is risky
+  const delegLabel = cfg.delegationLevel === 'low' ? 'Bounded' :
+                     cfg.delegationLevel === 'medium' ? 'Scoped' : 'Full'
+  setVal('cfg-delegation', delegLabel, cfg.delegationLevel === 'low')
+
+  // Boundaries: strong is good, none is risky
+  const boundLabel = cfg.boundaryStrength === 'strong' ? 'On' : 'Off'
+  setVal('cfg-boundaries', boundLabel, cfg.boundaryStrength === 'strong')
+
+  // Reversibility: fast is good, none is risky
+  const revLabel = cfg.reversibilitySpeed === 'fast' ? 'On' : 'Off'
+  setVal('cfg-reversibility', revLabel, cfg.reversibilitySpeed === 'fast')
+
+  // Intervention: true is good, false is risky
+  const interLabel = cfg.interventionActive ? 'On' : 'Off'
+  setVal('cfg-intervention', interLabel, cfg.interventionActive)
 }
 
 // ─── UI: RUN LOG ──────────────────────────────────────────────────────────────
