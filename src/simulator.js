@@ -10,6 +10,18 @@ import { populateResults } from './results.js'
 import { DOMAINS } from './data/domains.js'
 import { t, getLang } from './i18n.js'
 
+var LEVELS = {
+  none: 0,
+  low: 1,
+  medium: 2,
+  high: 3,
+  moderate: 2,
+  strong: 3,
+  wide: 1,
+  narrow: 3,
+  fast: 3,
+}
+
 // Active scenario set — defaults to the abstract domain from domains.js
 // which has multilingual desc objects
 let activeDomain = 'abstract'
@@ -22,74 +34,122 @@ let activeScenarios = DOMAINS['abstract'].scenarios
 //
 // "Deterministic" means: given the same inputs, it ALWAYS produces
 // the same output. No randomness, no AI, no network calls.
+// ─── HELPER: PRIMITIVE LEVEL COMPARISON ──────────────────────────────────────
+// Converts named levels to numbers so we can compare scenario demand
+// against model supply mathematically.
+// Example: scenario needs 'high' delegation, model only provides 'low'
+// → delegationExceeded = true
+
+function primitiveExceeds(scenarioDemand, configSupply) {
+  const L = { none: 0, low: 1, medium: 2, high: 3, strong: 3, moderate: 2 }
+  return L[scenarioDemand] > L[configSupply]
+}
+
+function reversibilityFails(scenarioWindow, modelSpeed) {
+  const WINDOW = { wide: 1, moderate: 2, narrow: 3 }
+  const SPEED  = { none: 0, fast: 3 }
+  // Only fails if scenario window demand EXCEEDS model speed by more than 1
+  return WINDOW[scenarioWindow] - SPEED[modelSpeed] > 1
+}
+
+// ─── HELPER: COMPUTE SCORE ───────────────────────────────────────────────────
+// Derives the controllability score from primitive evaluation results.
+// Weights are grounded in the theoretical references:
+// — Reversibility carries highest penalty (Perrow: permanent harm is least recoverable)
+// — Boundaries carry second penalty (Leveson: control structure failure)
+// — Delegation carries lowest penalty (Meadows: scope violation is precondition, not harm)
+// — Intervention partially recovers a boundary breach (detection + response > detection alone)
+
+function computeScore(delegationExceeded, boundaryBreached,
+                      reversibilityFailed, interventionActive) {
+  let score = 100
+  if (reversibilityFailed)                    score -= 40
+  if (boundaryBreached)                       score -= 35
+  if (delegationExceeded)                     score -= 25
+  if (boundaryBreached && interventionActive) score += 15
+  return Math.max(0, Math.min(100, score))
+}
+
+// ─── HELPER: DERIVE OUTPUT ───────────────────────────────────────────────────
+// Determines the observable outcome from primitive evaluation results.
+// Outcomes in order of severity:
+// irreversible → intervention → violation → compliant
+
+function deriveOutput(delegationExceeded, boundaryBreached,
+                      reversibilityFailed, interventionActive) {
+  // Irreversible: action cannot be undone — intervention cannot help here
+  // This takes priority over everything else
+  if (reversibilityFailed) {
+    return 'irreversible'
+  }
+  // Intervention: boundary or delegation breached but governance responded
+  if ((boundaryBreached || delegationExceeded) && interventionActive) {
+    return 'intervention'
+  }
+  // Violation: boundary or delegation breached, no response
+  if (boundaryBreached || delegationExceeded) {
+    return 'violation'
+  }
+  // Compliant: no primitive failures
+  return 'compliant'
+}
+
+// ─── HELPER: DERIVE EVENT MESSAGE ────────────────────────────────────────────
+// Returns the translation key for the event log entry.
+// These keys must exist in i18n.js under events.
+
+function deriveEventMsg(delegationExceeded, boundaryBreached,
+                        reversibilityFailed, interventionActive) {
+  if (reversibilityFailed && !interventionActive) return 'noGov'
+  if (reversibilityFailed && interventionActive)  return 'revBlocked'
+  if (boundaryBreached && interventionActive)      return 'boundaryInter'
+  if (boundaryBreached && !interventionActive)     return 'noConstraint'
+  if (delegationExceeded)                          return 'delegBroad'
+  return 'routine'
+}
+
+// ─── RULE ENGINE ─────────────────────────────────────────────────────────────
+// Takes a model key and a scenario, evaluates each primitive independently,
+// and returns an outcome object.
+// Deterministic: same inputs always produce same outputs.
+
 export function runScenario(modelKey, scenario) {
   const cfg = MODELS[modelKey]
-  let output = 'compliant'
-  let score = 100
-  let eventMsg = ''
 
-  if (scenario.irreversibleAttempt) {
-    // Rule group 1: Irreversible action attempted
-    // The reversibility primitive is checked FIRST — it's the earliest intervention point.
-    if (cfg.reversibility === 'On') {
-      output = 'intervention'
-      score = 72
-      eventMsg = 'revBlocked'
-    } else if (cfg.boundaries === 'On') {
-      // Boundaries catch it, but later in the decision chain — lower score
-      output = 'intervention'
-      score = 48
-      eventMsg = 'boundaryInter'
-    } else {
-      // No primitive active — action executes, outcome is permanent
-      output = 'irreversible'
-      score = 0
-      eventMsg = 'noGov'
-    }
-  } else if (scenario.risk === 'high') {
-    // Rule group 2: High-risk action (but reversible)
-    if (cfg.boundaries === 'On' && cfg.intervention !== 'Off') {
-      if (cfg.delegation === 'Bounded') {
-        // All three primitives working together — best governance outcome
-        output = 'compliant'
-        score = 95
-        eventMsg = 'allPrimitives'
-      } else {
-        // Boundaries and intervention present, but delegation too broad
-        output = 'intervention'
-        score = 60
-        eventMsg = 'delegBroad'
-      }
-    } else if (cfg.boundaries === 'On') {
-      // Boundary detected a violation but no mechanism to respond
-      output = 'violation'
-      score = 40
-      eventMsg = 'boundaryViol'
-    } else {
-      // No constraints — high-risk action proceeds unchecked
-      output = 'violation'
-      score = 18
-      eventMsg = 'noConstraint'
-    }
-  } else if (scenario.risk === 'medium') {
-    // Rule group 3: Medium-risk action
-    if (cfg.boundaries === 'On') {
-      output = 'compliant'
-      score = 88
-      eventMsg = 'boundaryPass'
-    } else {
-      output = 'violation'
-      score = 55
-      eventMsg = 'noCheck'
-    }
-  } else {
-    // Rule group 4: Low-risk action — all models handle this correctly
-    output = 'compliant'
-    score = 100
-    eventMsg = 'routine'
+  // Each primitive evaluates independently against scenario conditions
+  const delegationExceeded = primitiveExceeds(
+    scenario.delegationRequired,
+    cfg.delegationLevel
+  )
+  const boundaryBreached = primitiveExceeds(
+    scenario.boundaryPressure,
+    cfg.boundaryStrength
+  )
+  const reversibilityFailed = reversibilityFails(
+    scenario.reversibilityWindow,
+    cfg.reversibilitySpeed
+  )
+
+  // Derive all outputs from primitive evaluations
+  const output    = deriveOutput(delegationExceeded, boundaryBreached,
+                                  reversibilityFailed, cfg.interventionActive)
+  const score     = computeScore(delegationExceeded, boundaryBreached,
+                                  reversibilityFailed, cfg.interventionActive)
+  const eventMsg  = deriveEventMsg(delegationExceeded, boundaryBreached,
+                                    reversibilityFailed, cfg.interventionActive)
+
+  // Socio-technical harm comes from the scenario data, not the rule engine
+  const sociotechnicalHarm = scenario.sociotechnicalRisk || null
+
+  return {
+    output,
+    score,
+    eventMsg,
+    sociotechnicalHarm,
+    delegationExceeded,
+    boundaryBreached,
+    reversibilityFailed,
   }
-
-  return { output, score, eventMsg }
 }
 
 // ─── SIMULATOR STATE ──────────────────────────────────────────────────────────
