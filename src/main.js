@@ -1,43 +1,79 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// main.js — Entry point
+// main.js — Bounded Autonomy entry point
 //
-// This is the first JavaScript file Vite loads. Its job is simple:
-// import the CSS (so Vite knows to process it) and import + initialise
-// the two feature modules.
-//
-// Think of this as the "on/off switch" for the whole page.
+// Order of operations:
+//  1. Import CSS (Vite bundles these)
+//  2. Import all modules
+//  3. Init i18n (detect lang, apply translations to DOM)
+//  4. Mount language switcher in nav
+//  5. Register onLangChange callback
+//  6. Expose simulator functions to window (used by onclick in HTML)
+//  7. Build domain selector UI
+//  8. Init simulator + results
 // ─────────────────────────────────────────────────────────────────────────────
 
-// Importing the CSS here tells Vite to include it in the final bundle.
-// You never load CSS via a <link> tag when using Vite — this is the modern way.
 import './style.css'
+import './lang-switcher.css'
 
-// Import the initialisation functions from our two feature modules.
+import { initI18n, onLangChange, applyTranslations } from './i18n.js'
+import { mountLangSwitcher } from './langSwitcher.js'
 import { initSimulator, selectModel, runNext, runAll, selectDomain } from './simulator.js'
 import { initResults } from './results.js'
 import { DOMAINS, DOMAIN_KEYS } from './data/domains.js'
+import { getLang } from './i18n.js'
 
-// Attach to window so onclick handlers in HTML can reach them
-window.selectModel = selectModel
-window.runNext = runNext
-window.runAll = runAll
+// ── 1. Init i18n before anything renders
+initI18n()
+
+// ── 2. Mount language switcher into the nav slot
+const switcherMount = document.getElementById('lang-switcher-mount')
+mountLangSwitcher(switcherMount)
+
+// ── 3. When language changes, re-apply static translations
+onLangChange((lang) => {
+  applyTranslations()
+  document.querySelectorAll('.domain-btn').forEach(btn => {
+    const key = btn.dataset.domain
+    if (key && DOMAINS[key]) btn.textContent = DOMAINS[key].label[lang] || DOMAINS[key].label.en
+  })
+  const descEl = document.getElementById('domain-desc')
+  const activeBtn = document.querySelector('.domain-btn.active')
+  if (descEl && activeBtn) {
+    const key = activeBtn.dataset.domain
+    if (DOMAINS[key]) descEl.textContent = DOMAINS[key].description[lang] || DOMAINS[key].description.en
+  }
+  console.log(`[i18n] Language switched to: ${lang}`)
+})
+
+// ── 4. Expose simulator actions to window
+//    The HTML uses onclick="selectModel(...)" etc. — these need to be
+//    reachable from the global window object.
+window.selectModel  = selectModel
+window.runNext      = runNext
+window.runAll       = runAll
 window.selectDomain = selectDomain
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Build the domain selector buttons dynamically from domains.js
-  const selectorEl = document.getElementById('domain-selector')
-  if (selectorEl) {
-    DOMAIN_KEYS.forEach(key => {
-      const d = DOMAINS[key]
-      const btn = document.createElement('button')
-      btn.className = 'domain-btn' + (key === 'abstract' ? ' active' : '')
-      btn.dataset.domain = key
-      btn.onclick = () => selectDomain(key)
-      btn.innerHTML = `<span class="domain-icon">${d.icon}</span><span class="domain-label">${d.label}</span>`
-      selectorEl.appendChild(btn)
-    })
-  }
+// ── 5. Build the domain selector buttons
+function buildDomainSelector() {
+  const container = document.getElementById('domain-selector')
+  const descEl    = document.getElementById('domain-desc')
+  if (!container) return
 
-  initSimulator()
-  initResults()
-})
+  DOMAIN_KEYS.forEach((key, i) => {
+    const domain = DOMAINS[key]
+    const btn = document.createElement('button')
+    btn.className = 'domain-btn' + (i === 0 ? ' active' : '')
+    btn.dataset.domain = key
+    btn.textContent = domain.label[getLang()] || domain.label.en
+    btn.addEventListener('click', () => selectDomain(key))
+    container.appendChild(btn)
+  })
+
+  // Set initial description
+  if (descEl) descEl.textContent = DOMAINS[DOMAIN_KEYS[0]].description[getLang()] || DOMAINS[DOMAIN_KEYS[0]].description.en
+}
+
+// ── 6. Init everything
+buildDomainSelector()
+initSimulator()
+initResults()

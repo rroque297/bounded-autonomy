@@ -17,8 +17,8 @@
   --border: rgba(255,255,255,0.07);
   --border2: rgba(0,229,200,0.2);
   --text: #c8cce8;
-  --text2: #8890b0;
-  --text3: #5a6080;
+  --text2: #a8b0cc;
+  --text3: #7a8099;
   --radius: 10px;
   --radius-lg: 16px;
   --mono: 'IBM Plex Mono', monospace;
@@ -547,4 +547,96 @@ footer a { color: var(--cyan); text-decoration: none; }
   line-height: 1.6; font-style: italic;
   border-left: 2px solid var(--border2); padding-left: 0.75rem;
   transition: color 0.3s;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   NAV ADDITIONS — append to src/style.css
+   Supports the .nav-end wrapper that groups .nav-tag + language switcher.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/*
+  .nav-end groups the proof-of-concept tag and the language switcher pill
+  so they remain flush-right and vertically centered as one unit.
+*/
+.nav-end {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: auto;          /* push the whole group to the right */
+}
+
+/*
+  If your existing nav already uses margin-left: auto on .nav-tag alone,
+  remove that rule and let .nav-end handle the push instead.
+*/
+
+/*
+  The nav-logo now contains two <span> elements (logo text + accent word).
+  The original CSS targets .nav-logo span — this ensures it still applies.
+*/
+.nav-logo > span:last-child {
+  /* matches the existing cyan/accent color on the second span */
+  color: var(--cyan, #00e5ff);
+}
+
+/* ── Nav logo spacing fix */
+.nav-logo {
+  margin-right: 2rem;
+}
+
+/* ── Domain button visibility fix */
+.domain-btn {
+  color: rgba(255, 255, 255, 0.55);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.domain-btn:hover {
+  color: rgba(255, 255, 255, 0.85);
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ── Primitive cards — pin tag to bottom */
+.primitive-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.primitive-desc {
+  flex: 1;
+}
+
+.primitive-tag {
+  align-self: flex-start;
+  margin-top: 1.25rem;
+}
+
+/* ── Language switcher — filled pill style */
+.lang-trigger {
+  background: var(--surface2);
+  border: 1px solid var(--cyan);
+  color: var(--text);
+}
+
+.lang-trigger:hover {
+  background: var(--surface3);
+  border-color: var(--cyan);
+  color: #fff;
+}
+
+.lang-switcher.open .lang-trigger {
+  background: var(--surface3);
+  border-color: var(--cyan);
+  color: #fff;
+}
+
+.lang-trigger-globe {
+  opacity: 1;
+  color: var(--cyan);
+}
+
+/* ── Domain description — cyan accent */
+.domain-desc {
+  color: var(--cyan2);
+  font-style: normal;
 }

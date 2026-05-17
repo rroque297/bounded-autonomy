@@ -14,337 +14,477 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
 
   <!--
-    ⚠️  NO <style> block here anymore.
-    CSS now lives in src/style.css and is imported by src/main.js.
-    Vite sees that import and automatically injects the styles.
+    ⚠️ NO <style> block here.
+    CSS lives in src/style.css and src/lang-switcher.css — both imported by src/main.js.
   -->
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">Bounded<span>Autonomy</span></a>
-  <ul class="nav-links">
-    <li><a href="#research">Research</a></li>
-    <li><a href="#simulator">Simulator</a></li>
-    <li><a href="#results">Results</a></li>
-    <li><a href="#analysis">Analysis</a></li>
-  </ul>
-  <span class="nav-tag">Proof of Concept v1.0</span>
-</nav>
+  <!-- ═══════════════════════════════════════════════════════════════════
+       NAV — language switcher mounts inside .nav-end
+  ═══════════════════════════════════════════════════════════════════ -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <span data-i18n="nav.logo">Bounded</span><span data-i18n="nav.logoSpan">Autonomy</span>
+    </a>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-inner">
-    <div class="hero-label fade-up">Master in Design for Responsible Artificial Intelligence — Elisava School of Design and Engineering</div>
-    <h1 class="fade-up-2">Bounded<br/><em>Autonomy</em><br/>for AI</h1>
-    <p class="hero-sub fade-up-3">
-      A controlled experimental environment isolating the governance structure of AI autonomy through three fixed design primitives — delegation, boundaries, reversibility — and evaluating their effect through observable outcomes.
-    </p>
-    <div class="hero-ctas fade-up-4">
-      <a href="#simulator" class="btn-primary">Launch Simulator</a>
-      <a href="#research" class="btn-outline">Read Research</a>
-    </div>
-    <div class="hero-stats fade-up-4">
-      <div>
-        <div class="hero-stat-n">3</div>
-        <div class="hero-stat-l">Design Primitives</div>
-      </div>
-      <div>
-        <div class="hero-stat-n">3</div>
-        <div class="hero-stat-l">Baseline Models</div>
-      </div>
-      <div>
-        <div class="hero-stat-n">8</div>
-        <div class="hero-stat-l">Experimental Runs</div>
-      </div>
-      <div>
-        <div class="hero-stat-n">4</div>
-        <div class="hero-stat-l">Observable Outputs</div>
-      </div>
-    </div>
-  </div>
-</section>
+    <ul class="nav-links">
+      <li><a href="#research"  data-i18n="nav.research">Research</a></li>
+      <li><a href="#simulator" data-i18n="nav.simulator">Simulator</a></li>
+      <li><a href="#results"   data-i18n="nav.results">Results</a></li>
+      <li><a href="#analysis"  data-i18n="nav.analysis">Analysis</a></li>
+    </ul>
 
-<!-- RESEARCH / PRIMITIVES -->
-<section id="research">
-  <div class="section-label">Research Framework</div>
-  <h2>Three primitives, one question</h2>
-  <p class="primitives-intro">
-    Can bounded autonomy be operationalized through a minimal set of design primitives and evaluated through observable outcomes? This project isolates the governance structure of autonomy — not the full complexity of AI behavior — using three fixed, composable constraints.
-  </p>
-  <div class="primitives-grid">
-    <div class="primitive-card delegation">
-      <div class="primitive-num">01</div>
-      <div class="primitive-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 5v14M5 12l7-7 7 7"/>
-          <path d="M5 19h14" opacity="0.4"/>
-        </svg>
-      </div>
-      <div class="primitive-name">Delegation</div>
-      <p class="primitive-desc">The scope of authority granted to an autonomous agent. Determines which decisions the agent may make independently versus which require human confirmation or escalation.</p>
-      <span class="primitive-tag">Authority scope</span>
+    <!-- nav-end: groups the tag + the language switcher pill -->
+    <div class="nav-end">
+      <span class="nav-tag" data-i18n="nav.tag">Proof of Concept v1.0</span>
+      <!-- Language switcher mounts here via JS (mountLangSwitcher) -->
+      <div id="lang-switcher-mount"></div>
     </div>
-    <div class="primitive-card boundaries">
-      <div class="primitive-num">02</div>
-      <div class="primitive-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="3" width="18" height="18" rx="3"/>
-          <path d="M3 9h18M3 15h18" opacity="0.4"/>
-          <path d="M9 3v18" opacity="0.4"/>
-        </svg>
-      </div>
-      <div class="primitive-name">Boundaries</div>
-      <p class="primitive-desc">Hard constraints on the action space. Define the envelope within which the agent operates — the perimeter that, if crossed, triggers a violation event or intervention.</p>
-      <span class="primitive-tag">Action constraints</span>
-    </div>
-    <div class="primitive-card reversibility">
-      <div class="primitive-num">03</div>
-      <div class="primitive-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 14l-4-4 4-4"/>
-          <path d="M5 10h11a4 4 0 0 1 0 8h-1"/>
-        </svg>
-      </div>
-      <div class="primitive-name">Reversibility</div>
-      <p class="primitive-desc">Whether an action can be undone. Actions classified as irreversible carry higher governance weight — their occurrence constitutes a qualitatively different outcome class.</p>
-      <span class="primitive-tag">Undo capacity</span>
-    </div>
-  </div>
-</section>
+  </nav>
 
-<div style="max-width:1100px;margin:0 auto;padding:0 2.5rem;"><div class="section-rule"></div></div>
 
-<!-- SIMULATOR -->
-<section id="simulator">
-  <div class="sim-header">
-    <div class="section-label">Interactive Proof of Concept</div>
-    <h2>Run the experiment</h2>
-    <p style="color:var(--text2);max-width:560px;font-size:0.95rem;margin-top:0.5rem;line-height:1.75;">
-      Select a model configuration and run individual scenarios or all 8 experimental runs. All logic is deterministic and rule-based — no AI is invoked.
-    </p>
-  </div>
-  <div class="sim-frame">
-    <!-- Domain selector -->
-    <div class="domain-bar">
-      <div class="domain-bar-label">Context</div>
-      <div class="domain-selector" id="domain-selector">
-        <!-- buttons injected by main.js from domains.js -->
+  <!-- ═══════════════════════════════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════════════════════════════ -->
+  <section id="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-inner">
+
+      <div class="hero-label fade-up" data-i18n="hero.label">
+        Master in Design for Responsible Artificial Intelligence — Elisava School of Design and Engineering
       </div>
-      <div class="domain-desc" id="domain-desc">Domain-agnostic scenarios isolating governance structure. Intended for academic and technical audiences.</div>
-    </div>
 
-    <!-- Toolbar -->
-    <div class="sim-toolbar">
-      <span class="sim-toolbar-label">Model</span>
-      <div class="model-select">
-        <button class="model-btn active baseline" onclick="selectModel('baseline',this)">Baseline</button>
-        <button class="model-btn partial" onclick="selectModel('partial',this)">Partial</button>
-        <button class="model-btn full" onclick="selectModel('full',this)">Full</button>
+      <h1 class="fade-up-2">
+        <span data-i18n="hero.h1a">Bounded</span><br/>
+        <em data-i18n="hero.h1b">Autonomy</em><br/>
+        <span data-i18n="hero.h1c">for AI</span>
+      </h1>
+
+      <p class="hero-sub fade-up-3" data-i18n="hero.sub">
+        A controlled experimental environment isolating the governance structure of AI autonomy
+        through three fixed design primitives — delegation, boundaries, reversibility — and
+        evaluating their effect through observable outcomes.
+      </p>
+
+      <div class="hero-ctas fade-up-4">
+        <a href="#simulator" class="btn-primary" data-i18n="hero.cta1">Launch Simulator</a>
+        <a href="#research"  class="btn-outline"  data-i18n="hero.cta2">Read Research</a>
       </div>
-      <button class="run-all-btn" onclick="runAll()"><span id="run-count">Run all 8 →</span></button>
-      <button class="run-btn" id="run-btn" onclick="runNext()">Run next scenario</button>
-    </div>
 
-    <!-- Body -->
-    <div class="sim-body">
-      <!-- Left: run log -->
-      <div class="sim-left">
-        <div class="run-log-title">Experiment log</div>
-        <div class="run-log" id="run-log">
-          <!-- populated by JS -->
+      <div class="hero-stats fade-up-4">
+        <div>
+          <div class="hero-stat-n" data-i18n="hero.stat1n">3</div>
+          <div class="hero-stat-l" data-i18n="hero.stat1l">Design Primitives</div>
+        </div>
+        <div>
+          <div class="hero-stat-n" data-i18n="hero.stat2n">3</div>
+          <div class="hero-stat-l" data-i18n="hero.stat2l">Baseline Models</div>
+        </div>
+        <div>
+          <div class="hero-stat-n" data-i18n="hero.stat3n">8</div>
+          <div class="hero-stat-l" data-i18n="hero.stat3l">Experimental Runs</div>
+        </div>
+        <div>
+          <div class="hero-stat-n" data-i18n="hero.stat4n">4</div>
+          <div class="hero-stat-l" data-i18n="hero.stat4l">Observable Outputs</div>
         </div>
       </div>
 
-      <!-- Right: config + score + events -->
-      <div class="sim-right">
-        <!-- Config -->
-        <div class="panel-section">
-          <div class="panel-title">Current configuration</div>
-          <div class="config-row">
-            <span class="config-label">Delegation</span>
-            <span class="config-val" id="cfg-delegation">Full</span>
-          </div>
-          <div class="config-row">
-            <span class="config-label">Boundaries</span>
-            <span class="config-val" id="cfg-boundaries">Off</span>
-          </div>
-          <div class="config-row">
-            <span class="config-label">Reversibility check</span>
-            <span class="config-val" id="cfg-reversibility">Off</span>
-          </div>
-          <div class="config-row">
-            <span class="config-label">Intervention enabled</span>
-            <span class="config-val" id="cfg-intervention">Off</span>
-          </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       RESEARCH / PRIMITIVES
+  ═══════════════════════════════════════════════════════════════════ -->
+  <section id="research">
+
+    <div class="section-label" data-i18n="research.sectionLabel">Research Framework</div>
+    <h2 data-i18n="research.h2">Three primitives, one question</h2>
+    <p class="primitives-intro" data-i18n="research.intro">
+      Can bounded autonomy be operationalized through a minimal set of design primitives and
+      evaluated through observable outcomes? This project isolates the governance structure of
+      autonomy — not the full complexity of AI behavior — using three fixed, composable constraints.
+    </p>
+
+    <div class="primitives-grid">
+
+      <!-- 01 Delegation -->
+      <div class="primitive-card delegation">
+        <div class="primitive-num">01</div>
+        <div class="primitive-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 5v14M5 12l7-7 7 7"/>
+            <path d="M5 19h14" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="primitive-name" data-i18n="research.p1name">Delegation</div>
+        <p class="primitive-desc" data-i18n="research.p1desc">
+          The scope of authority granted to an autonomous agent. Determines which decisions the
+          agent may make independently versus which require human confirmation or escalation.
+        </p>
+        <span class="primitive-tag" data-i18n="research.p1tag">Authority scope</span>
+      </div>
+
+      <!-- 02 Boundaries -->
+      <div class="primitive-card boundaries">
+        <div class="primitive-num">02</div>
+        <div class="primitive-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="3"/>
+            <path d="M3 9h18M3 15h18" opacity="0.4"/>
+            <path d="M9 3v18" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="primitive-name" data-i18n="research.p2name">Boundaries</div>
+        <p class="primitive-desc" data-i18n="research.p2desc">
+          Hard constraints on the action space. Define the envelope within which the agent operates
+          — the perimeter that, if crossed, triggers a violation event or intervention.
+        </p>
+        <span class="primitive-tag" data-i18n="research.p2tag">Action constraints</span>
+      </div>
+
+      <!-- 03 Reversibility -->
+      <div class="primitive-card reversibility">
+        <div class="primitive-num">03</div>
+        <div class="primitive-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 14l-4-4 4-4"/>
+            <path d="M5 10h11a4 4 0 0 1 0 8h-1"/>
+          </svg>
+        </div>
+        <div class="primitive-name" data-i18n="research.p3name">Reversibility</div>
+        <p class="primitive-desc" data-i18n="research.p3desc">
+          Whether an action can be undone. Actions classified as irreversible carry higher governance
+          weight — their occurrence constitutes a qualitatively different outcome class.
+        </p>
+        <span class="primitive-tag" data-i18n="research.p3tag">Undo capacity</span>
+      </div>
+
+    </div>
+  </section>
+
+  <div style="max-width:1100px;margin:0 auto;padding:0 2.5rem;">
+    <div class="section-rule"></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       SIMULATOR
+  ═══════════════════════════════════════════════════════════════════ -->
+  <section id="simulator">
+
+    <div class="sim-header">
+      <div class="section-label" data-i18n="simulator.sectionLabel">Interactive Proof of Concept</div>
+      <h2 data-i18n="simulator.h2">Run the experiment</h2>
+      <p style="color:var(--text2);max-width:560px;font-size:0.95rem;margin-top:0.5rem;line-height:1.75;"
+         data-i18n="simulator.sub">
+        Select a model configuration and run individual scenarios or all 8 experimental runs.
+        All logic is deterministic and rule-based — no AI is invoked.
+      </p>
+    </div>
+
+    <div class="sim-frame">
+
+      <!-- Domain selector -->
+      <div class="domain-bar">
+        <div class="domain-bar-label" data-i18n="simulator.domainLabel">Context</div>
+        <div class="domain-selector" id="domain-selector">
+          <!-- buttons injected by main.js from domains.js -->
+        </div>
+        <div class="domain-desc" id="domain-desc">
+          Domain-agnostic scenarios isolating governance structure. Intended for academic and technical audiences.
+        </div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="sim-toolbar">
+        <span class="sim-toolbar-label" data-i18n="simulator.toolbarLabel">Model</span>
+        <div class="model-select">
+          <button class="model-btn active baseline" onclick="selectModel('baseline',this)" data-i18n="results.baselineLabel">Baseline</button>
+          <button class="model-btn partial"          onclick="selectModel('partial',this)" data-i18n="results.partialLabel">Partial</button>
+          <button class="model-btn full"             onclick="selectModel('full',this)" data-i18n="results.fullLabel">Full</button>
+        </div>
+        <button class="run-all-btn" onclick="runAll()">
+          <span id="run-count" data-i18n="simulator.runAllBtn">Run all 8 →</span>
+        </button>
+        <button class="run-btn" id="run-btn" onclick="runNext()" data-i18n="simulator.runNextBtn">
+          Run next scenario
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="sim-body">
+
+        <!-- Left: run log -->
+        <div class="sim-left">
+          <div class="run-log-title" data-i18n="simulator.logTitle">Experiment log</div>
+          <div class="run-log" id="run-log"><!-- populated by JS --></div>
         </div>
 
-        <!-- Score -->
-        <div class="panel-section">
-          <div class="panel-title">Controllability score</div>
-          <div class="score-display">
-            <div class="score-big" id="score-big" style="color:var(--text3)">—</div>
-            <div class="score-label-sm">avg. across completed runs</div>
-            <div class="score-bar-wrap">
-              <div class="score-bar-fill" id="score-bar" style="width:0%;background:var(--cyan)"></div>
+        <!-- Right: config + score + events -->
+        <div class="sim-right">
+
+          <!-- Config -->
+          <div class="panel-section">
+            <div class="panel-title" data-i18n="simulator.cfgTitle">Current configuration</div>
+            <div class="config-row">
+              <span class="config-label" data-i18n="simulator.cfgDeleg">Delegation</span>
+              <span class="config-val"   id="cfg-delegation">Full</span>
+            </div>
+            <div class="config-row">
+              <span class="config-label" data-i18n="simulator.cfgBounds">Boundaries</span>
+              <span class="config-val"   id="cfg-boundaries">Off</span>
+            </div>
+            <div class="config-row">
+              <span class="config-label" data-i18n="simulator.cfgRev">Reversibility check</span>
+              <span class="config-val"   id="cfg-reversibility">Off</span>
+            </div>
+            <div class="config-row">
+              <span class="config-label" data-i18n="simulator.cfgInter">Intervention enabled</span>
+              <span class="config-val"   id="cfg-intervention">Off</span>
             </div>
           </div>
-        </div>
 
-        <!-- Run-by-run scores chart -->
-        <div class="panel-section" id="chart-section" style="display:none">
-          <div class="panel-title">Score by run</div>
-          <div class="chart-bars" id="chart-bars"></div>
-        </div>
+          <!-- Score -->
+          <div class="panel-section">
+            <div class="panel-title" data-i18n="simulator.scoreTitle">Controllability score</div>
+            <div class="score-display">
+              <div class="score-big" id="score-big" style="color:var(--text3)">—</div>
+              <div class="score-label-sm" data-i18n="simulator.scoreLabel">avg. across completed runs</div>
+              <div class="score-bar-wrap">
+                <div class="score-bar-fill" id="score-bar" style="width:0%;background:var(--cyan)"></div>
+              </div>
+            </div>
+          </div>
 
-        <!-- Events -->
-        <div class="panel-section" id="events-section" style="display:none">
-          <div class="panel-title">Observable outputs</div>
-          <div class="event-list" id="event-list"></div>
+          <!-- Run-by-run scores chart -->
+          <div class="panel-section" id="chart-section" style="display:none">
+            <div class="panel-title" data-i18n="simulator.chartTitle">Score by run</div>
+            <div class="chart-bars" id="chart-bars"></div>
+          </div>
+
+          <!-- Events -->
+          <div class="panel-section" id="events-section" style="display:none">
+            <div class="panel-title" data-i18n="simulator.eventsTitle">Observable outputs</div>
+            <div class="event-list" id="event-list"></div>
+          </div>
+
         </div>
       </div>
-    </div>
-  </div>
-</section>
 
-<div style="max-width:1100px;margin:0 auto;padding:0 2.5rem;"><div class="section-rule"></div></div>
+    </div>
+  </section>
 
-<!-- RESULTS -->
-<section id="results">
-  <div class="section-label">Dataset &amp; Comparison</div>
-  <h2>Results</h2>
-  <p class="results-intro">
-    All three models were evaluated across the same 8 experimental scenarios. Scores are computed deterministically by the rule engine — no statistical variance, no probabilistic modeling. The dataset below is the complete output of the experiment.
-  </p>
-
-  <!-- Summary cards -->
-  <div class="results-summary" id="rs-summary">
-    <div class="rs-card baseline">
-      <div class="rs-model-label">Baseline model</div>
-      <div class="rs-score-num" id="rs-score-b">—</div>
-      <div class="rs-score-sub">avg. controllability score</div>
-      <div class="rs-bar-wrap"><div class="rs-bar-fill" id="rs-bar-b" style="width:0%"></div></div>
-      <div class="rs-output-pills" id="rs-pills-b"></div>
-    </div>
-    <div class="rs-card partial">
-      <div class="rs-model-label">Partial model</div>
-      <div class="rs-score-num" id="rs-score-p">—</div>
-      <div class="rs-score-sub">avg. controllability score</div>
-      <div class="rs-bar-wrap"><div class="rs-bar-fill" id="rs-bar-p" style="width:0%"></div></div>
-      <div class="rs-output-pills" id="rs-pills-p"></div>
-    </div>
-    <div class="rs-card full">
-      <div class="rs-model-label">Full model</div>
-      <div class="rs-score-num" id="rs-score-f">—</div>
-      <div class="rs-score-sub">avg. controllability score</div>
-      <div class="rs-bar-wrap"><div class="rs-bar-fill" id="rs-bar-f" style="width:0%"></div></div>
-      <div class="rs-output-pills" id="rs-pills-f"></div>
-    </div>
+  <div style="max-width:1100px;margin:0 auto;padding:0 2.5rem;">
+    <div class="section-rule"></div>
   </div>
 
-  <!-- Output frequency breakdown -->
-  <div style="font-family:var(--mono);font-size:0.7rem;color:var(--text3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1rem;">Output frequency across all models</div>
-  <div class="freq-grid" id="freq-grid">
-    <div class="freq-card">
-      <div class="freq-output-name v">Violation</div>
-      <div class="freq-bar-group" id="freq-v"></div>
-    </div>
-    <div class="freq-card">
-      <div class="freq-output-name i">Intervention</div>
-      <div class="freq-bar-group" id="freq-i"></div>
-    </div>
-    <div class="freq-card">
-      <div class="freq-output-name ir">Irreversible</div>
-      <div class="freq-bar-group" id="freq-ir"></div>
-    </div>
-    <div class="freq-card">
-      <div class="freq-output-name c">Compliant</div>
-      <div class="freq-bar-group" id="freq-c"></div>
-    </div>
-  </div>
 
-  <!-- Head-to-head chart -->
-  <div class="h2h-section">
-    <div class="h2h-title">Score by scenario — all three models</div>
-    <div style="display:flex;gap:1.5rem;margin-bottom:1rem;">
-      <span style="font-family:var(--mono);font-size:0.68rem;display:flex;align-items:center;gap:6px;color:var(--text2)"><span style="display:inline-block;width:10px;height:3px;background:var(--cyan);border-radius:2px"></span>Baseline</span>
-      <span style="font-family:var(--mono);font-size:0.68rem;display:flex;align-items:center;gap:6px;color:var(--text2)"><span style="display:inline-block;width:10px;height:3px;background:var(--amber);border-radius:2px"></span>Partial</span>
-      <span style="font-family:var(--mono);font-size:0.68rem;display:flex;align-items:center;gap:6px;color:var(--text2)"><span style="display:inline-block;width:10px;height:3px;background:var(--green);border-radius:2px"></span>Full</span>
-    </div>
-    <div id="h2h-chart"></div>
-  </div>
+  <!-- ═══════════════════════════════════════════════════════════════════
+       RESULTS
+  ═══════════════════════════════════════════════════════════════════ -->
+  <section id="results">
 
-  <!-- Full comparison matrix -->
-  <div style="font-family:var(--mono);font-size:0.7rem;color:var(--text3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1rem;">8-run comparison dataset</div>
-  <div class="matrix-wrap">
-    <table class="matrix-table" id="matrix-table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Scenario</th>
-          <th>Risk</th>
-          <th>Baseline</th>
-          <th>Partial</th>
-          <th>Full</th>
-        </tr>
-      </thead>
-      <tbody id="matrix-body"></tbody>
-    </table>
-  </div>
-
-  <!-- Methodology note -->
-  <div class="methodology-note">
-    <span class="method-icon">[ i ]</span>
-    <p class="method-text">
-      <strong>Scope note:</strong> All scores are produced by a deterministic rule engine applying the three primitives (delegation, boundaries, reversibility) to each scenario. There is no probabilistic modeling, no real AI decision-making, and no variance across runs. The dataset is fully reproducible and intentionally bounded — its purpose is to isolate governance structure, not to simulate AI behavior at scale.
+    <div class="section-label" data-i18n="results.sectionLabel">Dataset &amp; Comparison</div>
+    <h2 data-i18n="results.h2">Results</h2>
+    <p class="results-intro" data-i18n="results.intro">
+      All three models were evaluated across the same 8 experimental scenarios. Scores are computed
+      deterministically by the rule engine — no statistical variance, no probabilistic modeling.
+      The dataset below is the complete output of the experiment.
     </p>
-  </div>
-</section>
 
-<!-- ANALYSIS -->
-<section id="analysis">
-  <div class="section-label">Governance Patterns</div>
-  <h2>What the runs reveal</h2>
-  <p style="color:var(--text2);max-width:600px;font-size:0.95rem;line-height:1.75;">
-    Across 8 runs and three model configurations, four structural governance patterns emerge from the primitive interactions.
-  </p>
-  <div class="analysis-grid">
-    <div class="pattern-card">
-      <h3>Delegation without boundaries amplifies risk</h3>
-      <p>In the baseline model, unconstrained delegation produces violations in every high-stakes scenario. Authority scope alone, absent action constraints, generates irreversible outcomes at a 3× higher rate than the full model.</p>
-    </div>
-    <div class="pattern-card">
-      <h3>Boundaries alone are insufficient</h3>
-      <p>The partial model demonstrates that boundary enforcement without reversibility checks still permits high-consequence actions. The boundary stops the agent at the perimeter but cannot undo what happened within it.</p>
-    </div>
-    <div class="pattern-card">
-      <h3>Reversibility acts as a governance multiplier</h3>
-      <p>When reversibility checks are active, the controllability score improves not just by preventing irreversible outcomes, but by enabling intervention at the earliest decision node — compounding safety across subsequent runs.</p>
-    </div>
-    <div class="pattern-card">
-      <h3>Primitive interaction is non-linear</h3>
-      <p>The full model's controllability score is not the arithmetic sum of its parts. The three primitives interact: delegation scoped by boundaries becomes qualitatively safer when paired with reversibility — suggesting governance emerges from composition.</p>
-    </div>
-  </div>
-</section>
+    <!-- Summary cards -->
+    <div class="results-summary" id="rs-summary">
 
-<!-- FOOTER -->
-<footer>
-  <span>Bounded Autonomy Research · Master in Design for Responsible Artificial Intelligence · Elisava School of Design and Engineering · 2025</span>
-  <span>Proof of concept — no real AI decision-making</span>
-</footer>
+      <div class="rs-card baseline">
+        <div class="rs-model-label" data-i18n="results.baselineLabel">Baseline model</div>
+        <div class="rs-score-num"   id="rs-score-b">—</div>
+        <div class="rs-score-sub"   data-i18n="results.scoreSubLabel">avg. controllability score</div>
+        <div class="rs-bar-wrap">
+          <div class="rs-bar-fill" id="rs-bar-b" style="width:0%"></div>
+        </div>
+        <div class="rs-output-pills" id="rs-pills-b"></div>
+      </div>
 
-<!--
-  ⚠️  NO <script> block here anymore.
-  All JavaScript now lives in src/main.js (and the modules it imports).
-  This single line is all Vite needs — it finds main.js, follows all its
-  imports, and bundles everything automatically.
-  type="module" is required: it tells the browser this is modern JS with imports.
--->
-<script type="module" src="/src/main.js"></script>
+      <div class="rs-card partial">
+        <div class="rs-model-label" data-i18n="results.partialLabel">Partial model</div>
+        <div class="rs-score-num"   id="rs-score-p">—</div>
+        <div class="rs-score-sub"   data-i18n="results.scoreSubLabel">avg. controllability score</div>
+        <div class="rs-bar-wrap">
+          <div class="rs-bar-fill" id="rs-bar-p" style="width:0%"></div>
+        </div>
+        <div class="rs-output-pills" id="rs-pills-p"></div>
+      </div>
+
+      <div class="rs-card full">
+        <div class="rs-model-label" data-i18n="results.fullLabel">Full model</div>
+        <div class="rs-score-num"   id="rs-score-f">—</div>
+        <div class="rs-score-sub"   data-i18n="results.scoreSubLabel">avg. controllability score</div>
+        <div class="rs-bar-wrap">
+          <div class="rs-bar-fill" id="rs-bar-f" style="width:0%"></div>
+        </div>
+        <div class="rs-output-pills" id="rs-pills-f"></div>
+      </div>
+
+    </div>
+
+    <!-- Output frequency breakdown -->
+    <div style="font-family:var(--mono);font-size:0.7rem;color:var(--text3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1rem;"
+         data-i18n="results.freqLabel">Output frequency across all models</div>
+
+    <div class="freq-grid" id="freq-grid">
+      <div class="freq-card">
+        <div class="freq-output-name v" data-i18n="outputs.violation">Violation</div>
+        <div class="freq-bar-group" id="freq-v"></div>
+      </div>
+      <div class="freq-card">
+        <div class="freq-output-name i" data-i18n="outputs.intervention">Intervention</div>
+        <div class="freq-bar-group" id="freq-i"></div>
+      </div>
+      <div class="freq-card">
+        <div class="freq-output-name ir" data-i18n="outputs.irreversible">Irreversible</div>
+        <div class="freq-bar-group" id="freq-ir"></div>
+      </div>
+      <div class="freq-card">
+        <div class="freq-output-name c" data-i18n="outputs.compliant">Compliant</div>
+        <div class="freq-bar-group" id="freq-c"></div>
+      </div>
+    </div>
+
+    <!-- Head-to-head chart -->
+    <div class="h2h-section">
+      <div class="h2h-title" data-i18n="results.h2hTitle">Score by scenario — all three models</div>
+      <div style="display:flex;gap:1.5rem;margin-bottom:1rem;">
+        <span style="font-family:var(--mono);font-size:0.68rem;display:flex;align-items:center;gap:6px;color:var(--text2)">
+          <span style="display:inline-block;width:10px;height:3px;background:var(--cyan);border-radius:2px"></span>
+          <span data-i18n="results.legendBase">Baseline</span>
+        </span>
+        <span style="font-family:var(--mono);font-size:0.68rem;display:flex;align-items:center;gap:6px;color:var(--text2)">
+          <span style="display:inline-block;width:10px;height:3px;background:var(--amber);border-radius:2px"></span>
+          <span data-i18n="results.legendPart">Partial</span>
+        </span>
+        <span style="font-family:var(--mono);font-size:0.68rem;display:flex;align-items:center;gap:6px;color:var(--text2)">
+          <span style="display:inline-block;width:10px;height:3px;background:var(--green);border-radius:2px"></span>
+          <span data-i18n="results.legendFull">Full</span>
+        </span>
+      </div>
+      <div id="h2h-chart"></div>
+    </div>
+
+    <!-- Full comparison matrix -->
+    <div style="font-family:var(--mono);font-size:0.7rem;color:var(--text3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1rem;"
+         data-i18n="results.matrixLabel">8-run comparison dataset</div>
+
+    <div class="matrix-wrap">
+      <table class="matrix-table" id="matrix-table">
+        <thead>
+          <tr>
+            <th data-i18n="results.matColNum">#</th>
+            <th data-i18n="results.matColScen">Scenario</th>
+            <th data-i18n="results.matColRisk">Risk</th>
+            <th data-i18n="results.matColBase">Baseline</th>
+            <th data-i18n="results.matColPart">Partial</th>
+            <th data-i18n="results.matColFull">Full</th>
+          </tr>
+        </thead>
+        <tbody id="matrix-body"></tbody>
+      </table>
+    </div>
+
+    <!-- Methodology note -->
+    <div class="methodology-note">
+      <span class="method-icon" data-i18n="results.methodIcon">[ i ]</span>
+      <p class="method-text">
+        <span data-i18n="results.methodText">
+          All scores are produced by a deterministic rule engine applying the three primitives
+          (delegation, boundaries, reversibility) to each scenario. There is no probabilistic
+          modeling, no real AI decision-making, and no variance across runs. The dataset is fully
+          reproducible and intentionally bounded — its purpose is to isolate governance structure,
+          not to simulate AI behavior at scale.
+        </span>
+      </p>
+    </div>
+
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       ANALYSIS
+  ═══════════════════════════════════════════════════════════════════ -->
+  <section id="analysis">
+
+    <div class="section-label" data-i18n="analysis.sectionLabel">Governance Patterns</div>
+    <h2 data-i18n="analysis.h2">What the runs reveal</h2>
+    <p style="color:var(--text2);max-width:600px;font-size:0.95rem;line-height:1.75;"
+       data-i18n="analysis.sub">
+      Across 8 runs and three model configurations, four structural governance patterns emerge
+      from the primitive interactions.
+    </p>
+
+    <div class="analysis-grid">
+
+      <div class="pattern-card">
+        <h3 data-i18n="analysis.p1h">Delegation without boundaries amplifies risk</h3>
+        <p  data-i18n="analysis.p1p">
+          In the baseline model, unconstrained delegation produces violations in every high-stakes
+          scenario. Authority scope alone, absent action constraints, generates irreversible outcomes
+          at a 3× higher rate than the full model.
+        </p>
+      </div>
+
+      <div class="pattern-card">
+        <h3 data-i18n="analysis.p2h">Boundaries alone are insufficient</h3>
+        <p  data-i18n="analysis.p2p">
+          The partial model demonstrates that boundary enforcement without reversibility checks still
+          permits high-consequence actions. The boundary stops the agent at the perimeter but cannot
+          undo what happened within it.
+        </p>
+      </div>
+
+      <div class="pattern-card">
+        <h3 data-i18n="analysis.p3h">Reversibility acts as a governance multiplier</h3>
+        <p  data-i18n="analysis.p3p">
+          When reversibility checks are active, the controllability score improves not just by
+          preventing irreversible outcomes, but by enabling intervention at the earliest decision
+          node — compounding safety across subsequent runs.
+        </p>
+      </div>
+
+      <div class="pattern-card">
+        <h3 data-i18n="analysis.p4h">Primitive interaction is non-linear</h3>
+        <p  data-i18n="analysis.p4p">
+          The full model's controllability score is not the arithmetic sum of its parts. The three
+          primitives interact: delegation scoped by boundaries becomes qualitatively safer when paired
+          with reversibility — suggesting governance emerges from composition.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════════════════════════ -->
+  <footer>
+    <span data-i18n="footer.credit">
+      Bounded Autonomy Research · Master in Design for Responsible Artificial Intelligence ·
+      Elisava School of Design and Engineering · 2025
+    </span>
+    <span data-i18n="footer.note">Proof of concept — no real AI decision-making</span>
+  </footer>
+
+
+  <!--
+    ⚠️ main.js is the single Vite entry point.
+    It imports CSS, initialises i18n, mounts the lang switcher,
+    then calls all existing module init functions.
+    type="module" is required.
+  -->
+  <script type="module" src="/src/main.js"></script>
 
 </body>
 </html>

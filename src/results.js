@@ -1,20 +1,29 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// results.js — Results section: pre-computes all model × scenario combinations
-// and renders the summary cards, frequency breakdown, head-to-head chart,
-// and comparison matrix.
+// results.js — Results section
+// Renders summary cards, frequency breakdown, head-to-head chart, and
+// comparison matrix. Empty state shown to new visitors until simulator runs.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { MODELS, SCENARIOS, ALL_MODEL_KEYS } from './data/scenarios.js'
+import { DOMAINS } from './data/domains.js'
 import { runScenario } from './simulator.js'
+import { t, getLang, onLangChange } from './i18n.js'
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+// hasData tracks whether the simulator has been run at least once.
+// Until it has, we show the empty state.
+
+let hasData = false
 
 // ─── PRE-COMPUTE ALL RESULTS ──────────────────────────────────────────────────
-// Run every model against every scenario once, up front, at page load.
-// This means the Results section is always consistent with the Simulator —
-// they share the same rule engine, so the numbers always agree.
+// Results are still pre-computed — the rule engine runs all combinations up
+// front. The difference is we don't RENDER them until the visitor runs the
+// simulator. This keeps the numbers consistent with the simulator at all times.
 
 const RESULTS_DATA = {}
+const ABSTRACT_SCENARIOS = DOMAINS['abstract'].scenarios
 ALL_MODEL_KEYS.forEach(m => {
-  RESULTS_DATA[m] = SCENARIOS.map(s => runScenario(m, s))
+  RESULTS_DATA[m] = ABSTRACT_SCENARIOS.map(s => runScenario(m, s))
 })
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
@@ -32,12 +41,13 @@ function countOutputs(m) {
 
 function outputBadgeHTML(output) {
   const map = {
-    violation:    ['ob-violation',    'violation'],
-    intervention: ['ob-intervention', 'intervention'],
-    irreversible: ['ob-irreversible', 'irreversible'],
-    compliant:    ['ob-compliant',    'compliant'],
+    violation:    'ob-violation',
+    intervention: 'ob-intervention',
+    irreversible: 'ob-irreversible',
+    compliant:    'ob-compliant',
   }
-  const [cls, label] = map[output] || ['ob-none', '—']
+  const cls = map[output] || 'ob-none'
+  const label = t(`outputs.${output}`) || t('outputs.none')
   return `<span class="output-badge ${cls}">${label}</span>`
 }
 
@@ -45,9 +55,74 @@ function scoreColor(s) {
   return s >= 80 ? 'var(--green)' : s >= 45 ? 'var(--amber)' : 'var(--red)'
 }
 
+// ─── EMPTY STATE ──────────────────────────────────────────────────────────────
+// Shown to new visitors before any simulator run.
+// Cards are visible but all numbers show dashes and bars sit at zero.
+
+function renderEmptyState() {
+  // Status line
+  const statusEl = document.getElementById('rs-status')
+  if (statusEl) {
+    statusEl.textContent = t('results.emptyState')
+    statusEl.style.display = 'block'
+  }
+
+  // Summary cards — dashes + zero bars
+  const cardMap = { baseline: 'b', partial: 'p', full: 'f' }
+  ALL_MODEL_KEYS.forEach(m => {
+    const k = cardMap[m]
+    const scoreEl = document.getElementById(`rs-score-${k}`)
+    const barEl   = document.getElementById(`rs-bar-${k}`)
+    const pillsEl = document.getElementById(`rs-pills-${k}`)
+    if (scoreEl) { scoreEl.textContent = '—'; scoreEl.style.color = 'var(--text3)' }
+    if (barEl)   { barEl.style.width = '0%' }
+    if (pillsEl) { pillsEl.innerHTML = '' }
+  })
+
+  // Frequency bars — all flat
+  const freqIds = ['freq-v', 'freq-i', 'freq-ir', 'freq-c']
+  const modelDotColors = {
+    baseline: 'var(--cyan)',
+    partial:  'var(--amber)',
+    full:     'var(--green)',
+  }
+  freqIds.forEach(id => {
+    const el = document.getElementById(id)
+    if (!el) return
+    el.innerHTML = ALL_MODEL_KEYS.map(m => `
+      <div class="freq-bar-row">
+        <div class="freq-model-dot" style="background:${modelDotColors[m]}"></div>
+        <div class="freq-bar-bg"><div class="freq-bar-fg" style="width:0%"></div></div>
+        <span class="freq-count">—</span>
+      </div>`).join('')
+  })
+
+  // Head-to-head chart — empty rows with scenario labels
+  const h2hEl = document.getElementById('h2h-chart')
+  if (h2hEl) {
+    h2hEl.innerHTML = ABSTRACT_SCENARIOS.map((s, i) => {
+      const bars = ALL_MODEL_KEYS.map(m => `
+        <div class="h2h-bar-row">
+          <div class="h2h-bar-track">
+            <div class="h2h-bar-inner" style="width:0%;background:${
+              m === 'baseline' ? 'var(--cyan)' : m === 'partial' ? 'var(--amber)' : 'var(--green)'
+            }"></div>
+          </div>
+          <span class="h2h-val" style="color:var(--text3)">—</span>
+        </div>`).join('')
+      return `<div style="display:grid;grid-template-columns:180px 1fr;align-items:center;gap:1rem;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.03);">
+        <span style="font-family:var(--mono);font-size:0.68rem;color:var(--text2);line-height:1.4;">#${i + 1} ${s.desc[getLang()] || s.desc.en}</span>
+        <div style="display:flex;flex-direction:column;gap:3px;">${bars}</div>
+      </div>`
+    }).join('')
+  }
+
+  // Comparison matrix — headers only, no rows
+  const tbody = document.getElementById('matrix-body')
+  if (tbody) { tbody.innerHTML = '' }
+}
+
 // ─── RENDER: SUMMARY CARDS ────────────────────────────────────────────────────
-// Three cards at the top — one per model — showing the average score
-// and a breakdown of how many of each output type occurred.
 
 function renderSummaryCards() {
   const cardMap = { baseline: 'b', partial: 'p', full: 'f' }
@@ -58,7 +133,7 @@ function renderSummaryCards() {
     const counts = countOutputs(m)
 
     const scoreEl = document.getElementById(`rs-score-${k}`)
-    const barEl = document.getElementById(`rs-bar-${k}`)
+    const barEl   = document.getElementById(`rs-bar-${k}`)
     const pillsEl = document.getElementById(`rs-pills-${k}`)
     if (!scoreEl || !barEl || !pillsEl) return
 
@@ -75,8 +150,6 @@ function renderSummaryCards() {
 }
 
 // ─── RENDER: OUTPUT FREQUENCY BARS ───────────────────────────────────────────
-// Four cards — one per output type — each showing a bar for each model.
-// Makes it easy to see at a glance which model produces which outcomes most.
 
 function renderFrequency() {
   const outputKeys = [
@@ -96,7 +169,7 @@ function renderFrequency() {
     if (!el) return
     el.innerHTML = ALL_MODEL_KEYS.map(m => {
       const n = countOutputs(m)[key]
-      const pct = Math.round((n / 8) * 100) // 8 = total scenarios
+      const pct = Math.round((n / 8) * 100)
       return `<div class="freq-bar-row">
         <div class="freq-model-dot" style="background:${modelDotColors[m]}"></div>
         <div class="freq-bar-bg"><div class="freq-bar-fg" style="width:${pct}%;background:${dotColor}"></div></div>
@@ -107,8 +180,6 @@ function renderFrequency() {
 }
 
 // ─── RENDER: HEAD-TO-HEAD CHART ───────────────────────────────────────────────
-// One row per scenario. Each row shows three stacked bars — one per model —
-// so you can compare scores across models for the exact same situation.
 
 function renderH2HChart() {
   const el = document.getElementById('h2h-chart')
@@ -120,8 +191,7 @@ function renderH2HChart() {
     full:     'var(--green)',
   }
 
-  el.innerHTML = SCENARIOS.map((s, i) => {
-    const bars = ALL_MODEL_KEYS.map(m => {
+  el.innerHTML = ABSTRACT_SCENARIOS.map((s, i) => {    const bars = ALL_MODEL_KEYS.map(m => {
       const r = RESULTS_DATA[m][i]
       return `<div class="h2h-bar-row">
         <div class="h2h-bar-track">
@@ -132,23 +202,21 @@ function renderH2HChart() {
     }).join('')
 
     return `<div style="display:grid;grid-template-columns:180px 1fr;align-items:center;gap:1rem;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.03);">
-      <span style="font-family:var(--mono);font-size:0.68rem;color:var(--text2);line-height:1.4;">#${i + 1} ${s.desc}</span>
+       <span style="font-family:var(--mono);font-size:0.68rem;color:var(--text2);line-height:1.4;">#${i + 1} ${s.desc[getLang()] || s.desc.en}</span>
       <div style="display:flex;flex-direction:column;gap:3px;">${bars}</div>
     </div>`
   }).join('')
 }
 
 // ─── RENDER: COMPARISON MATRIX ────────────────────────────────────────────────
-// The full dataset in table form. Every scenario × every model.
-// Each cell shows the output type badge and the numerical score.
 
 function renderMatrix() {
   const tbody = document.getElementById('matrix-body')
   if (!tbody) return
 
-  tbody.innerHTML = SCENARIOS.map((s, i) => {
+  tbody.innerHTML = ABSTRACT_SCENARIOS.map((s, i) => {
     const riskClass =
-      s.risk === 'high' ? 'risk-high'
+      s.risk === 'high'   ? 'risk-high'
       : s.risk === 'medium' ? 'risk-medium'
       : 'risk-low'
 
@@ -164,19 +232,47 @@ function renderMatrix() {
 
     return `<tr>
       <td class="col-run">${i + 1}</td>
-      <td class="col-scenario" style="font-size:0.78rem;color:var(--text2)">${s.desc}</td>
+      <td class="col-scenario" style="font-size:0.78rem;color:var(--text2)">${s.desc[getLang()] || s.desc.en}</td>
       <td><span class="risk-badge ${riskClass}">${s.risk}</span></td>
       ${cells}
     </tr>`
   }).join('')
 }
 
-// ─── INIT ─────────────────────────────────────────────────────────────────────
-// Call this once on page load. Renders all four Results sub-sections.
+// ─── POPULATE RESULTS ─────────────────────────────────────────────────────────
+// Called by the simulator after any run completes.
+// Reveals the status line, populates all four sub-sections.
 
-export function initResults() {
+export function populateResults() {
+  hasData = true
+
+  // Hide the empty-state status line
+  const statusEl = document.getElementById('rs-status')
+  if (statusEl) statusEl.style.display = 'none'
+
   renderSummaryCards()
   renderFrequency()
   renderH2HChart()
   renderMatrix()
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+// Called once on page load. Shows the empty state.
+// Re-renders empty state text when language switches.
+
+export function initResults() {
+  renderEmptyState()
+
+  onLangChange(() => {
+    if (!hasData) {
+      const statusEl = document.getElementById('rs-status')
+      if (statusEl) statusEl.textContent = t('results.emptyState')
+      renderEmptyState()
+    } else {
+      renderSummaryCards()
+      renderFrequency()
+      renderH2HChart()
+      renderMatrix()
+    }
+  })
 }

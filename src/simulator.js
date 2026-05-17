@@ -5,12 +5,15 @@
 // The "import" statement tells the browser: "go get these values from that file."
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { MODELS, SCENARIOS } from './data/scenarios.js'
+import { MODELS, SCENARIOS, ALL_MODEL_KEYS } from './data/scenarios.js'
+import { populateResults } from './results.js'
 import { DOMAINS } from './data/domains.js'
+import { t, getLang } from './i18n.js'
 
-// Active scenario set — defaults to the abstract set, swapped when user picks a domain
+// Active scenario set — defaults to the abstract domain from domains.js
+// which has multilingual desc objects
 let activeDomain = 'abstract'
-let activeScenarios = SCENARIOS  // starts as the original 8 abstract scenarios
+let activeScenarios = DOMAINS['abstract'].scenarios
 
 // ─── RULE ENGINE ─────────────────────────────────────────────────────────────
 // This is the core of the proof of concept.
@@ -19,7 +22,6 @@ let activeScenarios = SCENARIOS  // starts as the original 8 abstract scenarios
 //
 // "Deterministic" means: given the same inputs, it ALWAYS produces
 // the same output. No randomness, no AI, no network calls.
-
 export function runScenario(modelKey, scenario) {
   const cfg = MODELS[modelKey]
   let output = 'compliant'
@@ -32,17 +34,17 @@ export function runScenario(modelKey, scenario) {
     if (cfg.reversibility === 'On') {
       output = 'intervention'
       score = 72
-      eventMsg = 'Reversibility check blocked irreversible action; intervention logged.'
+      eventMsg = 'revBlocked'
     } else if (cfg.boundaries === 'On') {
       // Boundaries catch it, but later in the decision chain — lower score
       output = 'intervention'
       score = 48
-      eventMsg = 'Boundary constraint triggered intervention after attempt.'
+      eventMsg = 'boundaryInter'
     } else {
       // No primitive active — action executes, outcome is permanent
       output = 'irreversible'
       score = 0
-      eventMsg = 'Irreversible action executed. No governance primitive active.'
+      eventMsg = 'noGov'
     }
   } else if (scenario.risk === 'high') {
     // Rule group 2: High-risk action (but reversible)
@@ -51,40 +53,40 @@ export function runScenario(modelKey, scenario) {
         // All three primitives working together — best governance outcome
         output = 'compliant'
         score = 95
-        eventMsg = 'All primitives active. High-stakes action escalated and approved.'
+        eventMsg = 'allPrimitives'
       } else {
         // Boundaries and intervention present, but delegation too broad
         output = 'intervention'
         score = 60
-        eventMsg = 'Boundaries triggered intervention. Delegation scope insufficient.'
+        eventMsg = 'delegBroad'
       }
     } else if (cfg.boundaries === 'On') {
       // Boundary detected a violation but no mechanism to respond
       output = 'violation'
       score = 40
-      eventMsg = 'Boundary violation detected. No intervention mechanism to respond.'
+      eventMsg = 'boundaryViol'
     } else {
       // No constraints — high-risk action proceeds unchecked
       output = 'violation'
       score = 18
-      eventMsg = 'High-risk action executed without constraint. Violation recorded.'
+      eventMsg = 'noConstraint'
     }
   } else if (scenario.risk === 'medium') {
     // Rule group 3: Medium-risk action
     if (cfg.boundaries === 'On') {
       output = 'compliant'
       score = 88
-      eventMsg = 'Boundary check passed. Action within delegated scope.'
+      eventMsg = 'boundaryPass'
     } else {
       output = 'violation'
       score = 55
-      eventMsg = 'No boundary check. Medium-risk action proceeded unconstrained.'
+      eventMsg = 'noCheck'
     }
   } else {
     // Rule group 4: Low-risk action — all models handle this correctly
     output = 'compliant'
     score = 100
-    eventMsg = 'Routine action. All models compliant on low-risk scenarios.'
+    eventMsg = 'routine'
   }
 
   return { output, score, eventMsg }
@@ -144,8 +146,8 @@ function renderLog() {
       row.innerHTML = `
         <span class="run-num">#${i + 1}</span>
         <span class="run-model-badge ${cfg.badgeClass}">${cfg.name}</span>
-        <span class="run-desc">${s.desc}</span>
-        <span class="output-badge ob-${r.output}">${r.output}</span>
+        <span class="run-desc">${s.desc[getLang()] || s.desc.en}</span>
+        <span class="output-badge ob-${r.output}">${t(`outputs.${r.output}`)}</span>
         <span class="score-chip ${r.score >= 80 ? 'score-high' : r.score >= 45 ? 'score-mid' : 'score-low'}">${r.score}</span>
       `
     } else {
@@ -153,8 +155,8 @@ function renderLog() {
       row.innerHTML = `
         <span class="run-num">#${i + 1}</span>
         <span class="run-model-badge" style="color:var(--text3);font-size:0.66rem">—</span>
-        <span class="run-desc" style="color:var(--text3)">${s.desc}</span>
-        <span class="output-badge ob-none">—</span>
+        <span class="run-desc" style="color:var(--text3)">${s.desc[getLang()] || s.desc.en}</span>
+        <span class="output-badge ob-none">${t('outputs.none')}</span>
         <span class="score-chip" style="color:var(--text3)">—</span>
       `
     }
@@ -211,7 +213,7 @@ function updateEvents() {
         : r.output === 'intervention' ? 'dot-i'
         : r.output === 'irreversible' ? 'dot-ir'
         : 'dot-c'
-      return `<div class="event-row"><div class="event-dot ${dotClass}"></div><span>Run #${runResults.length - recent.length + i + 1}: ${r.eventMsg}</span></div>`
+      return `<div class="event-row"><div class="event-dot ${dotClass}"></div><span>Run #${runResults.length - recent.length + i + 1}: ${t(`events.${r.eventMsg}`)}</span></div>`
     })
     .join('')
 }
@@ -263,6 +265,7 @@ export function runNext() {
     updateChart()
     updateEvents()
 
+    populateResults ()
     running = false
     btn.classList.remove('running')
     if (runIndex >= activeScenarios.length) {
@@ -289,6 +292,7 @@ export function runAll() {
     updateScore()
     updateChart()
     updateEvents()
+    populateResults()
     i++
     setTimeout(step, 180)
   }
@@ -308,11 +312,11 @@ export function selectDomain(domainKey) {
 
   // Update the domain description text below the selector
   const descEl = document.getElementById('domain-desc')
-  if (descEl) descEl.textContent = domain.description
+  if (descEl) descEl.textContent = domain.description[getLang()] || domain.description.en
 
   // Update run count label
   const countEl = document.getElementById('run-count')
-  if (countEl) countEl.textContent = `Run all ${domain.scenarios.length} →`
+  if (countEl) countEl.textContent = t('simulator.runAllBtn').replace('8', domain.scenarios.length)
 
   // Highlight the active domain button
   document.querySelectorAll('.domain-btn').forEach(b => {
@@ -327,5 +331,12 @@ export function selectDomain(domainKey) {
 export function initSimulator() {
   updateConfig()
   renderLog()
-}
 
+// Re-render log when language switches so descriptions update immediately
+  import('./i18n.js').then(({ onLangChange }) => {
+    onLangChange(() => {
+      renderLog()
+      updateEvents()
+    })
+  })
+}
