@@ -297,7 +297,7 @@ function updateEvents() {
   if (!section) return
   section.style.display = 'block'
   const list = document.getElementById('event-list')
-  const recent = runResults.slice(-5)
+  const recent = runResults.slice(0)
   list.innerHTML = recent
     .map((r, i) => {
       const dotClass =
