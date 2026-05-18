@@ -21,7 +21,7 @@ export const MODELS = {
     badgeClass: 'badge-baseline',
   },
   boundaries_only: {
-    name: 'Boundaries Only',
+    name: 'Bounds Only',
     // Full delegation: authority still unrestricted
     delegationLevel: 'high',
     // Boundaries active: actions outside perimeter are detected
@@ -30,10 +30,10 @@ export const MODELS = {
     reversibilitySpeed: 'none',
     // Intervention active: boundaries can trigger a stop
     interventionActive: true,
-    badgeClass: 'badge-partial',
+    badgeClass: 'badge-boundaries',
   },
   reversibility_only: {
-    name: 'Reversibility Only',
+    name: 'Revers. Only',
     // Full delegation: authority still unrestricted
     delegationLevel: 'high',
     // No boundaries: perimeter not defined
@@ -42,7 +42,7 @@ export const MODELS = {
     reversibilitySpeed: 'fast',
     // No intervention: no escalation mechanism
     interventionActive: false,
-    badgeClass: 'badge-partial',
+    badgeClass: 'badge-reversibility',
   },
   partial: {
     name: 'Partial',
