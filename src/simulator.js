@@ -215,13 +215,33 @@ function renderLog() {
     if (i < runResults.length) {
       const r = runResults[i]
       const s = activeScenarios[i]
+
+      // Build primitive attribution string
+      const primitives = []
+      if (r.delegationExceeded)  primitives.push('delegation exceeded')
+      if (r.boundaryBreached)    primitives.push('boundary breached')
+      if (r.reversibilityFailed) primitives.push('reversibility failed')
+      const primitiveText = primitives.length > 0 ? primitives.join(' · ') : 'all primitives held'
+
+      // Build sociotechnical harm label
+      const harmLabels = {
+        oversight_erosion:        'oversight erosion risk',
+        accountability_diffusion: 'accountability diffusion risk',
+        delegation_opacity:       'delegation opacity risk',
+        governance_tempo:         'governance tempo risk',
+        consent_displacement:     'consent displacement risk',
+      }
+      const harmText = s.sociotechnicalRisk ? harmLabels[s.sociotechnicalRisk] : null
+
       row.innerHTML = `
         <span class="run-num">#${i + 1}</span>
         <span class="run-model-badge ${cfg.badgeClass}">${cfg.name}</span>
         <span class="run-desc">${s.desc[getLang()] || s.desc.en}</span>
         <span class="output-badge ob-${r.output}">${t(`outputs.${r.output}`)}</span>
         <span class="score-chip ${r.score >= 80 ? 'score-high' : r.score >= 45 ? 'score-mid' : 'score-low'}">${r.score}</span>
+        <span class="run-attribution">↳ ${primitiveText}${harmText ? ' · <span class="harm-tag">' + harmText + '</span>' : ''}</span>
       `
+    
     } else {
       const s = activeScenarios[i]
       row.innerHTML = `

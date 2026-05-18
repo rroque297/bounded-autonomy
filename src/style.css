@@ -640,3 +640,17 @@ footer a { color: var(--cyan); text-decoration: none; }
   color: var(--cyan2);
   font-style: normal;
 }
+
+/* ── Run log attribution line ───────────────────────────────────────────── */
+.run-attribution {
+  grid-column: 1 / -1;
+  font-size: 0.68rem;
+  color: var(--text3);
+  padding: 0.1rem 0 0.4rem 2rem;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.01em;
+}
+
+.harm-tag {
+  color: var(--amber);
+}
