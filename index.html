@@ -75,11 +75,11 @@
 
       <div class="hero-stats fade-up-4">
         <div>
-          <div class="hero-stat-n" data-i18n="hero.stat1n">3</div>
+          <div class="hero-stat-n" data-i18n="hero.stat1n">4</div>
           <div class="hero-stat-l" data-i18n="hero.stat1l">Design Primitives</div>
         </div>
         <div>
-          <div class="hero-stat-n" data-i18n="hero.stat2n">3</div>
+          <div class="hero-stat-n" data-i18n="hero.stat2n">5</div>
           <div class="hero-stat-l" data-i18n="hero.stat2l">Baseline Models</div>
         </div>
         <div>
@@ -163,10 +163,26 @@
         <span class="primitive-tag" data-i18n="research.p3tag">Undo capacity</span>
       </div>
 
+      <!-- 04 Intervention -->
+      <div class="primitive-card intervention">
+        <div class="primitive-num">04</div>
+        <div class="primitive-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 9v4M12 17h.01"/>
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+          </svg>
+        </div>
+        <div class="primitive-name" data-i18n="research.p4name">Intervention</div>
+        <p class="primitive-desc" data-i18n="research.p4desc">
+          The active response mechanism triggered when a governance threshold is crossed.
+          Converts detection into action — halting, escalating, or redirecting an agent
+          when delegation or boundary conditions are violated.
+        </p>
+        <span class="primitive-tag" data-i18n="research.p4tag">Active response</span>
+      </div>
     </div>
   </section>
-
-  <div style="max-width:1100px;margin:0 auto;padding:0 2.5rem;">
+    <div style="max-width:1100px;margin:0 auto;padding:0 2.5rem;">
     <div class="section-rule"></div>
   </div>
 
@@ -311,6 +327,26 @@
         <div class="rs-output-pills" id="rs-pills-b"></div>
       </div>
 
+      <div class="rs-card boundaries-only">
+        <div class="rs-model-label" data-i18n="results.boundariesOnlyLabel">Boundaries only</div>
+        <div class="rs-score-num"   id="rs-score-bo">—</div>
+        <div class="rs-score-sub"   data-i18n="results.scoreSubLabel">avg. controllability score</div>
+        <div class="rs-bar-wrap">
+          <div class="rs-bar-fill" id="rs-bar-bo" style="width:0%"></div>
+        </div>
+        <div class="rs-output-pills" id="rs-pills-bo"></div>
+      </div>
+
+      <div class="rs-card reversibility-only">
+        <div class="rs-model-label" data-i18n="results.reversibilityOnlyLabel">Reversibility only</div>
+        <div class="rs-score-num"   id="rs-score-ro">—</div>
+        <div class="rs-score-sub"   data-i18n="results.scoreSubLabel">avg. controllability score</div>
+        <div class="rs-bar-wrap">
+          <div class="rs-bar-fill" id="rs-bar-ro" style="width:0%"></div>
+        </div>
+        <div class="rs-output-pills" id="rs-pills-ro"></div>
+      </div>
+      
       <div class="rs-card partial">
         <div class="rs-model-label" data-i18n="results.partialLabel">Partial model</div>
         <div class="rs-score-num"   id="rs-score-p">—</div>
@@ -359,13 +395,21 @@
     <!-- Head-to-head chart -->
     <div class="h2h-section">
       <div class="h2h-title" data-i18n="results.h2hTitle">Score by scenario — all three models</div>
-      <div style="display:flex;gap:1.5rem;margin-bottom:1rem;">
+      <div style="display:flex;gap:1.5rem;margin-bottom:1rem;flex-wrap:wrap;">
         <span style="font-family:var(--mono);font-size:0.68rem;display:flex;align-items:center;gap:6px;color:var(--text2)">
-          <span style="display:inline-block;width:10px;height:3px;background:var(--cyan);border-radius:2px"></span>
+          <span style="display:inline-block;width:10px;height:3px;background:var(--red);border-radius:2px"></span>
           <span data-i18n="results.legendBase">Baseline</span>
         </span>
         <span style="font-family:var(--mono);font-size:0.68rem;display:flex;align-items:center;gap:6px;color:var(--text2)">
           <span style="display:inline-block;width:10px;height:3px;background:var(--amber);border-radius:2px"></span>
+          <span data-i18n="results.legendBoundsOnly">Bounds Only</span>
+        </span>
+        <span style="font-family:var(--mono);font-size:0.68rem;display:flex;align-items:center;gap:6px;color:var(--text2)">
+          <span style="display:inline-block;width:10px;height:3px;background:var(--yellow);border-radius:2px"></span>
+          <span data-i18n="results.legendReversOnly">Revers. Only</span>
+        </span>
+        <span style="font-family:var(--mono);font-size:0.68rem;display:flex;align-items:center;gap:6px;color:var(--text2)">
+          <span style="display:inline-block;width:10px;height:3px;background:var(--cyan);border-radius:2px"></span>
           <span data-i18n="results.legendPart">Partial</span>
         </span>
         <span style="font-family:var(--mono);font-size:0.68rem;display:flex;align-items:center;gap:6px;color:var(--text2)">
@@ -388,6 +432,8 @@
             <th data-i18n="results.matColScen">Scenario</th>
             <th data-i18n="results.matColRisk">Risk</th>
             <th data-i18n="results.matColBase">Baseline</th>
+            <th data-i18n="results.matColBoundsOnly">Bounds</th>
+            <th data-i18n="results.matColReversOnly">Revers.</th>
             <th data-i18n="results.matColPart">Partial</th>
             <th data-i18n="results.matColFull">Full</th>
           </tr>
@@ -426,42 +472,42 @@
       from the primitive interactions.
     </p>
 
+    <!-- Stakes header — populated by analysis.js after simulator runs -->
+    <div id="analysis-stakes" class="analysis-stakes-wrap">
+      <div class="stakes-empty">
+        <span class="stakes-empty-icon">[ − ]</span>
+        <span class="stakes-empty-text">Run the simulator to generate your governance analysis.</span>
+      </div>
+    </div>
+    
     <div class="analysis-grid">
 
       <div class="pattern-card">
-        <h3 data-i18n="analysis.p1h">Delegation without boundaries amplifies risk</h3>
-        <p  data-i18n="analysis.p1p">
-          In the baseline model, unconstrained delegation produces violations in every high-stakes
-          scenario. Authority scope alone, absent action constraints, generates irreversible outcomes
-          at a 3× higher rate than the full model.
-        </p>
+        <h3 data-i18n="analysis.p1h">The cost of absent structure</h3>
+        <div class="pattern-body" id="analysis-p1">
+          <p data-i18n="analysis.p1p"></p>
+        </div>
       </div>
 
       <div class="pattern-card">
-        <h3 data-i18n="analysis.p2h">Boundaries alone are insufficient</h3>
-        <p  data-i18n="analysis.p2p">
-          The partial model demonstrates that boundary enforcement without reversibility checks still
-          permits high-consequence actions. The boundary stops the agent at the perimeter but cannot
-          undo what happened within it.
-        </p>
+        <h3 data-i18n="analysis.p2h">The recovery pair</h3>
+        <div class="pattern-body" id="analysis-p2">
+          <p data-i18n="analysis.p2p"></p>
+        </div>
       </div>
 
       <div class="pattern-card">
-        <h3 data-i18n="analysis.p3h">Reversibility acts as a governance multiplier</h3>
-        <p  data-i18n="analysis.p3p">
-          When reversibility checks are active, the controllability score improves not just by
-          preventing irreversible outcomes, but by enabling intervention at the earliest decision
-          node — compounding safety across subsequent runs.
-        </p>
+        <h3 data-i18n="analysis.p3h">Two ways to score 65</h3>
+        <div class="pattern-body" id="analysis-p3">
+          <p data-i18n="analysis.p3p"></p>
+        </div>
       </div>
 
       <div class="pattern-card">
-        <h3 data-i18n="analysis.p4h">Primitive interaction is non-linear</h3>
-        <p  data-i18n="analysis.p4p">
-          The full model's controllability score is not the arithmetic sum of its parts. The three
-          primitives interact: delegation scoped by boundaries becomes qualitatively safer when paired
-          with reversibility — suggesting governance emerges from composition.
-        </p>
+        <h3 data-i18n="analysis.p4h">Equifinality</h3>
+        <div class="pattern-body" id="analysis-p4">
+          <p data-i18n="analysis.p4p"></p>
+        </div>
       </div>
 
     </div>

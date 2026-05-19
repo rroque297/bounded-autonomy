@@ -9,6 +9,7 @@ import { MODELS, SCENARIOS, ALL_MODEL_KEYS } from './data/scenarios.js'
 import { populateResults } from './results.js'
 import { DOMAINS } from './data/domains.js'
 import { t, getLang } from './i18n.js'
+import { populateAnalysis } from './analysis.js'
 
 var LEVELS = {
   none: 0,
@@ -63,10 +64,13 @@ function reversibilityFails(scenarioWindow, modelSpeed) {
 function computeScore(delegationExceeded, boundaryBreached,
                       reversibilityFailed, interventionActive) {
   let score = 100
-  if (reversibilityFailed)                    score -= 40
-  if (boundaryBreached)                       score -= 35
-  if (delegationExceeded)                     score -= 25
-  if (boundaryBreached && interventionActive) score += 15
+  if (reversibilityFailed)                              score -= 40
+  if (boundaryBreached)                                 score -= 35
+  if (delegationExceeded)                               score -= 25
+  if ((boundaryBreached || delegationExceeded)
+      && interventionActive)                            score += 15
+  if (boundaryBreached && delegationExceeded
+      && interventionActive)                            score -= 8
   return Math.max(0, Math.min(100, score))
 }
 
@@ -312,11 +316,10 @@ function updateEvents() {
 
 // ─── ACTIONS: MODEL SELECTION ─────────────────────────────────────────────────
 // Called when the user clicks a model button. Updates state + resets the log.
-
 export function selectModel(model, btn) {
   currentModel = model
   document.querySelectorAll('.model-btn').forEach(b => {
-    b.classList.remove('active', 'baseline', 'partial', 'full')
+    b.classList.remove('active', 'baseline', 'boundaries_only', 'reversibility_only', 'partial', 'full')
   })
   btn.classList.add('active', model)
   updateConfig()
@@ -357,7 +360,8 @@ export function runNext() {
     updateChart()
     updateEvents()
 
-    populateResults ()
+    populateResults()
+    populateAnalysis()
     running = false
     btn.classList.remove('running')
     if (runIndex >= activeScenarios.length) {
@@ -385,6 +389,7 @@ export function runAll() {
     updateChart()
     updateEvents()
     populateResults()
+    populateAnalysis()
     i++
     setTimeout(step, 180)
   }
@@ -420,6 +425,10 @@ export function selectDomain(domainKey) {
 }
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
+export function getActiveDomain() {
+  return activeDomain
+}
+
 export function initSimulator() {
   updateConfig()
   renderLog()

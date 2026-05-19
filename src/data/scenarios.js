@@ -48,11 +48,11 @@ export const MODELS = {
     name: 'Partial',
     // Delegation still unrestricted
     delegationLevel: 'high',
-    // Boundaries active: perimeter defined and monitored
-    boundaryStrength: 'strong',
-    // No reversibility: irreversible actions not screened
-    reversibilitySpeed: 'none',
-    // Intervention active: boundary breaches trigger a response
+    // No boundaries: perimeter not defined or monitored
+    boundaryStrength: 'none',
+    // Reversibility active: irreversible actions are screened
+    reversibilitySpeed: 'fast',
+    // Intervention active: escalation mechanism exists
     interventionActive: true,
     badgeClass: 'badge-partial',
   },

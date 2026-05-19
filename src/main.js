@@ -19,6 +19,7 @@ import { initI18n, onLangChange, applyTranslations } from './i18n.js'
 import { mountLangSwitcher } from './langSwitcher.js'
 import { initSimulator, selectModel, runNext, runAll, selectDomain } from './simulator.js'
 import { initResults } from './results.js'
+import { initAnalysis, populateAnalysis } from './analysis.js'
 import { DOMAINS, DOMAIN_KEYS } from './data/domains.js'
 import { getLang } from './i18n.js'
 
@@ -77,3 +78,4 @@ function buildDomainSelector() {
 buildDomainSelector()
 initSimulator()
 initResults()
+initAnalysis()

@@ -68,7 +68,7 @@ function renderEmptyState() {
   }
 
   // Summary cards — dashes + zero bars
-  const cardMap = { baseline: 'b', partial: 'p', full: 'f' }
+  const cardMap = { baseline: 'b', boundaries_only: 'bo', reversibility_only: 'ro', partial: 'p', full: 'f' }
   ALL_MODEL_KEYS.forEach(m => {
     const k = cardMap[m]
     const scoreEl = document.getElementById(`rs-score-${k}`)
@@ -82,9 +82,11 @@ function renderEmptyState() {
   // Frequency bars — all flat
   const freqIds = ['freq-v', 'freq-i', 'freq-ir', 'freq-c']
   const modelDotColors = {
-    baseline: 'var(--cyan)',
-    partial:  'var(--amber)',
-    full:     'var(--green)',
+    baseline:           'var(--red)',
+    boundaries_only:    'var(--amber)',
+    reversibility_only: 'var(--yellow)',
+    partial:            'var(--cyan)',
+    full:               'var(--green)',
   }
   freqIds.forEach(id => {
     const el = document.getElementById(id)
@@ -125,7 +127,7 @@ function renderEmptyState() {
 // ─── RENDER: SUMMARY CARDS ────────────────────────────────────────────────────
 
 function renderSummaryCards() {
-  const cardMap = { baseline: 'b', partial: 'p', full: 'f' }
+  const cardMap = { baseline: 'b', boundaries_only: 'bo', reversibility_only: 'ro', partial: 'p', full: 'f' }
 
   ALL_MODEL_KEYS.forEach(m => {
     const k = cardMap[m]
@@ -159,9 +161,11 @@ function renderFrequency() {
     { key: 'compliant',    elId: 'freq-c',  dotColor: 'var(--green)' },
   ]
   const modelDotColors = {
-    baseline: 'var(--cyan)',
-    partial:  'var(--amber)',
-    full:     'var(--green)',
+    baseline:           'var(--red)',
+    boundaries_only:    'var(--amber)',
+    reversibility_only: 'var(--yellow)',
+    partial:            'var(--cyan)',
+    full:               'var(--green)',
   }
 
   outputKeys.forEach(({ key, elId, dotColor }) => {
@@ -186,9 +190,11 @@ function renderH2HChart() {
   if (!el) return
 
   const modelColors = {
-    baseline: 'var(--cyan)',
-    partial:  'var(--amber)',
-    full:     'var(--green)',
+    baseline:           'var(--red)',
+    boundaries_only:    'var(--amber)',
+    reversibility_only: 'var(--yellow)',
+    partial:            'var(--cyan)',
+    full:               'var(--green)',
   }
 
   el.innerHTML = ABSTRACT_SCENARIOS.map((s, i) => {    const bars = ALL_MODEL_KEYS.map(m => {
