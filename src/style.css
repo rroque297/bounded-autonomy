@@ -200,7 +200,7 @@ h2 {
 .intervention .primitive-tag { background: rgba(57,217,138,0.08); color: var(--green); border: 1px solid rgba(57,217,138,0.2); }
 
 /* ─── SIMULATOR ─── */
-#simulator { padding-top: 0; }
+#simulator { padding-top: 96; }
 .sim-header { margin-bottom: 2.5rem; }
 .sim-frame {
   background: var(--surface2); border: 1px solid var(--border);
@@ -1011,4 +1011,17 @@ footer a { color: var(--cyan); text-decoration: none; }
   color: var(--text2);
   line-height: 1.85;
   margin: 0;
+}
+
+/* ─── Scroll offset for fixed nav ───────────────────────────────────────── */
+
+#research,
+#results,
+#drift,
+#analysis {
+  scroll-margin-top: 80px;
+}
+
+#simulator {
+  scroll-margin-top: 80px;
 }
