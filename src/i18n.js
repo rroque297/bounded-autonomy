@@ -93,6 +93,11 @@ const TRANSLATIONS = {
       scoreLabel:   'avg. across completed runs',
       chartTitle:   'Score by run',
       eventsTitle:  'Observable outputs',
+      modelDescBaseline:         'No governance primitives active. The agent operates with full delegation, no boundary enforcement, no reversibility checks, and no intervention mechanism. This is the ungoverned reference state.',
+      modelDescBoundariesOnly:   'Boundary enforcement active with intervention. The agent cannot cross its perimeter without triggering a response — but delegation remains unrestricted and irreversible actions are not screened.',
+      modelDescReversibilityOnly:'Reversibility checks active. Irreversible actions are screened before execution — but no boundary enforcement exists and no intervention mechanism is available.',
+      modelDescPartial:          'Reversibility checks and intervention active, but no boundary enforcement. The system can recover from failures but has no perimeter control. A recovery pair without a containment layer.',
+      modelDescFull:             'All four primitives active. Delegation is bounded, boundaries are enforced, irreversible actions are screened, and intervention fires on any governance threshold breach.',
     },
 
     // ── Results
@@ -266,6 +271,11 @@ const TRANSLATIONS = {
       scoreLabel:   'moy. sur les séquences complètes',
       chartTitle:   'Score par séquence',
       eventsTitle:  'Sorties observables',
+      modelDescBaseline:         'Aucune primitive de gouvernance active. L\'agent opère avec une délégation totale, sans application des limites, sans vérification de réversibilité et sans mécanisme d\'intervention. C\'est l\'état de référence non gouverné.',
+      modelDescBoundariesOnly:   'Application des limites active avec intervention. L\'agent ne peut pas franchir son périmètre sans déclencher une réponse — mais la délégation reste sans restriction et les actions irréversibles ne sont pas filtrées.',
+      modelDescReversibilityOnly:'Vérifications de réversibilité actives. Les actions irréversibles sont filtrées avant exécution — mais aucune application des limites n\'existe et aucun mécanisme d\'intervention n\'est disponible.',
+      modelDescPartial:          'Vérifications de réversibilité et intervention actives, mais sans application des limites. Le système peut se remettre des défaillances mais n\'a pas de contrôle du périmètre. Une paire de récupération sans couche de confinement.',
+      modelDescFull:             'Les quatre primitives actives. La délégation est bornée, les limites sont appliquées, les actions irréversibles sont filtrées et l\'intervention se déclenche sur tout franchissement de seuil de gouvernance.',
     },
 
     results: {
@@ -436,6 +446,11 @@ const TRANSLATIONS = {
       scoreLabel:   'Durchschn. über abgeschlossene Läufe',
       chartTitle:   'Score pro Lauf',
       eventsTitle:  'Beobachtbare Ausgaben',
+      modelDescBaseline:         'Keine Governance-Primitive aktiv. Der Agent operiert mit voller Delegation, ohne Grenzdurchsetzung, ohne Reversibilitätsprüfungen und ohne Interventionsmechanismus. Dies ist der ungesteuerte Referenzzustand.',
+      modelDescBoundariesOnly:   'Grenzdurchsetzung mit Intervention aktiv. Der Agent kann seinen Perimeter nicht überschreiten, ohne eine Reaktion auszulösen — aber die Delegation bleibt uneingeschränkt und irreversible Aktionen werden nicht gefiltert.',
+      modelDescReversibilityOnly:'Reversibilitätsprüfungen aktiv. Irreversible Aktionen werden vor der Ausführung gefiltert — aber es gibt keine Grenzdurchsetzung und keinen Interventionsmechanismus.',
+      modelDescPartial:          'Reversibilitätsprüfungen und Intervention aktiv, aber ohne Grenzdurchsetzung. Das System kann sich von Fehlern erholen, hat aber keine Perimeterkontrolle. Ein Wiederherstellungspaar ohne Eindämmungsschicht.',
+      modelDescFull:             'Alle vier Primitive aktiv. Die Delegation ist begrenzt, Grenzen werden durchgesetzt, irreversible Aktionen werden gefiltert und die Intervention wird bei jedem Governance-Schwellenwertverstoß ausgelöst.',
     },
 
     results: {
@@ -606,6 +621,11 @@ const TRANSLATIONS = {
       scoreLabel:   'prom. a lo largo de ejecuciones completadas',
       chartTitle:   'Puntuación por ejecución',
       eventsTitle:  'Salidas observables',
+      modelDescBaseline:         'Ninguna primitiva de gobernanza activa. El agente opera con delegación total, sin aplicación de límites, sin verificaciones de reversibilidad y sin mecanismo de intervención. Este es el estado de referencia no gobernado.',
+      modelDescBoundariesOnly:   'Aplicación de límites activa con intervención. El agente no puede cruzar su perímetro sin activar una respuesta — pero la delegación permanece sin restricciones y las acciones irreversibles no son filtradas.',
+      modelDescReversibilityOnly:'Verificaciones de reversibilidad activas. Las acciones irreversibles son filtradas antes de la ejecución — pero no existe aplicación de límites ni mecanismo de intervención disponible.',
+      modelDescPartial:          'Verificaciones de reversibilidad e intervención activas, pero sin aplicación de límites. El sistema puede recuperarse de los fallos pero no tiene control del perímetro. Un par de recuperación sin capa de contención.',
+      modelDescFull:             'Las cuatro primitivas activas. La delegación está acotada, los límites se aplican, las acciones irreversibles son filtradas y la intervención se activa ante cualquier infracción del umbral de gobernanza.',
     },
 
     results: {

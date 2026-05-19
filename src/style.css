@@ -200,16 +200,33 @@ h2 {
 .intervention .primitive-tag { background: rgba(57,217,138,0.08); color: var(--green); border: 1px solid rgba(57,217,138,0.2); }
 
 /* ─── SIMULATOR ─── */
-#simulator { padding-top: 96; }
+#simulator { padding-top: 96px; }
 .sim-header { margin-bottom: 2.5rem; }
 .sim-frame {
   background: var(--surface2); border: 1px solid var(--border);
   border-radius: var(--radius-lg); overflow: hidden;
 }
 .sim-toolbar {
-  background: var(--surface3); border-bottom: 1px solid var(--border);
-  padding: 1rem 1.5rem; display: flex; align-items: center; gap: 1.5rem;
+  background: var(--surface3);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.sim-toolbar-row1 {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
   flex-wrap: wrap;
+}
+
+.sim-toolbar-row2 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
 }
 .sim-toolbar-label {
   font-family: var(--mono); font-size: 0.7rem; color: var(--text3);
@@ -557,11 +574,31 @@ footer a { color: var(--cyan); text-decoration: none; }
 }
 .domain-icon { font-size: 0.8rem; opacity: 0.85; }
 .domain-label { white-space: nowrap; }
+.domain-desc-wrap {
+  margin-top: 1rem;
+  padding: 0.875rem 1rem;
+  background: rgba(0,229,200,0.04);
+  border: 1px solid rgba(0,229,200,0.15);
+  border-radius: 8px;
+}
+
+.domain-desc-name {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--cyan);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+
 .domain-desc {
-  font-family: var(--sans); font-size: 0.8rem; color: var(--text3);
-  line-height: 1.6; font-style: italic;
-  border-left: 2px solid var(--border2); padding-left: 0.75rem;
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.65;
+  font-style: normal;
   transition: color 0.3s;
+  margin: 0;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -1024,4 +1061,39 @@ footer a { color: var(--cyan); text-decoration: none; }
 
 #simulator {
   scroll-margin-top: 80px;
+}
+
+/* ─── Model description ─────────────────────────────────────────────────── */
+
+.sim-toolbar-row3 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding-top: 0.25rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.model-desc-wrap {
+  padding: 0.875rem 1rem;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px;
+  width: 100%;
+}
+
+.model-desc-name {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--text2);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+
+.model-desc {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.65;
+  margin: 0;
 }

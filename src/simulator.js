@@ -316,6 +316,46 @@ function updateEvents() {
 
 // ─── ACTIONS: MODEL SELECTION ─────────────────────────────────────────────────
 // Called when the user clicks a model button. Updates state + resets the log.
+const MODEL_DESC_KEYS = {
+  baseline:           'simulator.modelDescBaseline',
+  boundaries_only:    'simulator.modelDescBoundariesOnly',
+  reversibility_only: 'simulator.modelDescReversibilityOnly',
+  partial:            'simulator.modelDescPartial',
+  full:               'simulator.modelDescFull',
+}
+
+const MODEL_DISPLAY_NAMES = {
+  baseline:           { en: 'Baseline Model',       fr: 'Modèle de base',        de: 'Basismodell',        es: 'Modelo base'       },
+  boundaries_only:    { en: 'Boundaries Only',       fr: 'Limites uniquement',    de: 'Nur Grenzen',        es: 'Solo límites'      },
+  reversibility_only: { en: 'Reversibility Only',    fr: 'Réversibilité uniquement', de: 'Nur Reversibilität', es: 'Solo reversibilidad' },
+  partial:            { en: 'Partial Model',         fr: 'Modèle partiel',        de: 'Teilmodell',         es: 'Modelo parcial'    },
+  full:               { en: 'Full Model',            fr: 'Modèle complet',        de: 'Vollmodell',         es: 'Modelo completo'   },
+}
+
+const MODEL_COLORS = {
+  baseline:           { color: 'var(--red)',    border: 'rgba(255,77,109,0.3)',  bg: 'rgba(255,77,109,0.04)'  },
+  boundaries_only:    { color: 'var(--amber)',  border: 'rgba(245,166,35,0.3)',  bg: 'rgba(245,166,35,0.04)'  },
+  reversibility_only: { color: 'var(--yellow)', border: 'rgba(247,201,72,0.3)',  bg: 'rgba(247,201,72,0.04)'  },
+  partial:            { color: 'var(--cyan)',   border: 'rgba(0,229,200,0.3)',   bg: 'rgba(0,229,200,0.04)'   },
+  full:               { color: 'var(--green)',  border: 'rgba(57,217,138,0.3)',  bg: 'rgba(57,217,138,0.04)'  },
+}
+
+function updateModelDesc(model) {
+  const lang = getLang()
+  const nameEl  = document.getElementById('model-desc-name')
+  const descEl  = document.getElementById('model-desc')
+  const wrapEl  = document.querySelector('.model-desc-wrap')
+  const colors  = MODEL_COLORS[model]
+
+  if (nameEl) nameEl.textContent = MODEL_DISPLAY_NAMES[model][lang] || MODEL_DISPLAY_NAMES[model].en
+  if (descEl) descEl.textContent = t(MODEL_DESC_KEYS[model])
+  if (wrapEl && colors) {
+    wrapEl.style.borderColor     = colors.border
+    wrapEl.style.background      = colors.bg
+    nameEl.style.color           = colors.color
+  }
+}
+
 export function selectModel(model, btn) {
   currentModel = model
   document.querySelectorAll('.model-btn').forEach(b => {
@@ -323,6 +363,7 @@ export function selectModel(model, btn) {
   })
   btn.classList.add('active', model)
   updateConfig()
+  updateModelDesc(model)
   resetLog()
 }
 
@@ -409,9 +450,11 @@ export function selectDomain(domainKey) {
   const domain = DOMAINS[domainKey]
   activeScenarios = domain.scenarios
 
-  // Update the domain description text below the selector
+  // Update the domain description text and name below the selector
   const descEl = document.getElementById('domain-desc')
   if (descEl) descEl.textContent = domain.description[getLang()] || domain.description.en
+  const descNameEl = document.getElementById('domain-desc-name')
+  if (descNameEl) descNameEl.textContent = domain.label[getLang()] || domain.label.en
 
   // Update run count label
   const countEl = document.getElementById('run-count')
@@ -434,12 +477,25 @@ export function getActiveDomain() {
 export function initSimulator() {
   updateConfig()
   renderLog()
+  updateModelDesc('baseline')
 
 // Re-render log when language switches so descriptions update immediately
   import('./i18n.js').then(({ onLangChange }) => {
-    onLangChange(() => {
+    onLangChange((lang) => {
       renderLog()
       updateEvents()
+      updateModelDesc(currentModel)
+      const activeBtn = document.querySelector('.domain-btn.active')
+      if (activeBtn) {
+        const key = activeBtn.dataset.domain
+        const domain = DOMAINS[key]
+        if (domain) {
+          const descEl = document.getElementById('domain-desc')
+          if (descEl) descEl.textContent = domain.description[lang] || domain.description.en
+          const descNameEl = document.getElementById('domain-desc-name')
+          if (descNameEl) descNameEl.textContent = domain.label[lang] || domain.label.en
+        }
+      }
     })
   })
 }

@@ -211,27 +211,38 @@
         <div class="domain-selector" id="domain-selector">
           <!-- buttons injected by main.js from domains.js -->
         </div>
-        <div class="domain-desc" id="domain-desc">
-          Domain-agnostic scenarios isolating governance structure. Intended for academic and technical audiences.
+        <div class="domain-desc-wrap">
+          <div class="domain-desc-name" id="domain-desc-name">Abstract</div>
+          <p class="domain-desc" id="domain-desc">Domain-agnostic scenarios isolating governance structure. Intended for academic and technical audiences.</p>
         </div>
       </div>
 
       <!-- Toolbar -->
       <div class="sim-toolbar">
-        <span class="sim-toolbar-label" data-i18n="simulator.toolbarLabel">Model</span>
-        <div class="model-select">
-          <button class="model-btn active baseline"         onclick="selectModel('baseline',this)"          data-i18n="results.baselineLabel">Baseline</button>
-          <button class="model-btn boundaries"              onclick="selectModel('boundaries_only',this)"   data-i18n="results.boundariesOnlyLabel">Boundaries Only</button>
-          <button class="model-btn reversibility"           onclick="selectModel('reversibility_only',this)" data-i18n="results.reversibilityOnlyLabel">Reversibility Only</button>
-          <button class="model-btn partial"                 onclick="selectModel('partial',this)"           data-i18n="results.partialLabel">Partial</button>
-          <button class="model-btn full"                    onclick="selectModel('full',this)"              data-i18n="results.fullLabel">Full</button>
+        <div class="sim-toolbar-row1">
+          <span class="sim-toolbar-label" data-i18n="simulator.toolbarLabel">Model</span>
+          <div class="model-select">
+            <button class="model-btn active baseline"         onclick="selectModel('baseline',this)"           data-i18n="results.baselineLabel">Baseline</button>
+            <button class="model-btn boundaries"              onclick="selectModel('boundaries_only',this)"    data-i18n="results.boundariesOnlyLabel">Boundaries Only</button>
+            <button class="model-btn reversibility"           onclick="selectModel('reversibility_only',this)" data-i18n="results.reversibilityOnlyLabel">Reversibility Only</button>
+            <button class="model-btn partial"                 onclick="selectModel('partial',this)"            data-i18n="results.partialLabel">Partial</button>
+            <button class="model-btn full"                    onclick="selectModel('full',this)"               data-i18n="results.fullLabel">Full</button>
+          </div>
         </div>
-        <button class="run-all-btn" onclick="runAll()">
-          <span id="run-count" data-i18n="simulator.runAllBtn">Run all 8 →</span>
-        </button>
-        <button class="run-btn" id="run-btn" onclick="runNext()" data-i18n="simulator.runNextBtn">
-          Run next scenario
-        </button>
+        <div class="sim-toolbar-row2">
+          <div class="model-desc-wrap">
+            <span class="model-desc-name" id="model-desc-name">Baseline Model</span>
+            <p class="model-desc" id="model-desc" data-i18n="simulator.modelDescBaseline"></p>
+          </div>
+        </div>
+        <div class="sim-toolbar-row3">
+          <button class="run-all-btn" onclick="runAll()">
+            <span id="run-count" data-i18n="simulator.runAllBtn">Run all 8 →</span>
+          </button>
+          <button class="run-btn" id="run-btn" onclick="runNext()" data-i18n="simulator.runNextBtn">
+            Run next scenario
+          </button>
+        </div>
       </div>
 
       <!-- Body -->

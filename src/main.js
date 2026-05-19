@@ -70,8 +70,10 @@ function buildDomainSelector() {
     container.appendChild(btn)
   })
 
-  // Set initial description
+  // Set initial description and name
   if (descEl) descEl.textContent = DOMAINS[DOMAIN_KEYS[0]].description[getLang()] || DOMAINS[DOMAIN_KEYS[0]].description.en
+  const descNameEl = document.getElementById('domain-desc-name')
+  if (descNameEl) descNameEl.textContent = DOMAINS[DOMAIN_KEYS[0]].label[getLang()] || DOMAINS[DOMAIN_KEYS[0]].label.en
 }
 
 // ── 6. Init everything
