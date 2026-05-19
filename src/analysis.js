@@ -179,6 +179,7 @@ function buildStakesHeader(domainKey, scenarios) {
       <div class="stakes-intro">
         <span class="stakes-domain-label">${label}</span>
         <p class="stakes-intro-text">${t('analysis.stakesIntro').replace('{domain}', label)}</p>
+        <p class="stakes-selection-logic">${t("analysis.stakesSelectionLogic")}</p>
       </div>
       <div class="stakes-findings">
         ${findingCards}

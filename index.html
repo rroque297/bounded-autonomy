@@ -381,27 +381,9 @@
 
     </div>
 
-    <!-- Output frequency breakdown -->
-    <div style="font-family:var(--mono);font-size:0.7rem;color:var(--text3);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:1rem;"
-         data-i18n="results.freqLabel">Output frequency across all models</div>
-
-    <div class="freq-grid" id="freq-grid">
-      <div class="freq-card">
-        <div class="freq-output-name v" data-i18n="outputs.violation">Violation</div>
-        <div class="freq-bar-group" id="freq-v"></div>
-      </div>
-      <div class="freq-card">
-        <div class="freq-output-name i" data-i18n="outputs.intervention">Intervention</div>
-        <div class="freq-bar-group" id="freq-i"></div>
-      </div>
-      <div class="freq-card">
-        <div class="freq-output-name ir" data-i18n="outputs.irreversible">Irreversible</div>
-        <div class="freq-bar-group" id="freq-ir"></div>
-      </div>
-      <div class="freq-card">
-        <div class="freq-output-name c" data-i18n="outputs.compliant">Compliant</div>
-        <div class="freq-bar-group" id="freq-c"></div>
-      </div>
+    <!-- Results narrative bridge -->
+    <div class="results-narrative" id="results-narrative">
+      <p class="results-narrative-text" data-i18n="results.narrativeEmpty"></p>
     </div>
 
     <!-- Head-to-head chart -->
@@ -459,13 +441,19 @@
       <span class="method-icon" data-i18n="results.methodIcon">[ i ]</span>
       <p class="method-text">
         <span data-i18n="results.methodText">
-          All scores are produced by a deterministic rule engine applying the three primitives
-          (delegation, boundaries, reversibility) to each scenario. There is no probabilistic
-          modeling, no real AI decision-making, and no variance across runs. The dataset is fully
-          reproducible and intentionally bounded — its purpose is to isolate governance structure,
-          not to simulate AI behavior at scale.
+          All scores are produced by a deterministic rule engine applying the four primitives
+          (delegation, boundaries, reversibility, intervention) to each scenario across 12 domain
+          contexts. There is no probabilistic modeling, no real AI decision-making, and no variance
+          across runs. The dataset is fully reproducible and intentionally bounded — its purpose is
+          to isolate governance structure, not to simulate AI behavior at scale.
         </span>
       </p>
+    </div>
+
+    <!-- Forward pointer to analysis -->
+    <div class="results-forward" id="results-forward">
+      <p class="results-forward-text" data-i18n="results.forwardPointer"></p>
+      <a href="#analysis" class="results-forward-link" data-i18n="results.forwardLink">Go to Analysis →</a>
     </div>
 
   </section>

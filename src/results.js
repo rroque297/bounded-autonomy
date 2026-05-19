@@ -65,6 +65,10 @@ function renderEmptyState() {
   if (statusEl) {
     statusEl.textContent = t('results.emptyState')
     statusEl.style.display = 'block'
+  const fwd = document.getElementById('results-forward')
+  if (fwd) fwd.style.display = 'none'
+  const narr = document.getElementById('results-narrative')
+  if (narr) narr.innerHTML = `<p class="results-narrative-text" style="color:var(--text3)">${t('results.narrativeEmpty')}</p>`
   }
 
   // Summary cards — dashes + zero bars
@@ -122,6 +126,41 @@ function renderEmptyState() {
   // Comparison matrix — headers only, no rows
   const tbody = document.getElementById('matrix-body')
   if (tbody) { tbody.innerHTML = '' }
+}
+
+// ─── RENDER: NARRATIVE BRIDGE ─────────────────────────────────────────────────
+
+function renderNarrative() {
+  console.log('narrativeP1:', t('results.narrativeP1'))
+  const el = document.getElementById('results-narrative')
+  if (!el) return
+
+  // Compute key facts across all models
+  const baselineResults = RESULTS_DATA['baseline']
+  const fullResults     = RESULTS_DATA['full']
+
+  const baseIrrev  = baselineResults.filter(r => r.output === 'irreversible').length
+  const baseViol   = baselineResults.filter(r => r.output === 'violation').length
+  const fullIrrev  = fullResults.filter(r => r.output === 'irreversible').length
+  const baseScore  = modelAvgScore('baseline')
+  const fullScore  = modelAvgScore('full')
+  const gap        = fullScore - baseScore
+
+  el.innerHTML = `<p class="results-narrative-text">
+    ${t('results.narrativeP1')
+      .replace('{baseIrrev}', baseIrrev)
+      .replace('{baseViol}', baseViol)
+      .replace('{baseScore}', baseScore)}
+  </p>
+  <p class="results-narrative-text results-narrative-p2">
+    ${t('results.narrativeP2')
+      .replace('{fullScore}', fullScore)
+      .replace('{gap}', gap)}
+  </p>`
+
+  // Show forward pointer
+  const fwd = document.getElementById('results-forward')
+  if (fwd) fwd.style.display = 'block'
 }
 
 // ─── RENDER: SUMMARY CARDS ────────────────────────────────────────────────────
@@ -257,12 +296,11 @@ function renderMatrix() {
 export function populateResults() {
   hasData = true
 
-  // Hide the empty-state status line
   const statusEl = document.getElementById('rs-status')
   if (statusEl) statusEl.style.display = 'none'
 
   renderSummaryCards()
-  renderFrequency()
+  renderNarrative()
   renderH2HChart()
   renderMatrix()
 }
