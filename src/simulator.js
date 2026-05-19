@@ -9,7 +9,7 @@ import { MODELS, SCENARIOS, ALL_MODEL_KEYS } from './data/scenarios.js'
 import { populateResults } from './results.js'
 import { DOMAINS } from './data/domains.js'
 import { t, getLang } from './i18n.js'
-import { populateAnalysis } from './analysis.js'
+import { populateAnalysis, populateDrift } from './analysis.js'
 
 var LEVELS = {
   none: 0,
@@ -362,6 +362,7 @@ export function runNext() {
 
     populateResults()
     populateAnalysis()
+    populateDrift()
     running = false
     btn.classList.remove('running')
     if (runIndex >= activeScenarios.length) {
@@ -390,6 +391,7 @@ export function runAll() {
     updateEvents()
     populateResults()
     populateAnalysis()
+    populateDrift()
     i++
     setTimeout(step, 180)
   }

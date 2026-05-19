@@ -902,3 +902,55 @@ footer a { color: var(--cyan); text-decoration: none; }
   line-height: 1.75;
   margin: 0;
 }
+
+/* ─── Drift indicator ───────────────────────────────────────────────────── */
+
+#drift {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.drift-intro {
+  color: var(--text2);
+  max-width: 600px;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.drift-chart-container .drift-domain-label {
+  margin-bottom: 0.75rem;
+}
+
+.drift-chart-container {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.drift-domain-label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--purple);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 1rem;
+}
+
+.drift-chart-wrap {
+  width: 100%;
+  overflow: hidden;
+}
+
+.drift-closing {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--text3);
+  letter-spacing: 0.05em;
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}

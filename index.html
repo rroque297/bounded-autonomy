@@ -32,6 +32,7 @@
       <li><a href="#research"  data-i18n="nav.research">Research</a></li>
       <li><a href="#simulator" data-i18n="nav.simulator">Simulator</a></li>
       <li><a href="#results"   data-i18n="nav.results">Results</a></li>
+      <li><a href="#drift"    data-i18n="nav.drift">Drift</a></li>
       <li><a href="#analysis"  data-i18n="nav.analysis">Analysis</a></li>
     </ul>
 
@@ -456,6 +457,26 @@
       </p>
     </div>
 
+  </section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════
+       DRIFT INDICATOR
+  ═══════════════════════════════════════════════════════════════════ -->
+  <section id="drift">
+    <div class="section-label" data-i18n="analysis.driftLabel">Cumulative Pressure</div>
+    <h2 data-i18n="analysis.driftH2">How pressure accumulates</h2>
+    <p class="drift-intro" data-i18n="analysis.driftIntro">
+      Each run contributes governance pressure based on which primitives failed.
+      The curves below show how that pressure accumulates across all 8 runs —
+      and what it would look like if the experiment never stopped.
+    </p>
+    <div id="drift-chart" class="drift-chart-container">
+      <div class="stakes-empty">
+        <span class="stakes-empty-icon">[ − ]</span>
+        <span class="stakes-empty-text" data-i18n="analysis.stakesEmpty"></span>
+      </div>
+    </div>
   </section>
 
 

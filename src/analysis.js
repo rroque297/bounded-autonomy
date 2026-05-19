@@ -306,6 +306,205 @@ function buildP4(domainKey, scenarios) {
     </div>`
 }
 
+// ─── DRIFT INDICATOR ──────────────────────────────────────────────────────────
+// Computes cumulative governance pressure across all 8 runs for each model
+// and renders a five-curve SVG line chart.
+//
+// Pressure per run:
+//   +3 if reversibilityFailed
+//   +2 if boundaryBreached
+//   +1 if delegationExceeded
+//   -1 if interventionActive and (boundaryBreached or delegationExceeded)
+// Cumulative pressure is the running total across all 8 runs.
+
+const MODEL_COLORS = {
+  baseline:           'var(--red)',
+  boundaries_only:    'var(--amber)',
+  reversibility_only: 'var(--yellow)',
+  partial:            'var(--cyan)',
+  full:               'var(--green)',
+}
+
+const MODEL_NAMES = {
+  en: {
+    baseline:           'Baseline',
+    boundaries_only:    'Bounds Only',
+    reversibility_only: 'Revers. Only',
+    partial:            'Partial',
+    full:               'Full',
+  },
+  fr: {
+    baseline:           'Base',
+    boundaries_only:    'Limites',
+    reversibility_only: 'Révers.',
+    partial:            'Partiel',
+    full:               'Complet',
+  },
+  de: {
+    baseline:           'Basis',
+    boundaries_only:    'Grenzen',
+    reversibility_only: 'Revers.',
+    partial:            'Teil',
+    full:               'Voll',
+  },
+  es: {
+    baseline:           'Base',
+    boundaries_only:    'Límites',
+    reversibility_only: 'Revers.',
+    partial:            'Parcial',
+    full:               'Completo',
+  },
+}
+
+function computePressure(result) {
+  let p = 0
+  if (result.reversibilityFailed) p += 3
+  if (result.boundaryBreached)    p += 2
+  if (result.delegationExceeded)  p += 1
+  if (result.interventionActive &&
+     (result.boundaryBreached || result.delegationExceeded)) p -= 1
+  return p
+}
+
+function computeCumulativePressure(modelKey, scenarios) {
+  const runs = runAll(modelKey, scenarios)
+  let cumulative = 0
+  return runs.map(({ result }) => {
+    cumulative += computePressure(result)
+    return Math.max(0, cumulative)
+  })
+}
+
+function buildDriftChart(scenarios) {
+  const lang = getLang()
+  const names = MODEL_NAMES[lang] || MODEL_NAMES.en
+
+  // Compute curves for all five models
+  const curves = {}
+  ALL_MODEL_KEYS.forEach(m => {
+    curves[m] = computeCumulativePressure(m, scenarios)
+  })
+
+  // Chart dimensions
+  const W = 800
+  const H = 280
+  const padL = 40
+  const padR = 100
+  const padT = 20
+  const padB = 40
+
+  const chartW = W - padL - padR
+  const chartH = H - padT - padB
+  const runs = scenarios.length
+  console.log('Drift curves:', Object.fromEntries(ALL_MODEL_KEYS.map(m => [m, curves[m]])))
+
+  // Find max pressure across all models for Y scale
+  const allValues = Object.values(curves).flat()
+  const maxP = Math.max(...allValues, 1)
+
+  // Scale helpers
+  const xPos = i => padL + (i / (runs - 1)) * chartW
+  const yPos = v => padT + chartH - (v / maxP) * chartH
+
+  // Build polyline points per model
+  const lines = ALL_MODEL_KEYS.map(m => {
+    const points = curves[m]
+      .map((v, i) => `${xPos(i)},${yPos(v)}`)
+      .join(' ')
+    return `<polyline
+      points="${points}"
+      fill="none"
+      stroke="${MODEL_COLORS[m]}"
+      stroke-width="2"
+      stroke-linejoin="round"
+      stroke-linecap="round"
+      opacity="0.9"
+    />`
+  }).join('')
+
+  // End-of-line labels — offset duplicates to prevent overlap
+  const usedYPositions = []
+  const endLabels = ALL_MODEL_KEYS.map(m => {
+    const lastVal = curves[m][runs - 1]
+    const x = xPos(runs - 1) + 6
+    let y = yPos(lastVal) + 4
+
+    // If this Y position is already taken, offset downward
+    while (usedYPositions.some(usedY => Math.abs(usedY - y) < 12)) {
+      y += 12
+    }
+    usedYPositions.push(y)
+
+    return `<text
+      x="${x}" y="${y}"
+      fill="${MODEL_COLORS[m]}"
+      font-family="IBM Plex Mono, monospace"
+      font-size="9"
+      dominant-baseline="middle"
+    >${names[m]}</text>`
+  }).join('')
+
+  // X axis labels — run numbers
+  const xLabels = scenarios.map((_, i) => `
+    <text
+      x="${xPos(i)}" y="${padT + chartH + 18}"
+      fill="rgba(200,204,232,0.4)"
+      font-family="IBM Plex Mono, monospace"
+      font-size="9"
+      text-anchor="middle"
+    >#${i + 1}</text>`).join('')
+
+  // Y axis gridlines
+  const gridSteps = 4
+  const gridLines = Array.from({ length: gridSteps + 1 }, (_, i) => {
+    const v = (maxP / gridSteps) * i
+    const y = yPos(v)
+    return `
+      <line
+        x1="${padL}" y1="${y}"
+        x2="${padL + chartW}" y2="${y}"
+        stroke="rgba(255,255,255,0.05)"
+        stroke-width="1"
+      />
+      <text
+        x="${padL - 6}" y="${y}"
+        fill="rgba(200,204,232,0.3)"
+        font-family="IBM Plex Mono, monospace"
+        font-size="8"
+        text-anchor="end"
+        dominant-baseline="middle"
+      >${Math.round(v)}</text>`
+  }).join('')
+
+  return `
+    <svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"
+         style="width:100%;height:auto;display:block;">
+      ${gridLines}
+      ${lines}
+      ${endLabels}
+      ${xLabels}
+    </svg>`
+}
+
+export function populateDrift() {
+  const domainKey = getActiveDomain()
+  const scenarios = DOMAINS[domainKey]?.scenarios
+  if (!scenarios) return
+
+  const label = domainLabel(domainKey)
+  const lang  = getLang()
+
+  const el = document.getElementById('drift-chart')
+  if (!el) return
+
+  el.innerHTML = `
+    <div class="drift-chart-wrap">
+      <div class="drift-domain-label">${label}</div>
+      ${buildDriftChart(scenarios)}
+    </div>
+    <p class="drift-closing">${t('analysis.driftClosing')}</p>`
+}
+
 // ─── EMPTY STATE ──────────────────────────────────────────────────────────────
 
 function renderEmptyState() {
@@ -365,8 +564,10 @@ export function initAnalysis() {
   renderEmptyState()
 
   onLangChange(() => {
-    // Re-render with new language if data is available
     const domainKey = getActiveDomain()
-    if (domainKey) populateAnalysis()
+    if (domainKey) {
+      populateAnalysis()
+      populateDrift()
+    }
   })
 }

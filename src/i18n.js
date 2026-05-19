@@ -32,6 +32,7 @@ const TRANSLATIONS = {
       simulator:  'Simulator',
       results:    'Results',
       analysis:   'Analysis',
+      drift:      'Drift',
       tag:        'Proof of Concept v1.0',
     },
 
@@ -150,6 +151,10 @@ const TRANSLATIONS = {
       stakesEmpty:        'Run the simulator to generate your governance analysis.',
       stakesCompliant:    'All 8 runs compliant in the {domain} domain. No governance failures detected under this configuration.',
       stakesIntro:        'What just happened in the {domain} domain — three findings from your run, in descending severity.',
+      driftClosing:       'In a live agentic system, this curve would never reset.',
+      driftLabel:         'Cumulative Pressure',
+      driftH2:            'How pressure accumulates',
+      driftIntro:         'Each run contributes governance pressure based on which primitives failed. The curves below show how that pressure accumulates across all 8 runs — and what it would look like if the experiment never stopped.',
     },
 
     // ── Simulator output labels + event messages
@@ -198,6 +203,7 @@ const TRANSLATIONS = {
       simulator:  'Simulateur',
       results:    'Résultats',
       analysis:   'Analyse',
+      drift:      'Dérive',
       tag:        'Preuve de concept v1.0',
     },
 
@@ -311,6 +317,10 @@ const TRANSLATIONS = {
       stakesEmpty:        'Lancez le simulateur pour générer votre analyse de gouvernance.',
       stakesCompliant:    'Les 8 séquences sont conformes dans le domaine {domain}. Aucune défaillance de gouvernance détectée sous cette configuration.',
       stakesIntro:        'Ce qui vient de se passer dans le domaine {domain} — trois résultats de votre séquence, par ordre de gravité décroissante.',
+      driftClosing:       'Dans un système agentique en production, cette courbe ne se réinitialiserait jamais.',
+      driftLabel:         'Pression cumulée',
+      driftH2:            'Comment la pression s\'accumule',
+      driftIntro:         'Chaque séquence contribue une pression de gouvernance selon les primitives qui ont échoué. Les courbes ci-dessous montrent comment cette pression s\'accumule sur les 8 séquences — et ce à quoi elle ressemblerait si l\'expérience ne s\'arrêtait jamais.',
     },
 
     // ── Simulator output labels + event messages
@@ -358,6 +368,7 @@ const TRANSLATIONS = {
       simulator:  'Simulator',
       results:    'Ergebnisse',
       analysis:   'Analyse',
+      drift:      'Drift',
       tag:        'Machbarkeitsnachweis v1.0',
     },
 
@@ -471,6 +482,10 @@ const TRANSLATIONS = {
       stakesEmpty:        'Starten Sie den Simulator, um Ihre Governance-Analyse zu generieren.',
       stakesCompliant:    'Alle 8 Läufe konform im Bereich {domain}. Keine Governance-Fehler unter dieser Konfiguration erkannt.',
       stakesIntro:        'Was gerade im Bereich {domain} passiert ist — drei Ergebnisse Ihres Laufs in absteigender Schwere.',
+      driftClosing:       'In einem produktiven agentischen System würde sich diese Kurve niemals zurücksetzen.',
+      driftLabel:         'Kumulativer Druck',
+      driftH2:            'Wie sich Druck akkumuliert',
+      driftIntro:         'Jeder Lauf trägt Governance-Druck bei, basierend darauf, welche Primitive versagt haben. Die Kurven unten zeigen, wie sich dieser Druck über alle 8 Läufe akkumuliert — und wie es aussehen würde, wenn das Experiment nie aufhören würde.',
     },
 
 // ── Simulator output labels + event messages
@@ -518,6 +533,7 @@ const TRANSLATIONS = {
       simulator:  'Simulador',
       results:    'Resultados',
       analysis:   'Análisis',
+      drift:      'Deriva',
       tag:        'Prueba de concepto v1.0',
     },
 
@@ -631,6 +647,10 @@ const TRANSLATIONS = {
       stakesEmpty:        'Ejecute el simulador para generar su análisis de gobernanza.',
       stakesCompliant:    'Las 8 ejecuciones son conformes en el dominio {domain}. No se detectaron fallos de gobernanza bajo esta configuración.',
       stakesIntro:        'Lo que acaba de ocurrir en el dominio {domain} — tres hallazgos de su ejecución, en orden de gravedad descendente.',
+      driftClosing:       'En un sistema agéntico en producción, esta curva nunca se reiniciaría.',
+      driftLabel:         'Presión acumulada',
+      driftH2:            'Cómo se acumula la presión',
+      driftIntro:         'Cada ejecución contribuye presión de gobernanza según qué primitivas fallaron. Las curvas a continuación muestran cómo esa presión se acumula a lo largo de las 8 ejecuciones — y cómo se vería si el experimento nunca se detuviera.',
     },
 
 // ── Simulator output labels + event messages
