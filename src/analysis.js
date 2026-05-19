@@ -305,9 +305,6 @@ function buildP4(domainKey, scenarios) {
 
   return `
     <div class="analysis-evidence">
-      <div class="ae-scores">
-        <span class="ae-score ae-concept">${t('analysis.equifinality_label')}</span>
-      </div>
       <p class="ae-text">${t('analysis.p4p').replace('{domain}', label)}</p>
     </div>`
 }

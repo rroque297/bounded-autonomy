@@ -24,7 +24,7 @@
   --radius-lg: 16px;
   --mono: 'IBM Plex Mono', monospace;
   --sans: 'IBM Plex Sans', sans-serif;
-  --display: 'Syne', sans-serif;
+  --display: Syne, sans-serif;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -386,8 +386,12 @@ h2 {
 }
 .pattern-card:hover { border-color: var(--border2); }
 .pattern-card h3 {
-  font-family: var(--display); font-weight: 600; font-size: 1rem; color: #fff;
-  margin-bottom: 0.6rem;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #fff;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
 }
 .pattern-card p { font-size: 0.875rem; color: var(--text2); line-height: 1.7; }
 
@@ -751,17 +755,17 @@ footer a { color: var(--cyan); text-decoration: none; }
 
 .ae-label {
   font-family: var(--mono);
-  font-size: 0.65rem;
-  color: var(--text3);
+  font-size: 0.68rem;
+  color: var(--text2);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   align-self: center;
 }
 
 .ae-text {
-  color: rgba(255,255,255,0.7);
-  font-size: 0.9rem;
-  line-height: 1.75;
+  color: rgba(255,255,255,0.8);
+  font-size: 0.92rem;
+  line-height: 1.8;
   margin: 0;
 }
 
@@ -1161,11 +1165,12 @@ footer a { color: var(--cyan); text-decoration: none; }
 }
 
 .stakes-selection-logic {
-  font-family: var(--mono);
-  font-size: 0.72rem;
+  font-family: var(--sans);
+  font-size: 0.8rem;
   color: var(--text3);
-  line-height: 1.65;
+  line-height: 1.7;
   margin: 0.5rem 0 0 0;
   padding-top: 0.5rem;
   border-top: 1px solid rgba(255,255,255,0.05);
+  font-style: italic;
 }
