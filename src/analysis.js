@@ -9,6 +9,9 @@
 
 import { runScenario, getActiveDomain } from './simulator.js'
 import { HARMS } from './data/harms.js'
+import { HARMS_FR } from './data/harms.fr.js'
+import { HARMS_DE } from './data/harms.de.js'
+import { HARMS_ES } from './data/harms.es.js'
 import { MODELS, ALL_MODEL_KEYS } from './data/scenarios.js'
 import { DOMAINS } from './data/domains.js'
 import { t, getLang, onLangChange } from './i18n.js'
@@ -104,7 +107,9 @@ function buildPrimitiveAttribution(result, lang) {
 function buildStakesHeader(domainKey, scenarios) {
   const lang = getLang()
   const label = domainLabel(domainKey)
-  const domainHarms = HARMS[domainKey] || HARMS['abstract']
+  const HARMS_MAP = { en: HARMS, fr: HARMS_FR, de: HARMS_DE, es: HARMS_ES }
+  const activeHarms = HARMS_MAP[getLang()] || HARMS
+  const domainHarms = activeHarms[domainKey] || activeHarms['abstract']
 
   // Run baseline model — it surfaces the most failures and gives the
   // richest evidence for the stakes header
