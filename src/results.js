@@ -222,9 +222,14 @@ function renderMatrix() {
 
   tbody.innerHTML = ABSTRACT_SCENARIOS.map((s, i) => {
     const riskClass =
-      s.risk === 'high'   ? 'risk-high'
-      : s.risk === 'medium' ? 'risk-medium'
+      s.boundaryPressure === 'strong' ? 'risk-high'
+      : s.boundaryPressure === 'medium' ? 'risk-medium'
       : 'risk-low'
+
+    const riskLabel =
+      s.boundaryPressure === 'strong' ? 'high'
+      : s.boundaryPressure === 'medium' ? 'medium'
+      : 'low'
 
     const cells = ALL_MODEL_KEYS.map(m => {
       const r = RESULTS_DATA[m][i]
@@ -239,7 +244,7 @@ function renderMatrix() {
     return `<tr>
       <td class="col-run">${i + 1}</td>
       <td class="col-scenario" style="font-size:0.78rem;color:var(--text2)">${s.desc[getLang()] || s.desc.en}</td>
-      <td><span class="risk-badge ${riskClass}">${s.risk}</span></td>
+      <td><span class="risk-badge ${riskClass}">${riskLabel}</span></td>
       ${cells}
     </tr>`
   }).join('')
