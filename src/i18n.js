@@ -38,7 +38,8 @@ const TRANSLATIONS = {
 
     // ── Hero
     hero: {
-      label:   'Master in Design for Responsible Artificial Intelligence — Elisava School of Design and Engineering',
+      label:      'Master in Design for Responsible Artificial Intelligence',
+      labelSchool:'Elisava School of Design and Engineering',
       h1a:     'Bounded',
       h1b:     'Autonomy',
       h1c:     'for AI',
@@ -224,7 +225,8 @@ const TRANSLATIONS = {
     },
 
     hero: {
-      label:   'Master en Design pour l\'Intelligence Artificielle Responsable — Elisava École de Design et d\'Ingénierie',
+      label:      'Master en Design pour l\'Intelligence Artificielle Responsable',
+      labelSchool:'Elisava École de Design et d\'Ingénierie',
       h1a:     'Autonomie',
       h1b:     'Bornée',
       h1c:     'pour l\'IA',
@@ -405,7 +407,8 @@ const TRANSLATIONS = {
     },
 
     hero: {
-      label:   'Master in Design für verantwortungsvolle Künstliche Intelligenz — Elisava Schule für Design und Ingenieurwesen',
+      label:      'Master in Design für verantwortungsvolle Künstliche Intelligenz',
+      labelSchool:'Elisava Schule für Design und Ingenieurwesen',
       h1a:     'Begrenzte',
       h1b:     'Autonomie',
       h1c:     'für KI',
@@ -586,7 +589,8 @@ const TRANSLATIONS = {
     },
 
     hero: {
-      label:   'Máster en Diseño para la Inteligencia Artificial Responsable — Elisava Escuela de Diseño e Ingeniería',
+      label:      'Máster en Diseño para la Inteligencia Artificial Responsable',
+      labelSchool:'Elisava Escuela de Diseño e Ingeniería',
       h1a:     'Autonomía',
       h1b:     'Acotada',
       h1c:     'para IA',
