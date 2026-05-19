@@ -155,6 +155,11 @@ const TRANSLATIONS = {
       driftLabel:         'Cumulative Pressure',
       driftH2:            'How pressure accumulates',
       driftIntro:         'Each run contributes governance pressure based on which primitives failed. The curves below show how that pressure accumulates across all 8 runs — and what it would look like if the experiment never stopped.',
+      blindSpotLabel:     'What this framework cannot see',
+      blindSpotP1:        'The four primitives evaluated here — delegation, boundaries, reversibility, and intervention — establish accountability at decision moments. They govern discrete actions at identifiable points in time. What they cannot govern is the space between decisions: the slow, incremental expansion of effective authority that occurs without any single action ever triggering a boundary violation.',
+      blindSpotP2:        'This is autonomy creep. An agentic system that gradually shapes outcomes over hundreds of interactions, each individually compliant, can accumulate influence far beyond its sanctioned scope without producing a single violation event. The curve above resets between experiments. In a deployed system, it never would — and no primitive in this framework would detect the drift.',
+      blindSpotConceptLabel: 'Continuous governance',
+      blindSpotConceptText:  'A complete governance architecture requires a layer beyond these four primitives: continuous behavioural monitoring that compares actual operational patterns against the original delegation mandate over time. The four primitives define what a system is permitted to do. Continuous governance would detect when what a system is actually doing has silently diverged from that mandate — not at a decision moment, but across the accumulation of decisions. That is the logical extension of this framework, and the boundary of this proof of concept.',
     },
 
     // ── Simulator output labels + event messages
@@ -321,6 +326,11 @@ const TRANSLATIONS = {
       driftLabel:         'Pression cumulée',
       driftH2:            'Comment la pression s\'accumule',
       driftIntro:         'Chaque séquence contribue une pression de gouvernance selon les primitives qui ont échoué. Les courbes ci-dessous montrent comment cette pression s\'accumule sur les 8 séquences — et ce à quoi elle ressemblerait si l\'expérience ne s\'arrêtait jamais.',
+      blindSpotLabel:     'Ce que ce cadre ne peut pas voir',
+      blindSpotP1:        'Les quatre primitives évaluées ici — délégation, limites, réversibilité et intervention — établissent la responsabilité aux moments de décision. Elles gouvernent des actions discrètes à des points identifiables dans le temps. Ce qu\'elles ne peuvent pas gouverner, c\'est l\'espace entre les décisions : l\'expansion lente et progressive de l\'autorité effective qui se produit sans qu\'aucune action individuelle ne déclenche une violation de limite.',
+      blindSpotP2:        'C\'est ce qu\'on appelle la dérive d\'autonomie. Un système agentique qui façonne progressivement les résultats au fil de centaines d\'interactions, chacune individuellement conforme, peut accumuler une influence bien au-delà de son périmètre autorisé sans produire un seul événement de violation. La courbe ci-dessus se réinitialise entre les expériences. Dans un système déployé, ce ne serait jamais le cas — et aucune primitive de ce cadre ne détecterait la dérive.',
+      blindSpotConceptLabel: 'Gouvernance continue',
+      blindSpotConceptText:  'Une architecture de gouvernance complète nécessite une couche au-delà de ces quatre primitives : une surveillance comportementale continue qui compare les modèles opérationnels réels avec le mandat de délégation original au fil du temps. Les quatre primitives définissent ce qu\'un système est autorisé à faire. La gouvernance continue détecterait le moment où ce qu\'un système fait réellement a silencieusement divergé de ce mandat — non pas à un moment de décision, mais à travers l\'accumulation de décisions. C\'est l\'extension logique de ce cadre, et la limite de cette preuve de concept.',
     },
 
     // ── Simulator output labels + event messages
@@ -486,6 +496,11 @@ const TRANSLATIONS = {
       driftLabel:         'Kumulativer Druck',
       driftH2:            'Wie sich Druck akkumuliert',
       driftIntro:         'Jeder Lauf trägt Governance-Druck bei, basierend darauf, welche Primitive versagt haben. Die Kurven unten zeigen, wie sich dieser Druck über alle 8 Läufe akkumuliert — und wie es aussehen würde, wenn das Experiment nie aufhören würde.',
+      blindSpotLabel:     'Was dieses Framework nicht sehen kann',
+      blindSpotP1:        'Die vier hier bewerteten Primitive — Delegation, Grenzen, Reversibilität und Intervention — etablieren Verantwortlichkeit in Entscheidungsmomenten. Sie regeln diskrete Aktionen zu identifizierbaren Zeitpunkten. Was sie nicht regeln können, ist der Raum zwischen Entscheidungen: die langsame, schrittweise Ausdehnung effektiver Autorität, die ohne dass eine einzelne Aktion eine Grenzverletzung auslöst, stattfindet.',
+      blindSpotP2:        'Dies ist Autonomie-Drift. Ein agentisches System, das über Hunderte von Interaktionen hinweg schrittweise Ergebnisse gestaltet, jede einzeln konform, kann Einfluss weit über seinen genehmigten Umfang ansammeln, ohne ein einziges Verletzungsereignis zu produzieren. Die obige Kurve setzt sich zwischen Experimenten zurück. In einem eingesetzten System würde sie es nie tun — und kein Primitiv in diesem Framework würde den Drift erkennen.',
+      blindSpotConceptLabel: 'Kontinuierliche Governance',
+      blindSpotConceptText:  'Eine vollständige Governance-Architektur erfordert eine Schicht jenseits dieser vier Primitive: kontinuierliche Verhaltensüberwachung, die tatsächliche Betriebsmuster über Zeit mit dem ursprünglichen Delegationsmandat vergleicht. Die vier Primitive definieren, was ein System tun darf. Kontinuierliche Governance würde erkennen, wenn das, was ein System tatsächlich tut, still von diesem Mandat abgewichen ist — nicht in einem Entscheidungsmoment, sondern über die Anhäufung von Entscheidungen. Das ist die logische Erweiterung dieses Frameworks und die Grenze dieses Machbarkeitsnachweises.',
     },
 
 // ── Simulator output labels + event messages
@@ -651,6 +666,11 @@ const TRANSLATIONS = {
       driftLabel:         'Presión acumulada',
       driftH2:            'Cómo se acumula la presión',
       driftIntro:         'Cada ejecución contribuye presión de gobernanza según qué primitivas fallaron. Las curvas a continuación muestran cómo esa presión se acumula a lo largo de las 8 ejecuciones — y cómo se vería si el experimento nunca se detuviera.',
+      blindSpotLabel:     'Lo que este marco no puede ver',
+      blindSpotP1:        'Las cuatro primitivas evaluadas aquí — delegación, límites, reversibilidad e intervención — establecen responsabilidad en los momentos de decisión. Gobiernan acciones discretas en puntos identificables en el tiempo. Lo que no pueden gobernar es el espacio entre decisiones: la expansión lenta e incremental de la autoridad efectiva que ocurre sin que ninguna acción individual active una violación de límite.',
+      blindSpotP2:        'Esto es lo que se denomina deriva de autonomía. Un sistema agéntico que gradualmente moldea resultados a lo largo de cientos de interacciones, cada una individualmente conforme, puede acumular influencia mucho más allá de su alcance autorizado sin producir un solo evento de violación. La curva anterior se reinicia entre experimentos. En un sistema desplegado, nunca lo haría — y ninguna primitiva de este marco detectaría la deriva.',
+      blindSpotConceptLabel: 'Gobernanza continua',
+      blindSpotConceptText:  'Una arquitectura de gobernanza completa requiere una capa más allá de estas cuatro primitivas: monitoreo conductual continuo que compare los patrones operativos reales con el mandato de delegación original a lo largo del tiempo. Las cuatro primitivas definen lo que un sistema tiene permitido hacer. La gobernanza continua detectaría cuándo lo que un sistema está haciendo realmente ha divergido silenciosamente de ese mandato — no en un momento de decisión, sino a través de la acumulación de decisiones. Esa es la extensión lógica de este marco y el límite de esta prueba de concepto.',
     },
 
 // ── Simulator output labels + event messages

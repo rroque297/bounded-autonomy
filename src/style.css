@@ -954,3 +954,61 @@ footer a { color: var(--cyan); text-decoration: none; }
   padding-top: 1rem;
   border-top: 1px solid rgba(255,255,255,0.05);
 }
+
+/* ─── What this framework cannot see ───────────────────────────────────── */
+
+.drift-blind-spot {
+  margin-top: 3rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 2.5rem;
+}
+
+.blind-spot-label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 1.5rem;
+}
+
+.blind-spot-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 720px;
+}
+
+.blind-spot-text {
+  font-size: 0.95rem;
+  color: var(--text2);
+  line-height: 1.85;
+  margin: 0;
+}
+
+.blind-spot-concept {
+  margin-top: 1rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(155,127,255,0.2);
+  border-left: 3px solid var(--purple);
+  border-radius: 8px;
+  background: rgba(155,127,255,0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.blind-spot-concept-label {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--purple);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.blind-spot-concept-text {
+  font-size: 0.9rem;
+  color: var(--text2);
+  line-height: 1.85;
+  margin: 0;
+}
