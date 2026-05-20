@@ -220,17 +220,23 @@ function renderSummaryCards() {
 
 // ─── PART 3: NARRATIVE BRIDGE ────────────────────────────────────────────────
 
-function renderNarrative() {
+function renderNarrative(domainKey, runResults, scenarios) {
   const el = document.getElementById('results-narrative')
   if (!el) return
 
-  const baselineResults = RESULTS_DATA['baseline']
-  const fullResults     = RESULTS_DATA['full']
+  // Use actual run results if available, otherwise use RESULTS_DATA
+  const baselineResults = scenarios && scenarios.length
+    ? scenarios.map(s => runScenario('baseline', s))
+    : RESULTS_DATA['baseline']
+
+    const fullResults = scenarios && scenarios.length
+    ? scenarios.map(s => runScenario('full', s))
+    : RESULTS_DATA['full']
 
   const baseIrrev  = baselineResults.filter(r => r.output === 'irreversible').length
   const baseViol   = baselineResults.filter(r => r.output === 'violation').length
-  const baseScore  = modelAvgScore('baseline')
-  const fullScore  = modelAvgScore('full')
+  const baseScore  = Math.round(baselineResults.reduce((a, b) => a + (b.score || 0), 0) / baselineResults.length)
+  const fullScore  = Math.round(fullResults.reduce((a, b) => a + (b.score || 0), 0) / fullResults.length)
   const gap        = fullScore - baseScore
 
   el.innerHTML = `
@@ -392,7 +398,7 @@ export function populateResults(domainKey, modelKey, runResults, scenarios) {
 
   renderThisRun(domainKey, modelKey, runResults, scenarios)
   renderSummaryCards()
-  renderNarrative()
+  renderNarrative(domainKey, runResults, lastScenarios.length ? lastScenarios : ABSTRACT_SCENARIOS)
   renderH2HChart(lastScenarios.length ? lastScenarios : ABSTRACT_SCENARIOS)
   renderMatrix(lastScenarios.length ? lastScenarios : ABSTRACT_SCENARIOS)
 }
@@ -408,7 +414,7 @@ export function initResults() {
     } else {
       renderThisRun(lastDomainKey, lastModelKey, lastRunResults, lastScenarios)
       renderSummaryCards()
-      renderNarrative()
+      renderNarrative(lastDomainKey, lastRunResults, lastScenarios.length ? lastScenarios : ABSTRACT_SCENARIOS)
       renderH2HChart(lastScenarios.length ? lastScenarios : ABSTRACT_SCENARIOS)
       renderMatrix(lastScenarios.length ? lastScenarios : ABSTRACT_SCENARIOS)
     }

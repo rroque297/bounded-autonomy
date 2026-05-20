@@ -399,8 +399,7 @@ function buildDriftChart(scenarios) {
   const chartW = W - padL - padR
   const chartH = H - padT - padB
   const runs = scenarios.length
-  console.log('Drift curves:', Object.fromEntries(ALL_MODEL_KEYS.map(m => [m, curves[m]])))
-
+  
   // Find max pressure across all models for Y scale
   const allValues = Object.values(curves).flat()
   const maxP = Math.max(...allValues, 1)
