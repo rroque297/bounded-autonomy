@@ -571,14 +571,23 @@ footer a { color: var(--cyan); text-decoration: none; }
 
 /* Methodology ribbon */
 .methodology-note {
-background: var(--surface3); border: 1px solid var(--border);
-border-left: 3px solid var(--cyan); border-radius: var(--radius);
-padding: 1.25rem 1.5rem; display: flex; gap: 1rem; align-items: flex-start;
-margin-top: 1rem;
+  margin-top: 1.5rem;
+  padding: 0;
+  background: none;
+  border: none;
+  display: block;
 }
-.method-icon { font-family: var(--mono); font-size: 0.72rem; color: var(--cyan); flex-shrink: 0; padding-top: 2px; }
-.method-text { font-size: 0.85rem; color: var(--text2); line-height: 1.7; }
-.method-text strong { color: var(--text); font-weight: 500; }
+
+.method-icon { display: none; }
+
+.method-text {
+  font-size: 0.78rem;
+  color: var(--text3);
+  line-height: 1.7;
+  font-style: italic;
+}
+
+.method-text strong { color: var(--text2); font-weight: 500; }
 
 /* ─── DOMAIN SELECTOR ─── */
 .domain-bar {
@@ -1155,12 +1164,12 @@ margin-top: 1rem;
 
 .results-forward {
   display: none;
-  margin-top: 2.5rem;
-  padding: 1.25rem 1.5rem;
-  border: 1px solid rgba(0,229,200,0.2);
-  border-left: 3px solid var(--cyan);
-  border-radius: 8px;
-  background: rgba(0,229,200,0.03);
+  margin-top: 3rem;
+  padding: 1.75rem 2rem;
+  border: 1px solid rgba(0,229,200,0.25);
+  border-left: 4px solid var(--cyan);
+  border-radius: 10px;
+  background: rgba(0,229,200,0.06);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1168,28 +1177,30 @@ margin-top: 1rem;
 }
 
 .results-forward-text {
-  font-size: 0.9rem;
-  color: var(--text2);
-  line-height: 1.75;
+  font-size: 0.95rem;
+  color: var(--text);
+  line-height: 1.8;
   margin: 0;
   max-width: 640px;
 }
 
 .results-forward-link {
   font-family: var(--mono);
-  font-size: 0.72rem;
-  color: var(--cyan);
+  font-size: 0.75rem;
+  color: var(--ink);
   text-decoration: none;
   letter-spacing: 0.08em;
   white-space: nowrap;
-  border: 1px solid rgba(0,229,200,0.3);
-  padding: 6px 14px;
+  background: var(--cyan);
+  padding: 10px 20px;
   border-radius: 6px;
-  transition: background 0.2s;
+  font-weight: 500;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
 }
 
 .results-forward-link:hover {
-  background: rgba(0,229,200,0.08);
+  opacity: 0.85;
 }
 
 .stakes-selection-logic {
@@ -1356,15 +1367,18 @@ margin-top: 1rem;
   align-items: baseline;
   gap: 1rem;
   margin-bottom: 1rem;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 0.875rem 1rem;
+  border: 1px solid rgba(0,229,200,0.15);
+  border-left: 3px solid var(--cyan);
+  border-radius: 8px;
+  background: rgba(0,229,200,0.03);
   flex-wrap: wrap;
 }
 
 .vs-label {
   font-family: var(--mono);
   font-size: 0.7rem;
-  color: var(--text2);
+  color: var(--cyan);
   text-transform: uppercase;
   letter-spacing: 0.12em;
 }
@@ -1372,7 +1386,7 @@ margin-top: 1rem;
 .vs-note {
   font-family: var(--mono);
   font-size: 0.68rem;
-  color: var(--text3);
+  color: var(--text2);
 }
 
 /* ─── Simulator subtitle ────────────────────────────────────────────────── */

@@ -224,27 +224,43 @@ function renderNarrative(domainKey, runResults, scenarios) {
   const el = document.getElementById('results-narrative')
   if (!el) return
 
-  // Use actual run results if available, otherwise use RESULTS_DATA
-  const baselineResults = scenarios && scenarios.length
-    ? scenarios.map(s => runScenario('baseline', s))
-    : RESULTS_DATA['baseline']
+  const lang = getLang()
+  const modelLabel = MODEL_DISPLAY_NAMES[lastModelKey]?.[lang] || MODEL_DISPLAY_NAMES[lastModelKey]?.en || lastModelKey
 
-    const fullResults = scenarios && scenarios.length
+  // Use actual run results for the active model
+  const activeResults = scenarios && scenarios.length
+    ? scenarios.map(s => runScenario(lastModelKey, s))
+    : RESULTS_DATA[lastModelKey] || []
+
+  const fullResults = scenarios && scenarios.length
     ? scenarios.map(s => runScenario('full', s))
     : RESULTS_DATA['full']
 
-  const baseIrrev  = baselineResults.filter(r => r.output === 'irreversible').length
-  const baseViol   = baselineResults.filter(r => r.output === 'violation').length
-  const baseScore  = Math.round(baselineResults.reduce((a, b) => a + (b.score || 0), 0) / baselineResults.length)
-  const fullScore  = Math.round(fullResults.reduce((a, b) => a + (b.score || 0), 0) / fullResults.length)
-  const gap        = fullScore - baseScore
+  const activeIrrev  = activeResults.filter(r => r.output === 'irreversible').length
+  const activeViol   = activeResults.filter(r => r.output === 'violation').length
+  const activeInter  = activeResults.filter(r => r.output === 'intervention').length
+  const activeComp   = activeResults.filter(r => r.output === 'compliant').length
+  const activeScore  = Math.round(activeResults.reduce((a, b) => a + (b.score || 0), 0) / activeResults.length)
+  const fullScore    = Math.round(fullResults.reduce((a, b) => a + (b.score || 0), 0) / fullResults.length)
+  const gap          = fullScore - activeScore
+
+  // Build output summary — only mention non-zero counts
+  const outputParts = []
+  if (activeIrrev) outputParts.push(`${activeIrrev} irreversible`)
+  if (activeViol)  outputParts.push(`${activeViol} violation`)
+  if (activeInter) outputParts.push(`${activeInter} intervention`)
+  if (activeComp)  outputParts.push(`${activeComp} compliant`)
+
+  const outputSummary = outputParts.length
+    ? outputParts.join(', ')
+    : 'no governance failures'
 
   el.innerHTML = `
     <p class="results-narrative-text">
       ${t('results.narrativeP1')
-        .replace('{baseIrrev}', baseIrrev)
-        .replace('{baseViol}', baseViol)
-        .replace('{baseScore}', baseScore)}
+        .replace('{model}', modelLabel)
+        .replace('{outputSummary}', outputSummary)
+        .replace('{baseScore}', activeScore)}
     </p>
     <p class="results-narrative-text results-narrative-p2">
       ${t('results.narrativeP2')
@@ -255,6 +271,9 @@ function renderNarrative(domainKey, runResults, scenarios) {
   const fwd = document.getElementById('results-forward')
   if (fwd) fwd.style.display = 'flex'
 }
+
+  const fwd = document.getElementById('results-forward')
+  if (fwd) fwd.style.display = 'flex'
 
 // ─── RENDER: HEAD-TO-HEAD CHART ───────────────────────────────────────────────
 
