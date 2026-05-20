@@ -401,7 +401,7 @@ export function runNext() {
     updateChart()
     updateEvents()
 
-    populateResults()
+    populateResults(activeDomain, currentModel, runResults, activeScenarios)
     populateAnalysis()
     populateDrift()
     running = false
@@ -430,7 +430,7 @@ export function runAll() {
     updateScore()
     updateChart()
     updateEvents()
-    populateResults()
+    populateResults(activeDomain, currentModel, runResults, activeScenarios)
     populateAnalysis()
     populateDrift()
     i++

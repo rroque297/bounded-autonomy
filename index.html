@@ -199,11 +199,9 @@
     <div class="sim-header">
       <div class="section-label" data-i18n="simulator.sectionLabel">Interactive Proof of Concept</div>
       <h2 data-i18n="simulator.h2">Run the experiment</h2>
-      <p style="color:var(--text2);max-width:560px;font-size:0.95rem;margin-top:0.5rem;line-height:1.75;"
-         data-i18n="simulator.sub">
-        Select a model configuration and run individual scenarios or all 8 experimental runs.
-        All logic is deterministic and rule-based — no AI is invoked.
-      </p>
+      <p class="sim-sub" data-i18n="simulator.sub"></p>
+      <p class="sim-guide" data-i18n="simulator.subGuide"></p>
+      <p class="sim-note" data-i18n="simulator.subNote"></p>
     </div>
 
     <div class="sim-frame">
@@ -324,10 +322,28 @@
     <div class="section-label" data-i18n="results.sectionLabel">Dataset &amp; Comparison</div>
     <h2 data-i18n="results.h2">Results</h2>
     <p class="results-intro" data-i18n="results.intro">
-      All three models were evaluated across the same 8 experimental scenarios. Scores are computed
-      deterministically by the rule engine — no statistical variance, no probabilistic modeling.
-      The dataset below is the complete output of the experiment.
+      Five models are evaluated across 8 experimental scenarios, each available across 12 domain
+      contexts. Scores are computed deterministically by the rule engine — no statistical variance,
+      no probabilistic modeling. Run the simulator above to populate the data set.
     </p>
+
+    <!-- PART 1: This Run -->
+    <div class="this-run-section" id="this-run-section">
+      <div class="this-run-empty" id="this-run-empty">
+        <span class="this-run-empty-icon">[ − ]</span>
+        <span class="this-run-empty-text" data-i18n="results.thisRunEmpty"></span>
+      </div>
+      <div class="this-run-populated" id="this-run-populated" style="display:none">
+        <div class="this-run-header" id="this-run-header"></div>
+        <div class="this-run-cards" id="this-run-cards"></div>
+      </div>
+    </div>
+
+    <!-- PART 2: Verified scores -->
+    <div class="verified-scores-label" id="verified-scores-label" style="display:none">
+      <span class="vs-label" data-i18n="results.verifiedLabel"></span>
+      <span class="vs-note" data-i18n="results.verifiedNote"></span>
+    </div>
 
     <!-- Summary cards -->
     <div class="results-summary" id="rs-summary">
@@ -439,6 +455,12 @@
       </table>
     </div>
 
+    <!-- Forward pointer to analysis -->
+    <div class="results-forward" id="results-forward">
+      <p class="results-forward-text" data-i18n="results.forwardPointer"></p>
+      <a href="#analysis" class="results-forward-link" data-i18n="results.forwardLink">Go to Analysis →</a>
+    </div>
+    
     <!-- Methodology note -->
     <div class="methodology-note">
       <span class="method-icon" data-i18n="results.methodIcon">[ i ]</span>
@@ -453,12 +475,7 @@
       </p>
     </div>
 
-    <!-- Forward pointer to analysis -->
-    <div class="results-forward" id="results-forward">
-      <p class="results-forward-text" data-i18n="results.forwardPointer"></p>
-      <a href="#analysis" class="results-forward-link" data-i18n="results.forwardLink">Go to Analysis →</a>
-    </div>
-
+    
   </section>
 
 

@@ -1,30 +1,43 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // results.js — Results section
-// Renders summary cards, frequency breakdown, head-to-head chart, and
-// comparison matrix. Empty state shown to new visitors until simulator runs.
+// Three-part structure:
+//   Part 1 — This Run: live results from the simulator, sorted by severity
+//   Part 2 — Verified Scores: theoretical domain-invariant scores
+//   Part 3 — Complete Picture: head-to-head chart and comparison matrix
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { MODELS, SCENARIOS, ALL_MODEL_KEYS } from './data/scenarios.js'
 import { DOMAINS } from './data/domains.js'
+import { HARMS } from './data/harms.js'
+import { HARMS_FR } from './data/harms.fr.js'
+import { HARMS_DE } from './data/harms.de.js'
+import { HARMS_ES } from './data/harms.es.js'
 import { runScenario } from './simulator.js'
 import { t, getLang, onLangChange } from './i18n.js'
 
 // ─── STATE ────────────────────────────────────────────────────────────────────
-// hasData tracks whether the simulator has been run at least once.
-// Until it has, we show the empty state.
 
 let hasData = false
+let lastDomainKey = 'abstract'
+let lastModelKey  = 'baseline'
+let lastRunResults = []
+let lastScenarios  = []
 
-// ─── PRE-COMPUTE ALL RESULTS ──────────────────────────────────────────────────
-// Results are still pre-computed — the rule engine runs all combinations up
-// front. The difference is we don't RENDER them until the visitor runs the
-// simulator. This keeps the numbers consistent with the simulator at all times.
+// ─── THEORETICAL RESULTS ──────────────────────────────────────────────────────
+// Pre-computed once. Used for verified scores (Part 2) and comparison chart.
 
-const RESULTS_DATA = {}
+let RESULTS_DATA = {}
 const ABSTRACT_SCENARIOS = DOMAINS['abstract'].scenarios
-ALL_MODEL_KEYS.forEach(m => {
-  RESULTS_DATA[m] = ABSTRACT_SCENARIOS.map(s => runScenario(m, s))
-})
+
+function computeResultsData(scenarios) {
+  const data = {}
+  ALL_MODEL_KEYS.forEach(m => {
+    data[m] = scenarios.map(s => runScenario(m, s))
+  })
+  return data
+}
+
+RESULTS_DATA = computeResultsData(ABSTRACT_SCENARIOS)
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
 
@@ -55,115 +68,126 @@ function scoreColor(s) {
   return s >= 80 ? 'var(--green)' : s >= 45 ? 'var(--amber)' : 'var(--red)'
 }
 
-// ─── EMPTY STATE ──────────────────────────────────────────────────────────────
-// Shown to new visitors before any simulator run.
-// Cards are visible but all numbers show dashes and bars sit at zero.
+function getHarms(lang) {
+  const map = { en: HARMS, fr: HARMS_FR, de: HARMS_DE, es: HARMS_ES }
+  return map[lang] || HARMS
+}
 
-function renderEmptyState() {
-  // Status line
-  const statusEl = document.getElementById('rs-status')
-  if (statusEl) {
-    statusEl.textContent = t('results.emptyState')
-    statusEl.style.display = 'block'
-  const fwd = document.getElementById('results-forward')
-  if (fwd) fwd.style.display = 'none'
-  const narr = document.getElementById('results-narrative')
-  if (narr) narr.innerHTML = `<p class="results-narrative-text" style="color:var(--text3)">${t('results.narrativeEmpty')}</p>`
+const SEVERITY_ORDER = ['irreversible', 'violation', 'intervention', 'compliant']
+
+function severityRank(output) {
+  return SEVERITY_ORDER.indexOf(output)
+}
+
+const MODEL_COLORS = {
+  baseline:           'var(--red)',
+  boundaries_only:    'var(--amber)',
+  reversibility_only: 'var(--yellow)',
+  partial:            'var(--cyan)',
+  full:               'var(--green)',
+}
+
+const MODEL_DISPLAY_NAMES = {
+  baseline:           { en: 'Baseline Model',        fr: 'Modele de base',           de: 'Basismodell',         es: 'Modelo base'        },
+  boundaries_only:    { en: 'Boundaries Only',        fr: 'Limites uniquement',       de: 'Nur Grenzen',         es: 'Solo limites'       },
+  reversibility_only: { en: 'Reversibility Only',     fr: 'Reversibilite uniquement', de: 'Nur Reversibilitat',  es: 'Solo reversibilidad'},
+  partial:            { en: 'Partial Model',          fr: 'Modele partiel',           de: 'Teilmodell',          es: 'Modelo parcial'     },
+  full:               { en: 'Full Model',             fr: 'Modele complet',           de: 'Vollmodell',          es: 'Modelo completo'    },
+}
+
+// ─── PART 1: THIS RUN ─────────────────────────────────────────────────────────
+
+function renderThisRun(domainKey, modelKey, runResults, scenarios) {
+  const lang = getLang()
+
+  // Handle null/empty state
+  if (!domainKey || !modelKey || !runResults || runResults.length === 0) {
+    const emptyEl = document.getElementById('this-run-empty')
+    const popEl   = document.getElementById('this-run-populated')
+    if (emptyEl) emptyEl.style.display = 'flex'
+    if (popEl)   popEl.style.display   = 'none'
+    return
   }
 
-  // Summary cards — dashes + zero bars
-  const cardMap = { baseline: 'b', boundaries_only: 'bo', reversibility_only: 'ro', partial: 'p', full: 'f' }
-  ALL_MODEL_KEYS.forEach(m => {
-    const k = cardMap[m]
-    const scoreEl = document.getElementById(`rs-score-${k}`)
-    const barEl   = document.getElementById(`rs-bar-${k}`)
-    const pillsEl = document.getElementById(`rs-pills-${k}`)
-    if (scoreEl) { scoreEl.textContent = '—'; scoreEl.style.color = 'var(--text3)' }
-    if (barEl)   { barEl.style.width = '0%' }
-    if (pillsEl) { pillsEl.innerHTML = '' }
-  })
+  const domainLabel = DOMAINS[domainKey]?.label[lang] || DOMAINS[domainKey]?.label.en || domainKey
+  const modelLabel  = MODEL_DISPLAY_NAMES[modelKey]?.[lang] || MODEL_DISPLAY_NAMES[modelKey]?.en || modelKey
+  const modelColor  = MODEL_COLORS[modelKey] || 'var(--text2)'
+  const domainHarms = getHarms(lang)[domainKey] || getHarms(lang)['abstract']
+  const emptyEl     = document.getElementById('this-run-empty')
+  const popEl       = document.getElementById('this-run-populated')
+  const headerEl    = document.getElementById('this-run-header')
+  const cardsEl     = document.getElementById('this-run-cards')
 
-  // Frequency bars — all flat
-  const freqIds = ['freq-v', 'freq-i', 'freq-ir', 'freq-c']
-  const modelDotColors = {
-    baseline:           'var(--red)',
-    boundaries_only:    'var(--amber)',
-    reversibility_only: 'var(--yellow)',
-    partial:            'var(--cyan)',
-    full:               'var(--green)',
-  }
-  freqIds.forEach(id => {
-    const el = document.getElementById(id)
-    if (!el) return
-    el.innerHTML = ALL_MODEL_KEYS.map(m => `
-      <div class="freq-bar-row">
-        <div class="freq-model-dot" style="background:${modelDotColors[m]}"></div>
-        <div class="freq-bar-bg"><div class="freq-bar-fg" style="width:0%"></div></div>
-        <span class="freq-count">—</span>
-      </div>`).join('')
-  })
+  if (emptyEl) emptyEl.style.display = 'none'
+  if (popEl)   popEl.style.display   = 'block'
 
-  // Head-to-head chart — empty rows with scenario labels
-  const h2hEl = document.getElementById('h2h-chart')
-  if (h2hEl) {
-    h2hEl.innerHTML = ABSTRACT_SCENARIOS.map((s, i) => {
-      const bars = ALL_MODEL_KEYS.map(m => `
-        <div class="h2h-bar-row">
-          <div class="h2h-bar-track">
-            <div class="h2h-bar-inner" style="width:0%;background:${
-              m === 'baseline' ? 'var(--cyan)' : m === 'partial' ? 'var(--amber)' : 'var(--green)'
-            }"></div>
-          </div>
-          <span class="h2h-val" style="color:var(--text3)">—</span>
-        </div>`).join('')
-      return `<div style="display:grid;grid-template-columns:180px 1fr;align-items:center;gap:1rem;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.03);">
-        <span style="font-family:var(--mono);font-size:0.68rem;color:var(--text2);line-height:1.4;">#${i + 1} ${s.desc[getLang()] || s.desc.en}</span>
-        <div style="display:flex;flex-direction:column;gap:3px;">${bars}</div>
+  // Count outputs
+  const counts = { irreversible: 0, violation: 0, intervention: 0, compliant: 0 }
+  runResults.forEach(r => { if (counts[r.output] !== undefined) counts[r.output]++ })
+
+  const total     = runResults.length
+  const completed = `${total} of 8`
+
+  // Summary line
+  const summaryParts = []
+  if (counts.irreversible) summaryParts.push(`<span style="color:var(--red)">${counts.irreversible} irreversible</span>`)
+  if (counts.violation)    summaryParts.push(`<span style="color:var(--amber)">${counts.violation} violation</span>`)
+  if (counts.intervention) summaryParts.push(`<span style="color:var(--cyan)">${counts.intervention} intervention</span>`)
+  if (counts.compliant)    summaryParts.push(`<span style="color:var(--green)">${counts.compliant} compliant</span>`)
+
+  if (headerEl) {
+    headerEl.innerHTML = `
+      <div class="tr-header-row">
+        <div class="tr-meta">
+          <span class="tr-domain" style="color:var(--purple)">${domainLabel}</span>
+          <span class="tr-model" style="color:${modelColor}">${modelLabel}</span>
+        </div>
+        <div class="tr-summary">
+          <span class="tr-count">${completed} runs</span>
+          <span class="tr-divider">·</span>
+          ${summaryParts.join('<span class="tr-divider">·</span>')}
+        </div>
       </div>`
+  }
+
+  // Sort runs by severity
+  const sortedRuns = runResults
+    .map((r, i) => ({ result: r, scenario: scenarios[i], index: i }))
+    .sort((a, b) => severityRank(a.result.output) - severityRank(b.result.output))
+
+  if (cardsEl) {
+    cardsEl.innerHTML = sortedRuns.map(({ result, scenario, index }) => {
+      const harmEntry = scenario ? domainHarms[scenario.id] : null
+      const harmValue = harmEntry
+        ? (harmEntry[result.output] || harmEntry['violation'] || harmEntry['intervention'] || null)
+        : null
+      const harm = harmValue || t('results.routineHarm')
+
+      const primitives = []
+      if (result.reversibilityFailed) primitives.push('Reversibility failed')
+      if (result.boundaryBreached)    primitives.push('Boundary breached')
+      if (result.delegationExceeded)  primitives.push('Delegation exceeded')
+      if (result.output === 'intervention') primitives.push('Intervention active')
+
+      const scenarioDesc = scenario
+        ? (scenario.desc[lang] || scenario.desc.en)
+        : `Run #${index + 1}`
+
+      return `
+        <div class="tr-card tr-${result.output}">
+          <div class="tr-card-header">
+            <span class="output-badge ob-${result.output}">${t(`outputs.${result.output}`)}</span>
+            <span class="tr-scenario">${scenarioDesc}</span>
+            <span class="tr-score" style="color:${scoreColor(result.score)}">${result.score}</span>
+          </div>
+          ${harm ? `<p class="tr-harm">${harm}</p>` : ''}
+          ${primitives.length ? `<div class="tr-attribution">↳ ${primitives.join(' · ')}</div>` : ''}
+        </div>`
     }).join('')
   }
-
-  // Comparison matrix — headers only, no rows
-  const tbody = document.getElementById('matrix-body')
-  if (tbody) { tbody.innerHTML = '' }
 }
 
-// ─── RENDER: NARRATIVE BRIDGE ─────────────────────────────────────────────────
-
-function renderNarrative() {
-  console.log('narrativeP1:', t('results.narrativeP1'))
-  const el = document.getElementById('results-narrative')
-  if (!el) return
-
-  // Compute key facts across all models
-  const baselineResults = RESULTS_DATA['baseline']
-  const fullResults     = RESULTS_DATA['full']
-
-  const baseIrrev  = baselineResults.filter(r => r.output === 'irreversible').length
-  const baseViol   = baselineResults.filter(r => r.output === 'violation').length
-  const fullIrrev  = fullResults.filter(r => r.output === 'irreversible').length
-  const baseScore  = modelAvgScore('baseline')
-  const fullScore  = modelAvgScore('full')
-  const gap        = fullScore - baseScore
-
-  el.innerHTML = `<p class="results-narrative-text">
-    ${t('results.narrativeP1')
-      .replace('{baseIrrev}', baseIrrev)
-      .replace('{baseViol}', baseViol)
-      .replace('{baseScore}', baseScore)}
-  </p>
-  <p class="results-narrative-text results-narrative-p2">
-    ${t('results.narrativeP2')
-      .replace('{fullScore}', fullScore)
-      .replace('{gap}', gap)}
-  </p>`
-
-  // Show forward pointer
-  const fwd = document.getElementById('results-forward')
-  if (fwd) fwd.style.display = 'block'
-}
-
-// ─── RENDER: SUMMARY CARDS ────────────────────────────────────────────────────
+// ─── PART 2: VERIFIED SCORES ──────────────────────────────────────────────────
 
 function renderSummaryCards() {
   const cardMap = { baseline: 'b', boundaries_only: 'bo', reversibility_only: 'ro', partial: 'p', full: 'f' }
@@ -183,51 +207,56 @@ function renderSummaryCards() {
     barEl.style.width = avg + '%'
 
     pillsEl.innerHTML = ''
-    if (counts.violation)    pillsEl.innerHTML += `<span class="rs-pill v">${counts.violation}× violation</span>`
-    if (counts.intervention) pillsEl.innerHTML += `<span class="rs-pill i">${counts.intervention}× intervention</span>`
-    if (counts.irreversible) pillsEl.innerHTML += `<span class="rs-pill ir">${counts.irreversible}× irreversible</span>`
-    if (counts.compliant)    pillsEl.innerHTML += `<span class="rs-pill c">${counts.compliant}× compliant</span>`
+    if (counts.violation)    pillsEl.innerHTML += `<span class="rs-pill v">${counts.violation}x violation</span>`
+    if (counts.intervention) pillsEl.innerHTML += `<span class="rs-pill i">${counts.intervention}x intervention</span>`
+    if (counts.irreversible) pillsEl.innerHTML += `<span class="rs-pill ir">${counts.irreversible}x irreversible</span>`
+    if (counts.compliant)    pillsEl.innerHTML += `<span class="rs-pill c">${counts.compliant}x compliant</span>`
   })
+
+  // Show verified scores label
+  const vsLabel = document.getElementById('verified-scores-label')
+  if (vsLabel) vsLabel.style.display = 'flex'
 }
 
-// ─── RENDER: OUTPUT FREQUENCY BARS ───────────────────────────────────────────
+// ─── PART 3: NARRATIVE BRIDGE ────────────────────────────────────────────────
 
-function renderFrequency() {
-  const outputKeys = [
-    { key: 'violation',    elId: 'freq-v',  dotColor: 'var(--red)' },
-    { key: 'intervention', elId: 'freq-i',  dotColor: 'var(--amber)' },
-    { key: 'irreversible', elId: 'freq-ir', dotColor: '#ff2050' },
-    { key: 'compliant',    elId: 'freq-c',  dotColor: 'var(--green)' },
-  ]
-  const modelDotColors = {
-    baseline:           'var(--red)',
-    boundaries_only:    'var(--amber)',
-    reversibility_only: 'var(--yellow)',
-    partial:            'var(--cyan)',
-    full:               'var(--green)',
-  }
+function renderNarrative() {
+  const el = document.getElementById('results-narrative')
+  if (!el) return
 
-  outputKeys.forEach(({ key, elId, dotColor }) => {
-    const el = document.getElementById(elId)
-    if (!el) return
-    el.innerHTML = ALL_MODEL_KEYS.map(m => {
-      const n = countOutputs(m)[key]
-      const pct = Math.round((n / 8) * 100)
-      return `<div class="freq-bar-row">
-        <div class="freq-model-dot" style="background:${modelDotColors[m]}"></div>
-        <div class="freq-bar-bg"><div class="freq-bar-fg" style="width:${pct}%;background:${dotColor}"></div></div>
-        <span class="freq-count">${n}</span>
-      </div>`
-    }).join('')
-  })
+  const baselineResults = RESULTS_DATA['baseline']
+  const fullResults     = RESULTS_DATA['full']
+
+  const baseIrrev  = baselineResults.filter(r => r.output === 'irreversible').length
+  const baseViol   = baselineResults.filter(r => r.output === 'violation').length
+  const baseScore  = modelAvgScore('baseline')
+  const fullScore  = modelAvgScore('full')
+  const gap        = fullScore - baseScore
+
+  el.innerHTML = `
+    <p class="results-narrative-text">
+      ${t('results.narrativeP1')
+        .replace('{baseIrrev}', baseIrrev)
+        .replace('{baseViol}', baseViol)
+        .replace('{baseScore}', baseScore)}
+    </p>
+    <p class="results-narrative-text results-narrative-p2">
+      ${t('results.narrativeP2')
+        .replace('{fullScore}', fullScore)
+        .replace('{gap}', gap)}
+    </p>`
+
+  const fwd = document.getElementById('results-forward')
+  if (fwd) fwd.style.display = 'flex'
 }
 
 // ─── RENDER: HEAD-TO-HEAD CHART ───────────────────────────────────────────────
 
-function renderH2HChart() {
+function renderH2HChart(scenarios) {
   const el = document.getElementById('h2h-chart')
   if (!el) return
 
+  const lang = getLang()
   const modelColors = {
     baseline:           'var(--red)',
     boundaries_only:    'var(--amber)',
@@ -236,7 +265,8 @@ function renderH2HChart() {
     full:               'var(--green)',
   }
 
-  el.innerHTML = ABSTRACT_SCENARIOS.map((s, i) => {    const bars = ALL_MODEL_KEYS.map(m => {
+  el.innerHTML = scenarios.map((s, i) => {
+    const bars = ALL_MODEL_KEYS.map(m => {
       const r = RESULTS_DATA[m][i]
       return `<div class="h2h-bar-row">
         <div class="h2h-bar-track">
@@ -247,7 +277,7 @@ function renderH2HChart() {
     }).join('')
 
     return `<div style="display:grid;grid-template-columns:180px 1fr;align-items:center;gap:1rem;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.03);">
-       <span style="font-family:var(--mono);font-size:0.68rem;color:var(--text2);line-height:1.4;">#${i + 1} ${s.desc[getLang()] || s.desc.en}</span>
+      <span style="font-family:var(--mono);font-size:0.68rem;color:var(--text2);line-height:1.4;">#${i + 1} ${s.desc[lang] || s.desc.en}</span>
       <div style="display:flex;flex-direction:column;gap:3px;">${bars}</div>
     </div>`
   }).join('')
@@ -255,11 +285,13 @@ function renderH2HChart() {
 
 // ─── RENDER: COMPARISON MATRIX ────────────────────────────────────────────────
 
-function renderMatrix() {
+function renderMatrix(scenarios) {
   const tbody = document.getElementById('matrix-body')
   if (!tbody) return
 
-  tbody.innerHTML = ABSTRACT_SCENARIOS.map((s, i) => {
+  const lang = getLang()
+
+  tbody.innerHTML = scenarios.map((s, i) => {
     const riskClass =
       s.boundaryPressure === 'strong' ? 'risk-high'
       : s.boundaryPressure === 'medium' ? 'risk-medium'
@@ -282,46 +314,103 @@ function renderMatrix() {
 
     return `<tr>
       <td class="col-run">${i + 1}</td>
-      <td class="col-scenario" style="font-size:0.78rem;color:var(--text2)">${s.desc[getLang()] || s.desc.en}</td>
+      <td class="col-scenario" style="font-size:0.78rem;color:var(--text2)">${s.desc[lang] || s.desc.en}</td>
       <td><span class="risk-badge ${riskClass}">${riskLabel}</span></td>
       ${cells}
     </tr>`
   }).join('')
 }
 
-// ─── POPULATE RESULTS ─────────────────────────────────────────────────────────
-// Called by the simulator after any run completes.
-// Reveals the status line, populates all four sub-sections.
+// ─── EMPTY STATE ──────────────────────────────────────────────────────────────
 
-export function populateResults() {
+function renderEmptyState() {
+  const statusEl = document.getElementById('rs-status')
+  if (statusEl) {
+    statusEl.textContent = t('results.emptyState')
+    statusEl.style.display = 'block'
+  }
+
+  const fwd = document.getElementById('results-forward')
+  if (fwd) fwd.style.display = 'none'
+
+  const narr = document.getElementById('results-narrative')
+  if (narr) narr.innerHTML = `<p class="results-narrative-text" style="color:var(--text3)">${t('results.narrativeEmpty')}</p>`
+
+  const vsLabel = document.getElementById('verified-scores-label')
+  if (vsLabel) vsLabel.style.display = 'none'
+
+  const cardMap = { baseline: 'b', boundaries_only: 'bo', reversibility_only: 'ro', partial: 'p', full: 'f' }
+  ALL_MODEL_KEYS.forEach(m => {
+    const k = cardMap[m]
+    const scoreEl = document.getElementById(`rs-score-${k}`)
+    const barEl   = document.getElementById(`rs-bar-${k}`)
+    const pillsEl = document.getElementById(`rs-pills-${k}`)
+    if (scoreEl) { scoreEl.textContent = '—'; scoreEl.style.color = 'var(--text3)' }
+    if (barEl)   { barEl.style.width = '0%' }
+    if (pillsEl) { pillsEl.innerHTML = '' }
+  })
+
+  const h2hEl = document.getElementById('h2h-chart')
+  if (h2hEl) {
+    h2hEl.innerHTML = ABSTRACT_SCENARIOS.map((s, i) => {
+      const bars = ALL_MODEL_KEYS.map(() => `
+        <div class="h2h-bar-row">
+          <div class="h2h-bar-track">
+            <div class="h2h-bar-inner" style="width:0%"></div>
+          </div>
+          <span class="h2h-val" style="color:var(--text3)">—</span>
+        </div>`).join('')
+      return `<div style="display:grid;grid-template-columns:180px 1fr;align-items:center;gap:1rem;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.03);">
+        <span style="font-family:var(--mono);font-size:0.68rem;color:var(--text2);line-height:1.4;">#${i + 1} ${s.desc[getLang()] || s.desc.en}</span>
+        <div style="display:flex;flex-direction:column;gap:3px;">${bars}</div>
+      </div>`
+    }).join('')
+  }
+
+  const tbody = document.getElementById('matrix-body')
+  if (tbody) tbody.innerHTML = ''
+
+  renderThisRun(null, null, [], [])
+}
+
+// ─── POPULATE RESULTS ─────────────────────────────────────────────────────────
+
+export function populateResults(domainKey, modelKey, runResults, scenarios) {
   hasData = true
+
+  // Store for language re-renders
+  lastDomainKey  = domainKey
+  lastModelKey   = modelKey
+  lastRunResults = runResults || []
+  lastScenarios  = scenarios  || []
+
+  // Recompute theoretical scores for this domain
+  RESULTS_DATA = computeResultsData(lastScenarios.length ? lastScenarios : ABSTRACT_SCENARIOS)
 
   const statusEl = document.getElementById('rs-status')
   if (statusEl) statusEl.style.display = 'none'
 
+  renderThisRun(domainKey, modelKey, runResults, scenarios)
   renderSummaryCards()
   renderNarrative()
-  renderH2HChart()
-  renderMatrix()
+  renderH2HChart(lastScenarios.length ? lastScenarios : ABSTRACT_SCENARIOS)
+  renderMatrix(lastScenarios.length ? lastScenarios : ABSTRACT_SCENARIOS)
 }
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
-// Called once on page load. Shows the empty state.
-// Re-renders empty state text when language switches.
 
 export function initResults() {
   renderEmptyState()
 
   onLangChange(() => {
     if (!hasData) {
-      const statusEl = document.getElementById('rs-status')
-      if (statusEl) statusEl.textContent = t('results.emptyState')
       renderEmptyState()
     } else {
+      renderThisRun(lastDomainKey, lastModelKey, lastRunResults, lastScenarios)
       renderSummaryCards()
-      renderFrequency()
-      renderH2HChart()
-      renderMatrix()
+      renderNarrative()
+      renderH2HChart(lastScenarios.length ? lastScenarios : ABSTRACT_SCENARIOS)
+      renderMatrix(lastScenarios.length ? lastScenarios : ABSTRACT_SCENARIOS)
     }
   })
 }
