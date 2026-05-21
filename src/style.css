@@ -820,6 +820,7 @@ footer a { color: var(--cyan); text-decoration: none; }
 /* ─── Stakes header ─────────────────────────────────────────────────────── */
 
 .analysis-stakes-wrap {
+  margin-top: 2rem;
   margin-bottom: 3rem;
 }
 
@@ -856,6 +857,7 @@ footer a { color: var(--cyan); text-decoration: none; }
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .stakes-domain-label {
@@ -1044,7 +1046,7 @@ footer a { color: var(--cyan); text-decoration: none; }
 .blind-spot-label {
   font-family: var(--mono);
   font-size: 0.7rem;
-  color: var(--text3);
+  color: var(--text2);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   margin-bottom: 1.5rem;
@@ -1205,12 +1207,10 @@ footer a { color: var(--cyan); text-decoration: none; }
 
 .stakes-selection-logic {
   font-family: var(--sans);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--text3);
-  line-height: 1.7;
-  margin: 0.5rem 0 0 0;
-  padding-top: 0.5rem;
-  border-top: 1px solid rgba(255,255,255,0.05);
+  line-height: 1.65;
+  margin: 0.25rem 0 0 0;
   font-style: italic;
 }
 
