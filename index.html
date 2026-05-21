@@ -342,70 +342,60 @@
       </div>
     </div>
 
+    <!-- PART 2: Verified scores -->
+    <div class="verified-scores-wrap" id="verified-scores-label" style="display:none">
+      <div class="verified-scores-header">
+        <span class="vs-label" data-i18n="results.verifiedLabel"></span>
+        <span class="vs-note" data-i18n="results.verifiedNote"></span>
+      </div>
+      <div class="results-summary" id="rs-summary">
+
+        <div class="rs-card baseline">
+          <div class="rs-model-label" data-i18n="results.baselineLabel">Baseline model</div>
+          <div class="rs-score-num" id="rs-score-b">—</div>
+          <div class="rs-score-sub" data-i18n="results.scoreSubLabel">avg. controllability score</div>
+          <div class="rs-bar-wrap"><div class="rs-bar-fill" id="rs-bar-b" style="width:0%"></div></div>
+          <div class="rs-output-pills" id="rs-pills-b"></div>
+        </div>
+
+        <div class="rs-card boundaries-only">
+          <div class="rs-model-label" data-i18n="results.boundariesOnlyLabel">Boundaries only</div>
+          <div class="rs-score-num" id="rs-score-bo">—</div>
+          <div class="rs-score-sub" data-i18n="results.scoreSubLabel">avg. controllability score</div>
+          <div class="rs-bar-wrap"><div class="rs-bar-fill" id="rs-bar-bo" style="width:0%"></div></div>
+          <div class="rs-output-pills" id="rs-pills-bo"></div>
+        </div>
+
+        <div class="rs-card reversibility-only">
+          <div class="rs-model-label" data-i18n="results.reversibilityOnlyLabel">Reversibility only</div>
+          <div class="rs-score-num" id="rs-score-ro">—</div>
+          <div class="rs-score-sub" data-i18n="results.scoreSubLabel">avg. controllability score</div>
+          <div class="rs-bar-wrap"><div class="rs-bar-fill" id="rs-bar-ro" style="width:0%"></div></div>
+          <div class="rs-output-pills" id="rs-pills-ro"></div>
+        </div>
+
+        <div class="rs-card partial">
+          <div class="rs-model-label" data-i18n="results.partialLabel">Partial model</div>
+          <div class="rs-score-num" id="rs-score-p">—</div>
+          <div class="rs-score-sub" data-i18n="results.scoreSubLabel">avg. controllability score</div>
+          <div class="rs-bar-wrap"><div class="rs-bar-fill" id="rs-bar-p" style="width:0%"></div></div>
+          <div class="rs-output-pills" id="rs-pills-p"></div>
+        </div>
+
+        <div class="rs-card full">
+          <div class="rs-model-label" data-i18n="results.fullLabel">Full model</div>
+          <div class="rs-score-num" id="rs-score-f">—</div>
+          <div class="rs-score-sub" data-i18n="results.scoreSubLabel">avg. controllability score</div>
+          <div class="rs-bar-wrap"><div class="rs-bar-fill" id="rs-bar-f" style="width:0%"></div></div>
+          <div class="rs-output-pills" id="rs-pills-f"></div>
+        </div>
+
+      </div>
+    </div>
+
     <!-- Results narrative bridge -->
     <div class="results-narrative" id="results-narrative">
       <p class="results-narrative-text" data-i18n="results.narrativeEmpty"></p>
-    </div>
-    
-    <!-- PART 2: Verified scores -->
-    <div class="verified-scores-label" id="verified-scores-label" style="display:none">
-      <span class="vs-label" data-i18n="results.verifiedLabel"></span>
-      <span class="vs-note" data-i18n="results.verifiedNote"></span>
-    </div>
-
-    <!-- Summary cards -->
-    <div class="results-summary" id="rs-summary">
-
-      <div class="rs-card baseline">
-        <div class="rs-model-label" data-i18n="results.baselineLabel">Baseline model</div>
-        <div class="rs-score-num"   id="rs-score-b">—</div>
-        <div class="rs-score-sub"   data-i18n="results.scoreSubLabel">avg. controllability score</div>
-        <div class="rs-bar-wrap">
-          <div class="rs-bar-fill" id="rs-bar-b" style="width:0%"></div>
-        </div>
-        <div class="rs-output-pills" id="rs-pills-b"></div>
-      </div>
-
-      <div class="rs-card boundaries-only">
-        <div class="rs-model-label" data-i18n="results.boundariesOnlyLabel">Boundaries only</div>
-        <div class="rs-score-num"   id="rs-score-bo">—</div>
-        <div class="rs-score-sub"   data-i18n="results.scoreSubLabel">avg. controllability score</div>
-        <div class="rs-bar-wrap">
-          <div class="rs-bar-fill" id="rs-bar-bo" style="width:0%"></div>
-        </div>
-        <div class="rs-output-pills" id="rs-pills-bo"></div>
-      </div>
-
-      <div class="rs-card reversibility-only">
-        <div class="rs-model-label" data-i18n="results.reversibilityOnlyLabel">Reversibility only</div>
-        <div class="rs-score-num"   id="rs-score-ro">—</div>
-        <div class="rs-score-sub"   data-i18n="results.scoreSubLabel">avg. controllability score</div>
-        <div class="rs-bar-wrap">
-          <div class="rs-bar-fill" id="rs-bar-ro" style="width:0%"></div>
-        </div>
-        <div class="rs-output-pills" id="rs-pills-ro"></div>
-      </div>
-      
-      <div class="rs-card partial">
-        <div class="rs-model-label" data-i18n="results.partialLabel">Partial model</div>
-        <div class="rs-score-num"   id="rs-score-p">—</div>
-        <div class="rs-score-sub"   data-i18n="results.scoreSubLabel">avg. controllability score</div>
-        <div class="rs-bar-wrap">
-          <div class="rs-bar-fill" id="rs-bar-p" style="width:0%"></div>
-        </div>
-        <div class="rs-output-pills" id="rs-pills-p"></div>
-      </div>
-
-      <div class="rs-card full">
-        <div class="rs-model-label" data-i18n="results.fullLabel">Full model</div>
-        <div class="rs-score-num"   id="rs-score-f">—</div>
-        <div class="rs-score-sub"   data-i18n="results.scoreSubLabel">avg. controllability score</div>
-        <div class="rs-bar-wrap">
-          <div class="rs-bar-fill" id="rs-bar-f" style="width:0%"></div>
-        </div>
-        <div class="rs-output-pills" id="rs-pills-f"></div>
-      </div>
-
     </div>
 
     <!-- Head-to-head chart -->
