@@ -104,7 +104,7 @@ function buildPrimitiveAttribution(result, lang) {
   return parts.join(' · ')
 }
 
-function buildStakesHeader(domainKey, scenarios) {
+function buildStakesHeader(domainKey, scenarios, modelKey, runResults) {
   const lang = getLang()
   const label = domainLabel(domainKey)
   const HARMS_MAP = { en: HARMS, fr: HARMS_FR, de: HARMS_DE, es: HARMS_ES }
@@ -115,36 +115,65 @@ function buildStakesHeader(domainKey, scenarios) {
   // richest evidence for the stakes header
   const baselineRuns = runAll('baseline', scenarios)
 
-  // Collect exactly one finding per severity level
-  // We look across ALL five models to guarantee we find
-  // at least one example of each output type
+  // Build findings from actual run results if available
   const findings = []
 
-  for (const severity of SEVERITY_ORDER) {
-    // Try each model in order from least to most governed
-    // so the harm description matches the actual failure mode
-    const modelOrder = ['baseline', 'reversibility_only', 'boundaries_only', 'partial', 'full']
-    let found = false
-
-    for (const modelKey of modelOrder) {
-      if (found) break
-      const modelRuns = runAll(modelKey, scenarios)
-      const match = modelRuns.find(r =>
-        r.result.output === severity &&
-        r.scenario.delegationRequired !== 'low' &&
-        domainHarms[r.scenario.id]?.[severity] &&
-        // Don't reuse a scenario already shown in a higher severity finding
-        !findings.some(f => f.scenario.id === r.scenario.id)
+  if (runResults && runResults.length > 0 && scenarios) {
+    // Pair results with scenarios by index, sort by severity, filter compliant
+    const sortedRuns = runResults
+      .map((result, i) => ({ result, scenario: scenarios[i] }))
+      .filter(({ result, scenario }) =>
+        result &&
+        result.output !== 'compliant' &&
+        scenario &&
+        domainHarms[scenario.id]?.[result.output]
       )
-      if (match) {
+      .sort((a, b) =>
+        SEVERITY_ORDER.indexOf(a.result.output) - SEVERITY_ORDER.indexOf(b.result.output)
+      )
+
+    // Take top 3 most severe — unique scenarios only
+    const seenScenarios = new Set()
+    for (const { result, scenario } of sortedRuns) {
+      if (findings.length >= 3) break
+      if (seenScenarios.has(scenario.id)) continue
+      const harm = domainHarms[scenario.id]?.[result.output]
+      if (harm) {
         findings.push({
-          severity,
-          scenario: match.scenario,
-          result:   match.result,
-          harm:     domainHarms[match.scenario.id][severity],
-          model:    modelKey,
+          severity: result.output,
+          scenario,
+          result,
+          harm,
+          model: modelKey,
         })
-        found = true
+        seenScenarios.add(scenario.id)
+      }
+    }
+  } else {
+    // Fallback: compute across all models
+    for (const severity of SEVERITY_ORDER) {
+      if (findings.length >= 3) break
+      const modelOrder = ['baseline', 'reversibility_only', 'boundaries_only', 'partial', 'full']
+      let found = false
+      for (const mk of modelOrder) {
+        if (found) break
+        const modelRuns = runAll(mk, scenarios)
+        const match = modelRuns.find(r =>
+          r.result.output === severity &&
+          r.scenario.delegationRequired !== 'low' &&
+          domainHarms[r.scenario.id]?.[severity] &&
+          !findings.some(f => f.scenario.id === r.scenario.id)
+        )
+        if (match) {
+          findings.push({
+            severity,
+            scenario: match.scenario,
+            result:   match.result,
+            harm:     domainHarms[match.scenario.id][severity],
+            model:    mk,
+          })
+          found = true
+        }
       }
     }
   }
@@ -537,21 +566,41 @@ function renderEmptyState() {
 // ─── POPULATE ─────────────────────────────────────────────────────────────────
 // Called by the simulator after every run, same as populateResults().
 
-export function populateAnalysis() {
-  const domainKey = getActiveDomain()
-  const scenarios = DOMAINS[domainKey]?.scenarios
-  if (!scenarios) return
+// Store last run data for language re-renders
+let lastAnalysisDomain  = null
+let lastAnalysisModel   = null
+let lastAnalysisResults = []
+let lastAnalysisScenarios = []
 
-  // Build stakes header first
+export function populateAnalysis(domainKey, modelKey, runResults, scenarios) {
+  // Store for language re-renders
+  if (domainKey)  lastAnalysisDomain    = domainKey
+  if (modelKey)   lastAnalysisModel     = modelKey
+  if (runResults) lastAnalysisResults   = runResults
+  if (scenarios)  lastAnalysisScenarios = scenarios
+
+  const activeDomain    = lastAnalysisDomain || getActiveDomain()
+  const activeScenarios = lastAnalysisScenarios.length
+    ? lastAnalysisScenarios
+    : DOMAINS[activeDomain]?.scenarios
+  if (!activeScenarios) return
+
+    console.log('populateAnalysis rendering stakes with', runResults?.length, 'results')
+  // Build stakes header using actual run results
   const stakesEl = document.getElementById('analysis-stakes')
-  if (stakesEl) stakesEl.innerHTML = buildStakesHeader(domainKey, scenarios)
+  if (stakesEl) stakesEl.innerHTML = buildStakesHeader(
+    activeDomain,
+    activeScenarios,
+    lastAnalysisModel,
+    lastAnalysisResults
+  )
 
   // Build pattern cards
   const containers = [
-    { id: 'analysis-p1', html: buildP1(domainKey, scenarios) },
-    { id: 'analysis-p2', html: buildP2(domainKey, scenarios) },
-    { id: 'analysis-p3', html: buildP3(domainKey, scenarios) },
-    { id: 'analysis-p4', html: buildP4(domainKey, scenarios) },
+    { id: 'analysis-p1', html: buildP1(activeDomain, activeScenarios) },
+    { id: 'analysis-p2', html: buildP2(activeDomain, activeScenarios) },
+    { id: 'analysis-p3', html: buildP3(activeDomain, activeScenarios) },
+    { id: 'analysis-p4', html: buildP4(activeDomain, activeScenarios) },
   ]
 
   containers.forEach(({ id, html }) => {
@@ -566,10 +615,14 @@ export function initAnalysis() {
   renderEmptyState()
 
   onLangChange(() => {
-    const domainKey = getActiveDomain()
+    const domainKey = lastAnalysisDomain || getActiveDomain()
     if (domainKey) {
-      populateAnalysis()
-      populateDrift()
+      populateAnalysis(
+        lastAnalysisDomain,
+        lastAnalysisModel,
+        lastAnalysisResults,
+        lastAnalysisScenarios
+      )
     }
   })
 }

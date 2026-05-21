@@ -402,7 +402,7 @@ export function runNext() {
     updateEvents()
 
     populateResults(activeDomain, currentModel, runResults, activeScenarios)
-    populateAnalysis()
+    populateAnalysis(activeDomain, currentModel, runResults, activeScenarios)
     populateDrift()
     running = false
     btn.classList.remove('running')
@@ -430,8 +430,8 @@ export function runAll() {
     updateScore()
     updateChart()
     updateEvents()
-    populateResults(activeDomain, currentModel, runResults, activeScenarios)
-    populateAnalysis()
+    populateResults(activeDomain, currentModel, runResults, activeScenarios)   
+    populateAnalysis(activeDomain, currentModel, runResults, activeScenarios)
     populateDrift()
     i++
     setTimeout(step, 180)
