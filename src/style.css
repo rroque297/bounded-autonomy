@@ -1421,3 +1421,14 @@ footer a { color: var(--cyan); text-decoration: none; }
   line-height: 1.6;
   margin-bottom: 0;
 }
+
+/* ─── Matrix label ──────────────────────────────────────────────────────── */
+
+.matrix-label {
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  color: var(--text2);
+  line-height: 1.75;
+  margin-bottom: 1rem;
+  max-width: 720px;
+}
