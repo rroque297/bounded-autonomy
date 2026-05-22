@@ -9,6 +9,9 @@
 import { MODELS, SCENARIOS, ALL_MODEL_KEYS } from './data/scenarios.js'
 import { DOMAINS } from './data/domains.js'
 import { DOMAIN_CONSEQUENCES } from './data/domainConsequences.js'
+import { DOMAIN_CONSEQUENCES_FR } from './data/domainConsequences.fr.js'
+import { DOMAIN_CONSEQUENCES_DE } from './data/domainConsequences.de.js'
+import { DOMAIN_CONSEQUENCES_ES } from './data/domainConsequences.es.js'
 import { HARMS } from './data/harms.js'
 import { HARMS_FR } from './data/harms.fr.js'
 import { HARMS_DE } from './data/harms.de.js'
@@ -72,6 +75,11 @@ function scoreColor(s) {
 function getHarms(lang) {
   const map = { en: HARMS, fr: HARMS_FR, de: HARMS_DE, es: HARMS_ES }
   return map[lang] || HARMS
+}
+
+function getConsequences(lang) {
+  const map = { en: DOMAIN_CONSEQUENCES, fr: DOMAIN_CONSEQUENCES_FR, de: DOMAIN_CONSEQUENCES_DE, es: DOMAIN_CONSEQUENCES_ES }
+  return map[lang] || DOMAIN_CONSEQUENCES
 }
 
 const SEVERITY_ORDER = ['irreversible', 'violation', 'intervention', 'compliant']
@@ -163,7 +171,7 @@ function renderThisRunSummary(domainKey, modelKey, runResults, scenarios) {
     runsOfType.sort((a, b) => a.result.score - b.result.score)
 
     const worst = runsOfType[0]
-    const consequences = DOMAIN_CONSEQUENCES[domainKey] || DOMAIN_CONSEQUENCES['abstract']
+    const consequences = getConsequences(lang)[domainKey] || getConsequences(lang)['abstract']
     const consequence = consequences[outputType]
       ? consequences[outputType]
           .replace('{count}', counts[outputType])
@@ -205,10 +213,10 @@ function renderThisRunSummary(domainKey, modelKey, runResults, scenarios) {
     const harm = harmValue || t('results.routineHarm')
 
     const primitives = []
-    if (result.reversibilityFailed) primitives.push('Reversibility failed')
-    if (result.boundaryBreached)    primitives.push('Boundary breached')
-    if (result.delegationExceeded)  primitives.push('Delegation exceeded')
-    if (result.output === 'intervention') primitives.push('Intervention active')
+      if (result.reversibilityFailed) primitives.push(t('simulator.primReversibility'))
+      if (result.boundaryBreached)    primitives.push(t('simulator.primBoundary'))
+      if (result.delegationExceeded)  primitives.push(t('simulator.primDelegation'))
+      if (result.output === 'intervention') primitives.push(t('simulator.primIntervention'))
 
     const scenarioDesc = scenario
       ? (scenario.desc[lang] || scenario.desc.en)
@@ -495,7 +503,7 @@ export function initResults() {
     if (!hasData) {
       renderEmptyState()
     } else {
-      renderThisRunSummary(domainKey, modelKey, runResults, scenarios)
+      renderThisRunSummary(lastDomainKey, lastModelKey, lastRunResults, lastScenarios)
       renderSummaryCards()
       renderNarrative(lastDomainKey, lastRunResults, lastScenarios.length ? lastScenarios : ABSTRACT_SCENARIOS)
       renderH2HChart(lastScenarios.length ? lastScenarios : ABSTRACT_SCENARIOS)
