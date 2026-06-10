@@ -62,6 +62,8 @@ const TRANSLATIONS = {
     research: {
       sectionLabel: 'Research Framework',
       h2:           'Four primitives, one question',
+      abstractLabel: 'Abstract',
+      abstract:     'Autonomous AI agents increasingly act on behalf of humans in high-stakes domains. Yet the governance structures that should constrain their authority remain undefined, mismatched, or absent. This project proposes that responsible agentic AI requires anticipatory design: governance primitives specified before deployment, not after harm occurs. Bounded Autonomy for AI operationalizes this claim through four composable constraints: delegation scope, boundary enforcement, reversibility, and intervention capacity. The results demonstrate that governance structure, not AI capability, is the primary determinant of controllability outcomes.',
       intro:        'Can bounded autonomy be operationalized through a minimal set of design primitives and evaluated through observable outcomes? This project isolates the governance structure of autonomy — not the full complexity of AI behavior — using four fixed, composable constraints.',
       p1name:       'Delegation',
       p1desc:       'The scope of authority granted to an autonomous agent. Determines which decisions the agent may make independently versus which require human confirmation or escalation.',
@@ -271,6 +273,8 @@ const TRANSLATIONS = {
     research: {
       sectionLabel: 'Cadre de recherche',
       h2:           'Quatre primitives, une question',
+      abstractLabel: 'Résumé',
+      abstract:     'Les agents IA autonomes agissent de plus en plus au nom des humains dans des domaines à enjeux élevés. Pourtant, les structures de gouvernance qui devraient contraindre leur autorité restent indefinies, inadaptées ou absentes. Ce projet propose que l\'IA agentique responsable nécessite une conception anticipatoire: des primitives de gouvernance spécifiées avant le déploiement, pas après que le préjudice se soit produit. Autonomie Bornée pour l\'IA opérationnalise cette affirmation à travers quatre contraintes composables: portée de délégation, application des limites, réversibilité et capacité d\'intervention. Les résultats démontrent que la structure de gouvernance, et non la capacité de l\'IA, est le principal déterminant des résultats de contrôlabilité.',
       intro:        'L\'autonomie bornée peut-elle être opérationnalisée à travers un ensemble minimal de primitives de conception et évaluée à travers des résultats observables? Ce projet isole la structure de gouvernance de l\'autonomie — non la complexité totale du comportement des IA — en utilisant quatre contraintes fixes et composables.',
       p1name:       'Délégation',
       p1desc:       'L\'étendue de l\'autorité accordée à un agent autonome. Détermine les décisions que l\'agent peut prendre indépendamment par rapport à celles nécessitant une confirmation humaine ou une escalade.',
@@ -476,6 +480,8 @@ const TRANSLATIONS = {
     research: {
       sectionLabel: 'Forschungsrahmen',
       h2:           'Vier Primitive, eine Frage',
+      abstractLabel: 'Zusammenfassung',
+      abstract:     'Autonome KI-Agenten handeln zunehmend im Namen von Menschen in hochriskanten Bereichen. Doch die Governance-Strukturen, die ihre Befugnisse einschränken sollten, bleiben undefiniert, nicht angepasst oder fehlen ganz. Dieses Projekt schlägt vor, dass verantwortungsvolle agentische KI antizipatorisches Design erfordert: Governance-Primitive, die vor dem Einsatz festgelegt werden, nicht nachdem Schaden entstanden ist. Begrenzte Autonomie für KI operationalisiert diese These durch vier komponierbare Einschränkungen: Delegationsumfang, Grenzdurchsetzung, Reversibilität und Interventionskapazität. Die Ergebnisse zeigen, dass die Governance-Struktur, nicht die KI-Fähigkeit, der primäre Bestimmungsfaktor für Kontrollierbarkeitsresultate ist.',
       intro:        'Kann begrenzte Autonomie durch einen minimalen Satz von Designprimitiven operationalisiert und durch beobachtbare Ergebnisse bewertet werden? Dieses Projekt isoliert die Governance-Struktur der Autonomie — nicht die gesamte Komplexität des KI-Verhaltens — unter Verwendung von vier festen, zusammensetzbaren Einschränkungen.',
       p1name:       'Delegation',
       p1desc:       'Der Umfang der einem autonomen Agenten gewährten Autorität. Bestimmt, welche Entscheidungen der Agent unabhängig treffen kann, und welche eine menschliche Bestätigung oder Eskalation erfordern.',
@@ -681,6 +687,8 @@ const TRANSLATIONS = {
     research: {
       sectionLabel: 'Marco de investigación',
       h2:           'Cuatro primitivas, una pregunta',
+      abstractLabel: 'Resumen',
+      abstract:     'Los agentes de IA autónomos actúan cada vez más en nombre de los humanos en dominios de alto riesgo. Sin embargo, las estructuras de gobernanza que deberían limitar su autoridad permanecen indefinidas, inadecuadas o ausentes. Este proyecto propone que la IA agéntica responsable requiere un diseño anticipatorio: primitivas de gobernanza especificadas antes del despliegue, no después de que ocurra el daño. Autonomía Acotada para IA operacionaliza esta afirmación a través de cuatro restricciones componibles: alcance de delegación, aplicación de límites, reversibilidad y capacidad de intervención. Los resultados demuestran que la estructura de gobernanza, y no la capacidad de la IA, es el principal determinante de los resultados de controlabilidad.',
       intro:        '¿Puede la autonomía acotada operacionalizarse a través de un conjunto mínimo de primitivas de diseño y evaluarse a través de resultados observables? Este proyecto aísla la estructura de gobernanza de la autonomía — no la complejidad total del comportamiento de la IA — usando cuatro restricciones fijas y componibles.',
       p1name:       'Delegación',
       p1desc:       'El alcance de la autoridad otorgada a un agente autónomo. Determina qué decisiones puede tomar el agente de forma independiente frente a cuáles requieren confirmación humana o escalada.',
