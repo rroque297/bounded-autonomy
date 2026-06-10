@@ -692,10 +692,10 @@ footer a { color: var(--cyan); text-decoration: none; }
 .method-icon { display: none; }
 
 .method-text {
-  font-size: 0.78rem;
-  color: var(--text3);
+  font-size: 0.82rem;
+  color: var(--text2);
   line-height: 1.7;
-  font-style: italic;
+  font-style: normal;
 }
 
 .method-text strong { color: var(--text2); font-weight: 500; }
