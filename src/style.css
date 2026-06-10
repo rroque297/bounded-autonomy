@@ -219,6 +219,31 @@ h2 {
 .intervention .primitive-icon svg { stroke: var(--green); }
 .intervention .primitive-tag { background: rgba(57,217,138,0.08); color: var(--green); border: 1px solid rgba(57,217,138,0.2); }
 
+/* ─── HORIZON CARD (05) ─── */
+.primitives-grid { grid-template-rows: auto auto; }
+.primitive-card.horizon {
+  grid-column: 1 / -1;
+  display: flex; flex-direction: row;
+  align-items: flex-start; gap: 2rem;
+  background: rgba(200,204,232,0.04);
+  border: 1px dashed rgba(200,204,232,0.35);
+  opacity: 0.85;
+}
+.primitive-card.horizon::before { display: none; }
+.primitive-card.horizon .primitive-icon {
+  background: rgba(200,204,232,0.06);
+  flex-shrink: 0;
+}
+.primitive-card.horizon .primitive-icon svg { stroke: var(--text3); }
+.primitive-card.horizon .primitive-name { color: var(--text2); }
+.primitive-card.horizon .primitive-desc { margin-bottom: 0.75rem; }
+.primitive-card.horizon .primitive-tag {
+  background: rgba(200,204,232,0.1);
+  color: var(--text2);
+  border: 1px dashed rgba(200,204,232,0.4);
+}
+.horizon-body { display: flex; flex-direction: column; }
+
 /* ─── SIMULATOR ─── */
 #simulator { padding-top: 96px; }
 .sim-header { margin-bottom: 2.5rem; }

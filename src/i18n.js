@@ -73,6 +73,9 @@ const TRANSLATIONS = {
       p4name:       'Intervention',
       p4desc:       'The active response mechanism triggered when a governance threshold is crossed. Converts detection into action — halting, escalating, or redirecting an agent when delegation or boundary conditions are violated.',
       p4tag:        'Active response',
+      p5name:       'Design Horizon',
+      p5desc:       'The governance frontier this framework identifies but cannot yet operationalize. Contestability — the capacity for affected parties to see, challenge, or reject autonomous decisions — marks the boundary of what bounded autonomy can currently guarantee.',
+      p5tag:        'Frontier',
     },
 
     // ── Simulator
@@ -277,6 +280,9 @@ const TRANSLATIONS = {
       p4name:       'Intervention',
       p4desc:       'Le mécanisme de réponse active déclenché lorsqu\'un seuil de gouvernance est franchi. Convertit la détection en action — arrêtant, escaladant ou redirigeant un agent lorsque les conditions de délégation ou de limite sont violées.',
       p4tag:        'Réponse active',
+      p5name:       'Horizon de conception',
+      p5desc:       'La frontière de gouvernance que ce cadre identifie mais ne peut pas encore opérationnaliser. La contestabilité — la capacité des parties concernées à voir, contester ou rejeter les décisions autonomes — marque la limite de ce que l\'autonomie bornée peut actuellement garantir.',
+      p5tag:        'Frontière',
     },
 
     simulator: {
@@ -477,6 +483,9 @@ const TRANSLATIONS = {
       p4name:       'Intervention',
       p4desc:       'Der aktive Reaktionsmechanismus, der ausgelöst wird, wenn ein Governance-Schwellenwert überschritten wird. Wandelt Erkennung in Aktion um — hält einen Agenten an, eskaliert oder leitet ihn um, wenn Delegations- oder Grenzbedingungen verletzt werden.',
       p4tag:        'Aktive Reaktion',
+      p5name:       'Designhorizont',
+      p5desc:       'Die Governance-Grenze, die dieses Framework identifiziert, aber noch nicht operationalisieren kann. Anfechtbarkeit — die Fähigkeit betroffener Parteien, autonome Entscheidungen einzusehen, anzufechten oder abzulehnen — markiert die Grenze dessen, was begrenzte Autonomie derzeit garantieren kann.',
+      p5tag:        'Horizont',
     },
 
     simulator: {
@@ -677,6 +686,9 @@ const TRANSLATIONS = {
       p4name:       'Intervención',
       p4desc:       'El mecanismo de respuesta activa que se activa cuando se cruza un umbral de gobernanza. Convierte la detección en acción — deteniendo, escalando o redirigiendo un agente cuando se violan las condiciones de delegación o límite.',
       p4tag:        'Respuesta activa',
+      p5name:       'Horizonte de diseño',
+      p5desc:       'La frontera de gobernanza que este marco identifica pero aún no puede operacionalizar. La contestabilidad — la capacidad de las partes afectadas para ver, cuestionar o rechazar las decisiones autónomas — marca el límite de lo que la autonomía acotada puede garantizar actualmente.',
+      p5tag:        'Frontera',
     },
 
     simulator: {
