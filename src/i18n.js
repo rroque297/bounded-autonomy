@@ -104,7 +104,7 @@ const TRANSLATIONS = {
       domainNote:   'Select a domain context to apply to all scenarios. Each domain uses the same governance structure with sector-specific consequences.',
       toolbarLabel: 'Model',
       runAllBtn:    'Run all 8 →',
-      runNextBtn:   'Run next scenario',
+      runNextBtn:   'Explore step by step',
       logTitle:     'Experiment log',
       cfgTitle:     'Current configuration',
       cfgDeleg:     'Delegation',

@@ -10,6 +10,7 @@ import { populateResults } from './results.js'
 import { DOMAINS } from './data/domains.js'
 import { t, getLang } from './i18n.js'
 import { populateAnalysis, populateDrift } from './analysis.js'
+import { selectInsight } from './insights.js'
 
 var LEVELS = {
   none: 0,
@@ -400,16 +401,48 @@ export function runNext() {
     populateResults(activeDomain, currentModel, runResults, activeScenarios)
     populateAnalysis(activeDomain, currentModel, runResults, activeScenarios)
     populateDrift()
+    renderInsight(result, runIndex)
     running = false
     btn.classList.remove('running')
     if (runIndex >= activeScenarios.length) {
-      btn.textContent = 'All runs complete'
-      btn.disabled = true
-    } else {
-      btn.textContent = 'Run next scenario'
-      btn.disabled = false
+    btn.textContent = 'All runs complete'
+    btn.disabled = true
+        } else {
+    btn.textContent = 'Explore step by step'
+    btn.disabled = false
     }
   }, 480)
+}
+
+// ─── INSIGHT CARD ─────────────────────────────────────────────────────────────
+function renderInsight(result, runNumber) {
+  const insight = selectInsight(result)
+  const container = document.querySelector('#insight-container')
+console.log('insight container found:', container, document.readyState)
+if (!container) return
+
+  const card = document.createElement('div')
+  card.className = 'insight-card'
+  card.innerHTML = `
+    <div class="insight-run-label">Run ${runNumber} insight</div>
+    <div class="insight-body">
+      <div class="insight-block">
+        <div class="insight-block-label">What happened</div>
+        <p class="insight-text">${insight.interpretation}</p>
+      </div>
+      <div class="insight-block">
+        <div class="insight-block-label">Real-world parallel</div>
+        <p class="insight-text insight-case">${insight.realWorldCase}</p>
+      </div>
+      <div class="insight-block">
+        <div class="insight-block-label">Governance question</div>
+        <p class="insight-text insight-question">${insight.question}</p>
+      </div>
+    </div>
+  `
+  // Prepend so most recent is always on top
+  container.prepend(card)
+  container.style.display = 'block'
 }
 
 // ─── ACTIONS: RUN ALL ─────────────────────────────────────────────────────────
