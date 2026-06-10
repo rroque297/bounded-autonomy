@@ -553,7 +553,7 @@ footer a { color: var(--cyan); text-decoration: none; }
   border-radius: var(--radius);
   padding: 0.75rem 1rem;
   margin-bottom: 2rem;
-  max-width: 100%;
+  max-width: 680px;
 }
 .results-disclaimer-icon {
   color: var(--amber);
@@ -1536,6 +1536,9 @@ footer a { color: var(--cyan); text-decoration: none; }
   font-family: var(--mono);
   line-height: 1.6;
   margin-bottom: 0;
+}
+.sim-note:empty {
+  display: none;
 }
 
 /* ─── Matrix label ──────────────────────────────────────────────────────── */
