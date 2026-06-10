@@ -218,7 +218,7 @@ const TRANSLATIONS = {
     
     // ── Footer
     footer: {
-      credit: 'Bounded Autonomy Research · Master in Design for Responsible Artificial Intelligence · Elisava School of Design and Engineering · 2025',
+      credit: 'Bounded Autonomy Research · Master in Design for Responsible Artificial Intelligence · Elisava School of Design and Engineering · 2026',
       note:   'Proof of concept — no real AI decision-making',
     },
   },
@@ -421,7 +421,7 @@ const TRANSLATIONS = {
     },
     
     footer: {
-      credit: 'Recherche Autonomie Bornée · Master en Design pour l\'IA Responsable · Elisava École de Design et d\'Ingénierie · 2025',
+      credit: 'Recherche Autonomie Bornée · Master en Design pour l\'IA Responsable · Elisava École de Design et d\'Ingénierie · 2026',
       note:   'Preuve de concept — aucune prise de décision IA réelle',
     },
   },
@@ -624,7 +624,7 @@ const TRANSLATIONS = {
     },
 
     footer: {
-      credit: 'Forschung Begrenzte Autonomie · Master in Design für verantwortungsvolle KI · Elisava Schule für Design und Ingenieurwesen · 2025',
+      credit: 'Forschung Begrenzte Autonomie · Master in Design für verantwortungsvolle KI · Elisava Schule für Design und Ingenieurwesen · 2026',
       note:   'Machbarkeitsnachweis — keine echte KI-Entscheidungsfindung',
     },
   },
@@ -827,7 +827,7 @@ const TRANSLATIONS = {
     },
 
     footer: {
-      credit: 'Investigación Autonomía Acotada · Máster en Diseño para la IA Responsable · Elisava Escuela de Diseño e Ingeniería · 2025',
+      credit: 'Investigación Autonomía Acotada · Máster en Diseño para la IA Responsable · Elisava Escuela de Diseño e Ingeniería · 2026',
       note:   'Prueba de concepto — sin toma de decisiones IA real',
     },
   },
