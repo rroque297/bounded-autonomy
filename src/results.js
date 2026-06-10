@@ -448,26 +448,10 @@ function renderEmptyState() {
   })
 
   const h2hEl = document.getElementById('h2h-chart')
-  if (h2hEl) {
-    h2hEl.innerHTML = ABSTRACT_SCENARIOS.map((s, i) => {
-      const bars = ALL_MODEL_KEYS.map(() => `
-        <div class="h2h-bar-row">
-          <div class="h2h-bar-track">
-            <div class="h2h-bar-inner" style="width:0%"></div>
-          </div>
-          <span class="h2h-val" style="color:var(--text3)">—</span>
-        </div>`).join('')
-      return `<div style="display:grid;grid-template-columns:180px 1fr;align-items:center;gap:1rem;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.03);">
-        <span style="font-family:var(--mono);font-size:0.68rem;color:var(--text2);line-height:1.4;">#${i + 1} ${s.desc[getLang()] || s.desc.en}</span>
-        <div style="display:flex;flex-direction:column;gap:3px;">${bars}</div>
-      </div>`
-    }).join('')
-  }
+if (h2hEl) h2hEl.innerHTML = ''
 
-  const tbody = document.getElementById('matrix-body')
-  if (tbody) tbody.innerHTML = ''
-
-  renderThisRunSummary(null, null, [], [])
+const tbody = document.getElementById('matrix-body')
+if (tbody) tbody.innerHTML = ''
 }
 
 // ─── POPULATE RESULTS ─────────────────────────────────────────────────────────

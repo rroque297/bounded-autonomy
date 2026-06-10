@@ -220,21 +220,18 @@ function buildStakesHeader(domainKey, scenarios, modelKey, runResults) {
 // Each function returns an HTML string for one analysis paragraph.
 // They read from the active domain and current language at render time.
 
-function buildP1(domainKey, scenarios) {
+function buildP1(domainKey, scenarios, showEvidence = true) {
   const lang = getLang()
   const label = domainLabel(domainKey)
 
-  // Count irreversible outcomes for baseline in this domain
   const baselineRuns = runAll('baseline', scenarios)
   const fullRuns     = runAll('full', scenarios)
   const baseIrrev    = countOutput(baselineRuns, 'irreversible')
-  const fullIrrev    = countOutput(fullRuns, 'irreversible')
 
-  // Static score facts (verified, domain-invariant)
   const baseScore = 30
   const fullScore = 91
 
-  const domainEvidence = baseIrrev > 0
+  const domainEvidence = showEvidence && baseIrrev > 0
     ? t('analysis.p1p_evidence')
         .replace('{domain}', label)
         .replace('{n}', baseIrrev)
@@ -252,18 +249,15 @@ function buildP1(domainKey, scenarios) {
     </div>`
 }
 
-function buildP2(domainKey, scenarios) {
+function buildP2(domainKey, scenarios, showEvidence = true) {
   const lang = getLang()
   const label = domainLabel(domainKey)
 
   const partialRuns = runAll('partial', scenarios)
-  const boundsRuns  = runAll('boundaries_only', scenarios)
-  const reversRuns  = runAll('reversibility_only', scenarios)
 
-  // Find a scenario where partial intervened despite no boundaries
   const recoveryExample = firstMatch(partialRuns, 'intervention')
 
-  const exampleText = recoveryExample
+  const exampleText = showEvidence && recoveryExample
     ? t('analysis.p2p_evidence')
         .replace('{domain}', label)
         .replace('{scenario}', recoveryExample.scenario.desc[lang] || recoveryExample.scenario.desc.en)
@@ -284,17 +278,14 @@ function buildP2(domainKey, scenarios) {
     </div>`
 }
 
-function buildP3(domainKey, scenarios) {
+function buildP3(domainKey, scenarios, showEvidence = true) {
   const lang = getLang()
   const label = domainLabel(domainKey)
 
   const boundsRuns = runAll('boundaries_only', scenarios)
   const reversRuns = runAll('reversibility_only', scenarios)
 
-  // Boundaries-only fails on irreversibility
   const boundsFailExample = firstMatch(boundsRuns, 'irreversible')
-  
-  // Reversibility-only fails on violation — find a DIFFERENT scenario than bounds if possible
   const boundsScenarioId = boundsFailExample?.scenario.id
   const reversFailExample =
     reversRuns.find(r =>
@@ -303,13 +294,13 @@ function buildP3(domainKey, scenarios) {
       r.scenario.id !== boundsScenarioId
     ) || firstMatch(reversRuns, 'violation')
 
-  const boundsText = boundsFailExample
+  const boundsText = showEvidence && boundsFailExample
     ? t('analysis.p3p_evidence_bounds')
         .replace('{domain}', label)
         .replace('{scenario}', boundsFailExample.scenario.desc[lang] || boundsFailExample.scenario.desc.en)
     : ''
 
-  const reversText = reversFailExample
+  const reversText = showEvidence && reversFailExample
     ? t('analysis.p3p_evidence_revers')
         .replace('{domain}', label)
         .replace('{scenario}', reversFailExample.scenario.desc[lang] || reversFailExample.scenario.desc.en)
@@ -328,7 +319,7 @@ function buildP3(domainKey, scenarios) {
     </div>`
 }
 
-function buildP4(domainKey, scenarios) {
+function buildP4(domainKey, scenarios, showEvidence = true) {
   const lang = getLang()
   const label = domainLabel(domainKey)
 
@@ -549,18 +540,21 @@ function renderEmptyState() {
       </div>`
   }
 
-  // Clear pattern cards
-  const placeholders = {
-    'analysis-p1': 'analysis.p1p',
-    'analysis-p2': 'analysis.p2p',
-    'analysis-p3': 'analysis.p3p',
-    'analysis-p4': 'analysis.p4p',
-  }
-  Object.entries(placeholders).forEach(([id, key]) => {
-    const el = document.getElementById(id)
-    if (!el) return
-    el.innerHTML = `<p style="color:var(--text3);font-size:0.9rem;line-height:1.75;">${t(key)}</p>`
-  })
+  // Clear pattern cards using builders so {domain} resolves correctly
+const emptyDomain = getActiveDomain()
+const emptyScenarios = DOMAINS[emptyDomain]?.scenarios || []
+
+const containers = [
+  { id: 'analysis-p1', html: buildP1(emptyDomain, emptyScenarios, false) },
+  { id: 'analysis-p2', html: buildP2(emptyDomain, emptyScenarios, false) },
+  { id: 'analysis-p3', html: buildP3(emptyDomain, emptyScenarios, false) },
+  { id: 'analysis-p4', html: buildP4(emptyDomain, emptyScenarios, false) },
+]
+
+containers.forEach(({ id, html }) => {
+  const el = document.getElementById(id)
+  if (el) el.innerHTML = html
+})
 }
 
 // ─── POPULATE ─────────────────────────────────────────────────────────────────
@@ -584,8 +578,7 @@ export function populateAnalysis(domainKey, modelKey, runResults, scenarios) {
     ? lastAnalysisScenarios
     : DOMAINS[activeDomain]?.scenarios
   if (!activeScenarios) return
-
-    console.log('populateAnalysis rendering stakes with', runResults?.length, 'results')
+ 
   // Build stakes header using actual run results
   const stakesEl = document.getElementById('analysis-stakes')
   if (stakesEl) stakesEl.innerHTML = buildStakesHeader(
@@ -614,15 +607,27 @@ export function populateAnalysis(domainKey, modelKey, runResults, scenarios) {
 export function initAnalysis() {
   renderEmptyState()
 
+  // Force clear stakes header — guards against bfcache DOM restore
+  const stakesEl = document.getElementById('analysis-stakes')
+  if (stakesEl) {
+    stakesEl.innerHTML = `
+      <div class="stakes-empty">
+        <span class="stakes-empty-icon">[ − ]</span>
+        <span class="stakes-empty-text">${t('analysis.stakesEmpty')}</span>
+      </div>`
+  }
+
   onLangChange(() => {
-    const domainKey = lastAnalysisDomain || getActiveDomain()
-    if (domainKey) {
-      populateAnalysis(
-        lastAnalysisDomain,
-        lastAnalysisModel,
-        lastAnalysisResults,
-        lastAnalysisScenarios
-      )
-    }
-  })
+  if (!lastAnalysisDomain) {
+    renderEmptyState()
+  } else {
+    populateAnalysis(
+      lastAnalysisDomain,
+      lastAnalysisModel,
+      lastAnalysisResults,
+      lastAnalysisScenarios
+    )
+  }
+  populateDrift()
+})
 }
