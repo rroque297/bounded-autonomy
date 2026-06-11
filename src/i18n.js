@@ -89,8 +89,8 @@ const TRANSLATIONS = {
 
     // ── Simulator
     simulator: {
-      sectionLabel: 'Conception de recherche',
-      h2:           'L\'argument de gouvernance',
+      sectionLabel: 'Interactive Proof of Concept',
+      h2:           'Run the experiment',
       sub:          'Each model configuration represents a different combination of governance constraints. Running the experiment shows what happens to autonomous decisions as those constraints are added, removed, or recombined, from fully ungoverned to fully structured.',
       subGuide:     'Suggested path: choose a domain, start with Baseline and run all 8 to see what ungoverned AI decisions look like in practice. Then switch to Full to see what governance structure changes.',
       subNote:      '',
@@ -185,8 +185,8 @@ const TRANSLATIONS = {
 
     // ── Analysis
     analysis: {
-      sectionLabel: 'Diseño de investigación',
-      h2:           'El argumento de gobernanza',
+      sectionLabel: 'Governance Patterns',
+      h2:           'What the runs reveal',
       sub:          'Across 8 runs and five model configurations, four structural governance patterns emerge from the primitive interactions.',
       p1h:          'The cost of absent structure',
       p1p:          'The simulation produces a threefold difference in governance coverage between the least and most constrained configurations. The baseline model scores 30. The full model scores 91. That gap is not incidental. It is the measurable cost of absent structure. Every point between 30 and 91 represents a scenario in which an ungoverned system either exceeded its sanctioned scope, produced an irreversible outcome, or both, with no mechanism available to recover.',
