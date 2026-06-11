@@ -290,12 +290,32 @@
           </div>
         </div>
         <div class="sim-toolbar-row3">
-          <button class="run-all-btn" onclick="runAll()">
-            <span id="run-count" data-i18n="simulator.runAllBtn">Run all 8 →</span>
-          </button>
-          <button class="run-btn" id="run-btn" onclick="runNext()" data-i18n="simulator.runNextBtn">
-            Explore step by step
-          </button>
+          <div class="toolbar-config">
+            <div class="config-row">
+              <span class="config-label" data-i18n="simulator.cfgDeleg">Delegation</span>
+              <span class="config-val" id="cfg-delegation">Full</span>
+            </div>
+            <div class="config-row">
+              <span class="config-label" data-i18n="simulator.cfgBounds">Boundaries</span>
+              <span class="config-val" id="cfg-boundaries">Off</span>
+            </div>
+            <div class="config-row">
+              <span class="config-label" data-i18n="simulator.cfgRev">Reversibility check</span>
+              <span class="config-val" id="cfg-reversibility">Off</span>
+            </div>
+            <div class="config-row">
+              <span class="config-label" data-i18n="simulator.cfgInter">Intervention enabled</span>
+              <span class="config-val" id="cfg-intervention">Off</span>
+            </div>
+          </div>
+          <div class="toolbar-run-buttons">
+            <button class="run-all-btn" onclick="runAll()">
+              <span id="run-count" data-i18n="simulator.runAllBtn">Run all 8 →</span>
+            </button>
+            <button class="run-btn" id="run-btn" onclick="runNext()" data-i18n="simulator.runNextBtn">
+              Explore step by step
+            </button>
+          </div>
         </div>
       </div>
 
@@ -312,29 +332,8 @@
           <div class="run-log" id="run-log"><!-- populated by JS --></div>
         </div>
 
-        <!-- Right: config + score + events -->
+        <!-- Right: score + events -->
         <div class="sim-right">
-
-          <!-- Config -->
-          <div class="panel-section">
-            <div class="panel-title" data-i18n="simulator.cfgTitle">Current configuration</div>
-            <div class="config-row">
-              <span class="config-label" data-i18n="simulator.cfgDeleg">Delegation</span>
-              <span class="config-val"   id="cfg-delegation">Full</span>
-            </div>
-            <div class="config-row">
-              <span class="config-label" data-i18n="simulator.cfgBounds">Boundaries</span>
-              <span class="config-val"   id="cfg-boundaries">Off</span>
-            </div>
-            <div class="config-row">
-              <span class="config-label" data-i18n="simulator.cfgRev">Reversibility check</span>
-              <span class="config-val"   id="cfg-reversibility">Off</span>
-            </div>
-            <div class="config-row">
-              <span class="config-label" data-i18n="simulator.cfgInter">Intervention enabled</span>
-              <span class="config-val"   id="cfg-intervention">Off</span>
-            </div>
-          </div>
 
           <!-- Score -->
           <div class="panel-section">

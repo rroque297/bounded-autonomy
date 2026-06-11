@@ -1287,10 +1287,29 @@ footer a { color: var(--cyan); text-decoration: none; }
 .sim-toolbar-row3 {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 0.75rem;
-  padding-top: 0.25rem;
+  padding-top: 0.75rem;
   border-top: 1px solid rgba(255,255,255,0.05);
+}
+.toolbar-config {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  align-items: center;
+}
+.toolbar-config .config-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 80px;
+}
+.toolbar-run-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: auto;
 }
 
 .model-desc-wrap {

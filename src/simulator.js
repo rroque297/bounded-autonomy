@@ -377,7 +377,10 @@ function resetLog() {
   const eventSec = document.getElementById('events-section')
   if (eventSec) eventSec.style.display = 'none'
   const btn = document.getElementById('run-btn')
-  if (btn) { btn.disabled = false; btn.textContent = 'Run next scenario' }
+  if (btn) { btn.disabled = false; btn.textContent = 'Explore step by step' }
+  clearInsights()
+  const runCountEl = document.getElementById('run-count')
+  if (runCountEl) runCountEl.textContent = t('simulator.runAllBtn')
 }
 
 // ─── ACTIONS: RUN NEXT ────────────────────────────────────────────────────────
@@ -412,6 +415,14 @@ export function runNext() {
     btn.disabled = false
     }
   }, 480)
+}
+
+// ─── CLEAR INSIGHTS ───────────────────────────────────────────────────────────
+function clearInsights() {
+  const container = document.getElementById('insight-container')
+  if (!container) return
+  container.innerHTML = ''
+  container.style.display = 'none'
 }
 
 // ─── INSIGHT CARD ─────────────────────────────────────────────────────────────
