@@ -1504,11 +1504,11 @@ footer a { color: var(--cyan); text-decoration: none; }
 
 .stakes-selection-logic {
   font-family: var(--sans);
-  font-size: 0.78rem;
-  color: var(--text3);
-  line-height: 1.65;
-  margin: 0.25rem 0 0 0;
-  font-style: italic;
+  font-size: 0.82rem;
+  color: var(--text2);
+  line-height: 1.7;
+  margin: 0.5rem 0 1rem 0;
+  font-style: normal;
 }
 
 /* ─── This Run section ──────────────────────────────────────────────────── */
