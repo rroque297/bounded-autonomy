@@ -170,7 +170,7 @@ let running = false   // prevents double-clicks during the animation delay
 // Updates the "Current configuration" panel on the right side of the simulator
 // to reflect whichever model is selected.
 
-function updateConfig() {
+export function updateConfig() {
   const cfg = MODELS[currentModel]
 
   function setVal(id, val, isGood) {
@@ -184,20 +184,17 @@ function updateConfig() {
   }
 
   // Delegation: low is good (tightly scoped), high is risky
-  const delegLabel = cfg.delegationLevel === 'low' ? 'Bounded' :
-                     cfg.delegationLevel === 'medium' ? 'Scoped' : 'Full'
+  const delegLabel = cfg.delegationLevel === 'low' ? t('simulator.cfgValBounded') :
+  cfg.delegationLevel === 'medium' ? t('simulator.cfgValScoped') : t('simulator.cfgValFull')
   setVal('cfg-delegation', delegLabel, cfg.delegationLevel === 'low')
-
   // Boundaries: strong is good, none is risky
-  const boundLabel = cfg.boundaryStrength === 'strong' ? 'On' : 'Off'
+  const boundLabel = cfg.boundaryStrength === 'strong' ? t('simulator.cfgValOn') : t('simulator.cfgValOff')
   setVal('cfg-boundaries', boundLabel, cfg.boundaryStrength === 'strong')
-
   // Reversibility: fast is good, none is risky
-  const revLabel = cfg.reversibilitySpeed === 'fast' ? 'On' : 'Off'
+  const revLabel = cfg.reversibilitySpeed === 'fast' ? t('simulator.cfgValOn') : t('simulator.cfgValOff')
   setVal('cfg-reversibility', revLabel, cfg.reversibilitySpeed === 'fast')
-
   // Intervention: true is good, false is risky
-  const interLabel = cfg.interventionActive ? 'On' : 'Off'
+  const interLabel = cfg.interventionActive ? t('simulator.cfgValOn') : t('simulator.cfgValOff')
   setVal('cfg-intervention', interLabel, cfg.interventionActive)
 }
 
@@ -381,6 +378,9 @@ function resetLog() {
   clearInsights()
   const runCountEl = document.getElementById('run-count')
   if (runCountEl) runCountEl.textContent = t('simulator.runAllBtn')
+  populateResults(activeDomain, currentModel, [], activeScenarios)
+  populateAnalysis(activeDomain, currentModel, [], activeScenarios)
+  populateDrift()
 }
 
 // ─── ACTIONS: RUN NEXT ────────────────────────────────────────────────────────
