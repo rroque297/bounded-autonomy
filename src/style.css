@@ -635,6 +635,19 @@ h2 {
 }
 .pattern-card p { font-size: 0.875rem; color: var(--text2); line-height: 1.7; }
 
+.pattern-card-limit {
+  grid-column: 1 / -1;
+  background: transparent;
+  border: 1px dashed rgba(200,204,232,0.25);
+  opacity: 0.8;
+}
+.pattern-card-limit h3 {
+  color: var(--text2);
+}
+.pattern-card-limit p {
+  color: var(--text3);
+}
+
 /* ─── FOOTER ─── */
 footer {
   border-top: 1px solid var(--border);
