@@ -1645,16 +1645,27 @@ footer a { color: var(--cyan); text-decoration: none; }
 }
 
 .sim-guide {
-  color: var(--cyan);
-  max-width: 600px;
-  font-size: 0.88rem;
+  color: var(--text2);
+  max-width: 760px;
+  font-size: 0.85rem;
   font-family: var(--sans);
   line-height: 1.75;
-  margin-bottom: 0.5rem;
-  padding: 0.6rem 0.875rem;
-  background: rgba(0,229,200,0.04);
-  border-left: 2px solid rgba(0,229,200,0.3);
-  border-radius: 0 4px 4px 0;
+  margin-bottom: 1.25rem;
+  margin-top: 0.5rem;
+  margin-left: 1.5rem;
+  padding: 0;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+
+.sim-guide-icon {
+  color: var(--cyan);
+  margin-right: 0.5rem;
+  font-size: 0.7rem;
+  vertical-align: middle;
 }
 
 .sim-note {
