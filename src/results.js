@@ -484,8 +484,9 @@ export function initResults() {
   renderEmptyState()
 
   onLangChange(() => {
+    console.log('[results] onLangChange fired, hasData:', hasData)
     if (!hasData) {
-      renderEmptyState()
+    renderEmptyState()
     } else {
       renderThisRunSummary(lastDomainKey, lastModelKey, lastRunResults, lastScenarios)
       renderSummaryCards()

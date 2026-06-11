@@ -374,7 +374,7 @@ function resetLog() {
   const eventSec = document.getElementById('events-section')
   if (eventSec) eventSec.style.display = 'none'
   const btn = document.getElementById('run-btn')
-  if (btn) { btn.disabled = false; btn.textContent = 'Explore step by step' }
+  if (btn) { btn.disabled = false; btn.textContent = t('simulator.runNextBtn') }
   clearInsights()
   const runCountEl = document.getElementById('run-count')
   if (runCountEl) runCountEl.textContent = t('simulator.runAllBtn')
@@ -417,17 +417,51 @@ export function runNext() {
   }, 480)
 }
 
-// ─── CLEAR INSIGHTS ───────────────────────────────────────────────────────────
+// ─── INSIGHT STORE ────────────────────────────────────────────────────────────
+let insightResults = [] // stores {result, runNumber} for re-render on lang change
+
 function clearInsights() {
   const container = document.getElementById('insight-container')
   if (!container) return
   container.innerHTML = ''
   container.style.display = 'none'
+  insightResults = []
+}
+
+export function rerenderInsights() {
+  const container = document.getElementById('insight-container')
+  if (!container || insightResults.length === 0) return
+  container.innerHTML = ''
+  // Re-render in reverse order so most recent stays on top
+  const ordered = [...insightResults].reverse()
+  ordered.forEach(({ result, runNumber }) => {
+    const insight = selectInsight(result, getLang())
+    const card = document.createElement('div')
+    card.className = 'insight-card'
+    card.innerHTML = `
+      <div class="insight-run-label">Run ${runNumber} insight</div>
+      <div class="insight-body">
+        <div class="insight-block">
+          <div class="insight-block-label">What happened</div>
+          <p class="insight-text">${insight.interpretation}</p>
+        </div>
+        <div class="insight-block">
+          <div class="insight-block-label">Real-world parallel</div>
+          <p class="insight-text insight-case">${insight.realWorldCase}</p>
+        </div>
+        <div class="insight-block">
+          <div class="insight-block-label">Governance question</div>
+          <p class="insight-text insight-question">${insight.question}</p>
+        </div>
+      </div>
+    `
+    container.appendChild(card)
+  })
 }
 
 // ─── INSIGHT CARD ─────────────────────────────────────────────────────────────
 function renderInsight(result, runNumber) {
-  const insight = selectInsight(result)
+  const insight = selectInsight(result, getLang())
   const container = document.querySelector('#insight-container')
 console.log('insight container found:', container, document.readyState)
 if (!container) return
@@ -451,6 +485,8 @@ if (!container) return
       </div>
     </div>
   `
+  // Store for re-render on language change
+  insightResults.push({ result, runNumber })
   // Prepend so most recent is always on top
   container.prepend(card)
   container.style.display = 'block'

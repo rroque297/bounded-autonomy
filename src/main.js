@@ -15,9 +15,9 @@
 import './style.css'
 import './lang-switcher.css'
 
-import { initI18n, onLangChange, applyTranslations } from './i18n.js'
+import { initI18n, onLangChange, applyTranslations, t } from './i18n.js'
 import { mountLangSwitcher } from './langSwitcher.js'
-import { initSimulator, selectModel, runNext, runAll, selectDomain, updateConfig } from './simulator.js'
+import { initSimulator, selectModel, runNext, runAll, selectDomain, updateConfig, rerenderInsights } from './simulator.js'
 import { initResults } from './results.js'
 import { initAnalysis, populateAnalysis } from './analysis.js'
 import { DOMAINS, DOMAIN_KEYS } from './data/domains.js'
@@ -44,6 +44,7 @@ onLangChange((lang) => {
     if (DOMAINS[key]) descEl.textContent = DOMAINS[key].description[lang] || DOMAINS[key].description.en
   }
   updateConfig()
+  rerenderInsights()
   const runBtn = document.getElementById('run-btn')
   if (runBtn && runBtn.textContent !== 'Running…') {
     runBtn.textContent = t('simulator.runNextBtn')
