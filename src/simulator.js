@@ -232,8 +232,8 @@ function renderLog() {
 
       // Build sociotechnical harm label
       const harmText = s.sociotechnicalRisk ? t(`simulator.harm_${s.sociotechnicalRisk}`) : null
-
-      const insight = (i === lastShown) ? selectInsight(r, getLang()) : null
+      const lastShown = shownInsights.size > 0 ? Math.max(...shownInsights) : -1
+      const insight = (!runAllMode && i === lastShown) ? selectInsight(r, getLang()) : null
       const insightHTML = insight ? `
         <div class="inline-insight inline-insight-open">
           <div class="inline-insight-body">
@@ -421,6 +421,7 @@ export function runNext() {
     const result = runScenario(currentModel, activeScenarios[runIndex])
     runResults.push(result)
     runIndex++
+    shownInsights.add(runIndex - 1)
     renderLog()
     updateScore()
     updateChart()
@@ -546,7 +547,7 @@ export function runAll() {
   let i = 0
   function step() {
     if (i >= activeScenarios.length) return
-    const result = runScenario(currentModel, activeScenarios[i])
+    const result = runScenario(currentModel, activeScenarios[runIndex])
     runResults.push(result)
     runIndex++
     shownInsights.add(runIndex - 1)
