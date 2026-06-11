@@ -60,11 +60,15 @@ const TRANSLATIONS = {
 
     // ── Research section
     research: {
-      sectionLabel: 'Research Framework',
-      h2:           'Four primitives, one question',
+      sectionLabel: 'Research Design',
+      h2:           'The governance argument',
       abstractLabel: 'Abstract',
+      rqLabel:      'Research Questions',
+      rq1:          'RQ1: When AI systems are perceived as autonomous agents rather than configured distributions of human choices, what governance conditions become structurally unavailable — and can a design intervention at the deployment-system level restore them?',
+      rq2:          'RQ2: How do different configurations of delegation scope, boundary constraint, reversibility, and intervention capacity produce differentiated harm profiles across deployment domains — and what does that differentiation reveal about whose definition of safety the framework is calibrated against?',
+      rq3:          'RQ3: Can a design artifact make the structural conditions for AI harm legible enough to be acted on by those with deployment authority — and what would be required for that legibility to extend to those governed by the system rather than only those who govern it?',
       citationsLabel: 'Theoretical Basis',
-      abstract:     'Autonomous AI agents increasingly act on behalf of humans in high-stakes domains. Yet the governance structures that should constrain their authority remain undefined, mismatched, or absent. This project proposes that responsible agentic AI requires anticipatory design: governance primitives specified before deployment, not after harm occurs. Bounded Autonomy for AI operationalizes this claim through four composable constraints: delegation scope, boundary enforcement, reversibility, and intervention capacity. The results demonstrate that governance structure, not AI capability, is the primary determinant of controllability outcomes.',
+      abstract:     'When AI system outputs are attributed to the AI as an autonomous agent rather than to the humans whose configuration choices produced them, governance becomes structurally invisible. This project names that condition misattributed intelligence, and proposes four governance primitives as the minimum condition for making the distribution of agency visible again: delegation scope, boundary enforcement, reversibility, and intervention capacity. Bounded Autonomy for AI operationalizes this claim through a deterministic proof-of-concept simulator across twelve domain contexts. The results demonstrate that governance structure, not AI capability, is the primary determinant of controllability outcomes.',
       intro:        'Can bounded autonomy be operationalized through a minimal set of design primitives and evaluated through observable outcomes? This project isolates the governance structure of autonomy, not the full complexity of AI behavior, using four fixed, composable constraints.',
       p1name:       'Delegation',
       p1desc:       'The scope of authority granted to an autonomous agent. Determines which decisions the agent may make independently versus which require human confirmation or escalation.',
@@ -85,8 +89,8 @@ const TRANSLATIONS = {
 
     // ── Simulator
     simulator: {
-      sectionLabel: 'Interactive Proof of Concept',
-      h2:           'Run the experiment',
+      sectionLabel: 'Conception de recherche',
+      h2:           'L\'argument de gouvernance',
       sub:          'Each model configuration represents a different combination of governance constraints. Running the experiment shows what happens to autonomous decisions as those constraints are added, removed, or recombined, from fully ungoverned to fully structured.',
       subGuide:     'Suggested path: choose a domain, start with Baseline and run all 8 to see what ungoverned AI decisions look like in practice. Then switch to Full to see what governance structure changes.',
       subNote:      '',
@@ -137,8 +141,8 @@ const TRANSLATIONS = {
 
     // ── Results
     results: {
-      sectionLabel: 'Dataset & Comparison',
-      h2:           'Results',
+      sectionLabel: 'Datensatz & Vergleich',
+      h2:           'Ergebnisse',
       intro:        'Five models are evaluated across 8 experimental scenarios, each available across 12 domain contexts. Scores are computed deterministically by the rule engine: no statistical variance, no probabilistic modeling. Run the simulator above to populate the data set.',
       baselineLabel:          'Baseline model',
       boundariesOnlyLabel:    'Boundaries only',
@@ -181,8 +185,8 @@ const TRANSLATIONS = {
 
     // ── Analysis
     analysis: {
-      sectionLabel: 'Governance Patterns',
-      h2:           'What the runs reveal',
+      sectionLabel: 'Diseño de investigación',
+      h2:           'El argumento de gobernanza',
       sub:          'Across 8 runs and five model configurations, four structural governance patterns emerge from the primitive interactions.',
       p1h:          'The cost of absent structure',
       p1p:          'The simulation produces a threefold difference in governance coverage between the least and most constrained configurations. The baseline model scores 30. The full model scores 91. That gap is not incidental. It is the measurable cost of absent structure. Every point between 30 and 91 represents a scenario in which an ungoverned system either exceeded its sanctioned scope, produced an irreversible outcome, or both, with no mechanism available to recover.',
@@ -208,7 +212,7 @@ const TRANSLATIONS = {
       driftLabel:         'Cumulative Pressure',
       driftH2:            'How pressure accumulates',
       driftIntro:         'Each run contributes governance pressure based on which primitives failed. The curves below show how that pressure accumulates across all 8 runs, and what it would look like if the experiment never stopped.',
-driftBridge:        'When governance pressure accumulates without correction, the system drifts: it continues operating, but progressively further from its sanctioned mandate. Drift is not a single failure event. It is the structural consequence of absent governance over time.',
+      driftBridge:        'When governance pressure accumulates without correction, the system drifts: it continues operating, but progressively further from its sanctioned mandate. Drift is not a single failure event. It is the structural consequence of absent governance over time.',
       blindSpotLabel:     'What this framework cannot see',
       blindSpotP1:        'The four primitives evaluated here (delegation, boundaries, reversibility, and intervention) establish accountability at decision moments. They govern discrete actions at identifiable points in time. What they cannot govern is the space between decisions: the slow, incremental expansion of effective authority that occurs without any single action ever triggering a boundary violation.',
       blindSpotP2:        'This is autonomy creep. An agentic system that gradually shapes outcomes over hundreds of interactions, each individually compliant, can accumulate influence far beyond its sanctioned scope without producing a single violation event. The curve above resets between experiments. In a deployed system, it never would, and no primitive in this framework would detect the drift.',
@@ -288,11 +292,15 @@ driftBridge:        'When governance pressure accumulates without correction, th
     },
 
     research: {
-      sectionLabel: 'Cadre de recherche',
-      h2:           'Quatre primitives, une question',
+      sectionLabel: 'Conception de recherche',
+      h2:           'L\'argument de gouvernance',
       abstractLabel: 'Résumé',
+      rqLabel:      'Questions de recherche',
+      rq1:          'QR1: Lorsque les systèmes IA sont perçus comme des agents autonomes plutôt que comme des distributions configurées de choix humains, quelles conditions de gouvernance deviennent structurellement indisponibles — et une intervention de conception au niveau du système de déploiement peut-elle les restaurer?',
+      rq2:          'QR2: Comment différentes configurations de portée de délégation, contrainte de limite, réversibilité et capacité d\'intervention produisent-elles des profils de préjudice différenciés dans les domaines de déploiement — et que révèle cette différenciation sur la définition de la sécurité contre laquelle le cadre est calibré?',
+      rq3:          'QR3: Un artefact de conception peut-il rendre les conditions structurelles du préjudice IA suffisamment lisibles pour être utilisées par ceux qui ont l\'autorité de déploiement — et que faudrait-il pour que cette lisibilité s\'étende à ceux gouvernés par le système plutôt qu\'à ceux qui le gouvernent?',
       citationsLabel: 'Fondements théoriques',
-      abstract:     'Les agents IA autonomes agissent de plus en plus au nom des humains dans des domaines à enjeux élevés. Pourtant, les structures de gouvernance qui devraient contraindre leur autorité restent indefinies, inadaptées ou absentes. Ce projet propose que l\'IA agentique responsable nécessite une conception anticipatoire: des primitives de gouvernance spécifiées avant le déploiement, pas après que le préjudice se soit produit. Autonomie Bornée pour l\'IA opérationnalise cette affirmation à travers quatre contraintes composables: portée de délégation, application des limites, réversibilité et capacité d\'intervention. Les résultats démontrent que la structure de gouvernance, et non la capacité de l\'IA, est le principal déterminant des résultats de contrôlabilité.',
+      abstract:     'Lorsque les résultats d\'un système IA sont attribués à l\'IA en tant qu\'agent autonome plutôt qu\'aux humains dont les choix de configuration les ont produits, la gouvernance devient structurellement invisible. Ce projet nomme cette condition intelligence mal attribuée, et propose quatre primitives de gouvernance comme condition minimale pour rendre à nouveau visible la distribution de l\'agentivité: portée de délégation, application des limites, réversibilité et capacité d\'intervention. Autonomie Bornée pour l\'IA opérationnalise cette affirmation à travers un simulateur déterministe dans douze contextes de domaine. Les résultats démontrent que la structure de gouvernance, et non la capacité de l\'IA, est le principal déterminant des résultats de contrôlabilité.',
       intro:        'L\'autonomie bornée peut-elle être opérationnalisée à travers un ensemble minimal de primitives de conception et évaluée à travers des résultats observables? Ce projet isole la structure de gouvernance de l\'autonomie, non la complexité totale du comportement des IA, en utilisant quatre contraintes fixes et composables.',
       p1name:       'Délégation',
       p1desc:       'L\'étendue de l\'autorité accordée à un agent autonome. Détermine les décisions que l\'agent peut prendre indépendamment par rapport à celles nécessitant une confirmation humaine ou une escalade.',
@@ -433,7 +441,7 @@ driftBridge:        'When governance pressure accumulates without correction, th
       driftLabel:         'Pression cumulée',
       driftH2:            'Comment la pression s\'accumule',
       driftIntro:         'Chaque séquence contribue à la pression de gouvernance en fonction des primitives qui ont échoué. Les courbes ci-dessous montrent comment cette pression s\'accumule sur les 8 séquences, et à quoi cela ressemblerait si l\'expérience ne s\'arrêtait jamais.',
-driftBridge:        'Lorsque la pression de gouvernance s\'accumule sans correction, le système dérive: il continue de fonctionner, mais progressivement de plus en plus loin de son mandat autorisé. La dérive n\'est pas un événement de défaillance unique. C\'est la conséquence structurelle d\'une gouvernance absente dans le temps.',
+      driftBridge:        'Lorsque la pression de gouvernance s\'accumule sans correction, le système dérive: il continue de fonctionner, mais progressivement de plus en plus loin de son mandat autorisé. La dérive n\'est pas un événement de défaillance unique. C\'est la conséquence structurelle d\'une gouvernance absente dans le temps.',
       blindSpotLabel:     'Ce que ce cadre ne peut pas voir',
       blindSpotP1:        'Les quatre primitives évaluées ici (délégation, limites, réversibilité et intervention) établissent la responsabilité aux moments de décision. Elles gouvernent des actions discrètes à des points identifiables dans le temps. Ce qu\'elles ne peuvent pas gouverner, c\'est l\'espace entre les décisions : l\'expansion lente et progressive de l\'autorité effective qui se produit sans qu\'aucune action individuelle ne déclenche une violation de limite.',
       blindSpotP2:        'C\'est ce qu\'on appelle la dérive d\'autonomie. Un système agentique qui façonne progressivement les résultats au fil de centaines d\'interactions, chacune individuellement conforme, peut accumuler une influence bien au-delà de son périmètre autorisé sans produire un seul événement de violation. La courbe ci-dessus se réinitialise entre les expériences. Dans un système déployé, ce ne serait jamais le cas, et aucune primitive de ce cadre ne détecterait la dérive.',
@@ -512,11 +520,15 @@ driftBridge:        'Lorsque la pression de gouvernance s\'accumule sans correct
     },
 
     research: {
-      sectionLabel: 'Forschungsrahmen',
-      h2:           'Vier Primitive, eine Frage',
+      sectionLabel: 'Forschungsdesign',
+      h2:           'Das Governance-Argument',
       abstractLabel: 'Zusammenfassung',
+      rqLabel:      'Forschungsfragen',
+      rq1:          'FF1: Wenn KI-Systeme als autonome Agenten wahrgenommen werden statt als konfigurierte Verteilungen menschlicher Entscheidungen, welche Governance-Bedingungen werden strukturell unavailable — und kann eine Designintervention auf Deployment-Systemebene sie wiederherstellen?',
+      rq2:          'FF2: Wie produzieren verschiedene Konfigurationen von Delegationsumfang, Grenzbeschränkung, Reversibilität und Interventionskapazität differenzierte Schadensprofile über Deployment-Domänen — und was offenbart diese Differenzierung über wessen Sicherheitsdefinition das Framework kalibriert ist?',
+      rq3:          'FF3: Kann ein Designartefakt die strukturellen Bedingungen für KI-Schaden lesbar genug machen, um von denen mit Deployment-Autorität gehandelt zu werden — und was wäre erforderlich, damit diese Lesbarkeit sich auf die vom System Regierten erstreckt, nicht nur auf jene, die es regieren?',
       citationsLabel: 'Theoretische Grundlage',
-      abstract:     'Autonome KI-Agenten handeln zunehmend im Namen von Menschen in hochriskanten Bereichen. Doch die Governance-Strukturen, die ihre Befugnisse einschränken sollten, bleiben undefiniert, nicht angepasst oder fehlen ganz. Dieses Projekt schlägt vor, dass verantwortungsvolle agentische KI antizipatorisches Design erfordert: Governance-Primitive, die vor dem Einsatz festgelegt werden, nicht nachdem Schaden entstanden ist. Begrenzte Autonomie für KI operationalisiert diese These durch vier komponierbare Einschränkungen: Delegationsumfang, Grenzdurchsetzung, Reversibilität und Interventionskapazität. Die Ergebnisse zeigen, dass die Governance-Struktur, nicht die KI-Fähigkeit, der primäre Bestimmungsfaktor für Kontrollierbarkeitsresultate ist.',
+      abstract:     'Wenn KI-Systemausgaben dem KI als autonomem Agenten zugeschrieben werden statt den Menschen, deren Konfigurationsentscheidungen sie produzierten, wird Governance strukturell unsichtbar. Dieses Projekt nennt diese Bedingung fehlattribuierte Intelligenz und schlägt vier Governance-Primitive als Mindestbedingung vor, um die Verteilung von Handlungsfähigkeit wieder sichtbar zu machen: Delegationsumfang, Grenzdurchsetzung, Reversibilität und Interventionskapazität. Begrenzte Autonomie für KI operationalisiert diese These durch einen deterministischen Simulator in zwölf Domänenkontexten. Die Ergebnisse zeigen, dass die Governance-Struktur, nicht die KI-Fähigkeit, der primäre Bestimmungsfaktor für Kontrollierbarkeitsresultate ist.',
       intro:        'Kann begrenzte Autonomie durch einen minimalen Satz von Designprimitiven operationalisiert und durch beobachtbare Ergebnisse bewertet werden? Dieses Projekt isoliert die Governance-Struktur der Autonomie — nicht die gesamte Komplexität des KI-Verhaltens — unter Verwendung von vier festen, zusammensetzbaren Einschränkungen.',
       p1name:       'Delegation',
       p1desc:       'Der Umfang der einem autonomen Agenten gewährten Autorität. Bestimmt, welche Entscheidungen der Agent unabhängig treffen kann, und welche eine menschliche Bestätigung oder Eskalation erfordern.',
@@ -657,7 +669,7 @@ driftBridge:        'Lorsque la pression de gouvernance s\'accumule sans correct
       driftLabel:         'Kumulativer Druck',
       driftH2:            'Wie sich Druck akkumuliert',
       driftIntro:         'Jede Sequenz trägt Governance-Druck bei, basierend darauf, welche Primitive versagt haben. Die Kurven unten zeigen, wie sich dieser Druck über alle 8 Sequenzen ansammelt, und wie es aussehen würde, wenn das Experiment nie aufhören würde.',
-driftBridge:        'Wenn sich Governance-Druck ohne Korrektur ansammelt, driftet das System: es funktioniert weiter, aber progressiv weiter von seinem genehmigten Mandat entfernt. Drift ist kein einzelnes Versagensereignis. Es ist die strukturelle Konsequenz fehlender Governance über die Zeit.',
+      driftBridge:        'Wenn sich Governance-Druck ohne Korrektur ansammelt, driftet das System: es funktioniert weiter, aber progressiv weiter von seinem genehmigten Mandat entfernt. Drift ist kein einzelnes Versagensereignis. Es ist die strukturelle Konsequenz fehlender Governance über die Zeit.',
       blindSpotLabel:     'Was dieses Framework nicht sehen kann',
       blindSpotP1:        'Die vier hier bewerteten Primitive (Delegation, Grenzen, Reversibilität und Intervention) etablieren Verantwortlichkeit in Entscheidungsmomenten. Sie regeln diskrete Aktionen zu identifizierbaren Zeitpunkten. Was sie nicht regeln können, ist der Raum zwischen Entscheidungen: die langsame, schrittweise Ausdehnung effektiver Autorität, die ohne dass eine einzelne Aktion eine Grenzverletzung auslöst, stattfindet.',
       blindSpotP2:        'Dies ist Autonomie-Drift. Ein agentisches System, das über Hunderte von Interaktionen hinweg schrittweise Ergebnisse gestaltet, jede einzeln konform, kann Einfluss weit über seinen genehmigten Umfang ansammeln, ohne ein einziges Verletzungsereignis zu produzieren. Die obige Kurve setzt sich zwischen Experimenten zurück. In einem eingesetzten System würde sie es nie tun, und kein Primitiv in diesem Framework würde den Drift erkennen.',
@@ -736,11 +748,15 @@ driftBridge:        'Wenn sich Governance-Druck ohne Korrektur ansammelt, drifte
     },
 
     research: {
-      sectionLabel: 'Marco de investigación',
-      h2:           'Cuatro primitivas, una pregunta',
+      sectionLabel: 'Diseño de investigación',
+      h2:           'El argumento de gobernanza',
       abstractLabel: 'Resumen',
+      rqLabel:      'Preguntas de investigación',
+      rq1:          'PI1: Cuando los sistemas de IA se perciben como agentes autónomos en lugar de distribuciones configuradas de elecciones humanas, ¿qué condiciones de gobernanza se vuelven estructuralmente indisponibles — y puede una intervención de diseño a nivel del sistema de despliegue restaurarlas?',
+      rq2:          'PI2: ¿Cómo producen diferentes configuraciones de alcance de delegación, restricción de límites, reversibilidad y capacidad de intervención perfiles de daño diferenciados en los dominios de despliegue — y qué revela esa diferenciación sobre la definición de seguridad contra la que el marco está calibrado?',
+      rq3:          'PI3: ¿Puede un artefacto de diseño hacer que las condiciones estructurales del daño de IA sean suficientemente legibles para ser actuadas por quienes tienen autoridad de despliegue — y qué se requeriría para que esa legibilidad se extienda a los gobernados por el sistema en lugar de solo a quienes lo gobiernan?',
       citationsLabel: 'Base teórica',
-      abstract:     'Los agentes de IA autónomos actúan cada vez más en nombre de los humanos en dominios de alto riesgo. Sin embargo, las estructuras de gobernanza que deberían limitar su autoridad permanecen indefinidas, inadecuadas o ausentes. Este proyecto propone que la IA agéntica responsable requiere un diseño anticipatorio: primitivas de gobernanza especificadas antes del despliegue, no después de que ocurra el daño. Autonomía Acotada para IA operacionaliza esta afirmación a través de cuatro restricciones componibles: alcance de delegación, aplicación de límites, reversibilidad y capacidad de intervención. Los resultados demuestran que la estructura de gobernanza, y no la capacidad de la IA, es el principal determinante de los resultados de controlabilidad.',
+      abstract:     'Cuando los resultados de un sistema de IA se atribuyen a la IA como agente autónomo en lugar de a los humanos cuyas decisiones de configuración los produjeron, la gobernanza se vuelve estructuralmente invisible. Este proyecto denomina esa condición inteligencia mal atribuida, y propone cuatro primitivas de gobernanza como condición mínima para hacer visible de nuevo la distribución de agencia: alcance de delegación, aplicación de límites, reversibilidad y capacidad de intervención. Autonomía Acotada para IA operacionaliza esta afirmación a través de un simulador determinista en doce contextos de dominio. Los resultados demuestran que la estructura de gobernanza, y no la capacidad de la IA, es el principal determinante de los resultados de controlabilidad.',
       intro:        '¿Puede la autonomía acotada operacionalizarse a través de un conjunto mínimo de primitivas de diseño y evaluarse a través de resultados observables? Este proyecto aísla la estructura de gobernanza de la autonomía, no la complejidad total del comportamiento de la IA, usando cuatro restricciones fijas y componibles.',
       p1name:       'Delegación',
       p1desc:       'El alcance de la autoridad otorgada a un agente autónomo. Determina qué decisiones puede tomar el agente de forma independiente frente a cuáles requieren confirmación humana o escalada.',
@@ -881,7 +897,7 @@ driftBridge:        'Wenn sich Governance-Druck ohne Korrektur ansammelt, drifte
       driftLabel:         'Presión acumulada',
       driftH2:            'Cómo se acumula la presión',
       driftIntro:         'Cada secuencia contribuye presión de gobernanza basada en qué primitivas fallaron. Las curvas a continuación muestran cómo esa presión se acumula a través de las 8 secuencias, y cómo se vería si el experimento nunca se detuviera.',
-driftBridge:        'Cuando la presión de gobernanza se acumula sin corrección, el sistema deriva: continúa operando, pero progresivamente más lejos de su mandato autorizado. La deriva no es un evento de fallo único. Es la consecuencia estructural de una gobernanza ausente a lo largo del tiempo.',
+      driftBridge:        'Cuando la presión de gobernanza se acumula sin corrección, el sistema deriva: continúa operando, pero progresivamente más lejos de su mandato autorizado. La deriva no es un evento de fallo único. Es la consecuencia estructural de una gobernanza ausente a lo largo del tiempo.',
       blindSpotLabel:     'Lo que este marco no puede ver',
       blindSpotP1:        'Las cuatro primitivas evaluadas aquí (delegación, límites, reversibilidad e intervención) establecen responsabilidad en los momentos de decisión. Gobiernan acciones discretas en puntos identificables en el tiempo. Lo que no pueden gobernar es el espacio entre decisiones: la expansión lenta e incremental de la autoridad efectiva que ocurre sin que ninguna acción individual active una violación de límite.',
       blindSpotP2:        'Esto es lo que se denomina deriva de autonomía. Un sistema agéntico que gradualmente moldea resultados a lo largo de cientos de interacciones, cada una individualmente conforme, puede acumular influencia mucho más allá de su alcance autorizado sin producir un solo evento de violación. La curva anterior se reinicia entre experimentos. En un sistema desplegado, nunca lo haría, y ninguna primitiva de este marco detectaría la deriva.',
