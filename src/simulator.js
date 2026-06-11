@@ -228,6 +228,7 @@ function renderLog() {
       // Build sociotechnical harm label
       const harmText = s.sociotechnicalRisk ? t(`simulator.harm_${s.sociotechnicalRisk}`) : null
 
+      const insight = selectInsight(r, getLang())
       row.innerHTML = `
         <span class="run-num">#${i + 1}</span>
         <span class="run-model-badge ${cfg.badgeClass}">${cfg.name}</span>
@@ -237,6 +238,22 @@ function renderLog() {
         <div class="run-attribution">
           <span>↳ ${primitiveText}</span>
           ${harmText ? `<span class="harm-tag">${harmText}</span>` : ''}
+        </div>
+        <div class="inline-insight ${i === runIndex - 1 ? 'inline-insight-open' : ''}">
+          <div class="inline-insight-body">
+            <div class="inline-insight-block">
+              <div class="inline-insight-label">${t('simulator.insightWhat')}</div>
+              <p class="inline-insight-text">${insight.interpretation}</p>
+            </div>
+            <div class="inline-insight-block">
+              <div class="inline-insight-label">${t('simulator.insightCase')}</div>
+              <p class="inline-insight-text insight-case">${insight.realWorldCase}</p>
+            </div>
+            <div class="inline-insight-block">
+              <div class="inline-insight-label">${t('simulator.insightQ')}</div>
+              <p class="inline-insight-text insight-question">${insight.question}</p>
+            </div>
+          </div>
         </div>
       `
     
@@ -388,7 +405,7 @@ export function runNext() {
   if (runIndex >= activeScenarios.length || running) return
   running = true
   const btn = document.getElementById('run-btn')
-  btn.textContent = 'Running…'
+  btn.textContent = t('simulator.runningBtn')
   btn.disabled = true
   btn.classList.add('running')
 
@@ -404,14 +421,13 @@ export function runNext() {
     populateResults(activeDomain, currentModel, runResults, activeScenarios)
     populateAnalysis(activeDomain, currentModel, runResults, activeScenarios)
     populateDrift()
-    renderInsight(result, runIndex)
     running = false
     btn.classList.remove('running')
     if (runIndex >= activeScenarios.length) {
-    btn.textContent = 'All runs complete'
+    btn.textContent = t('simulator.allCompleteBtn')
     btn.disabled = true
         } else {
-    btn.textContent = 'Explore step by step'
+    btn.textContent = t('simulator.runNextBtn')
     btn.disabled = false
     }
   }, 480)

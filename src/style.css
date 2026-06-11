@@ -421,6 +421,47 @@ h2 {
 .insight-question {
   color: var(--cyan);
 }
+
+/* ─── INLINE INSIGHTS ─── */
+.inline-insight {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+  opacity: 0;
+  grid-column: 1 / -1;
+}
+.inline-insight-open {
+  max-height: 400px;
+  opacity: 1;
+}
+.inline-insight-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.5rem;
+  padding: 1rem 0 0.5rem 0;
+  border-top: 1px solid var(--border);
+  margin-top: 0.75rem;
+}
+.inline-insight-label {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 0.4rem;
+}
+.inline-insight-text {
+  font-size: 0.8rem;
+  color: #fff;
+  line-height: 1.65;
+}
+.inline-insight-text.insight-case {
+  color: var(--amber);
+  font-style: normal;
+}
+.inline-insight-text.insight-question {
+  color: var(--cyan);
+}
 .run-all-btn {
   font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em;
   text-transform: uppercase; padding: 8px 16px; border-radius: 7px;
@@ -441,15 +482,28 @@ h2 {
 }
 .run-log { display: flex; flex-direction: column; gap: 0.5rem; }
 .run-row {
-  display: grid; grid-template-columns: 28px 100px 1fr auto auto auto;
-  align-items: center; gap: 0.75rem;
-  background: var(--surface3); border: 1px solid var(--border);
-  border-radius: 7px; padding: 10px 12px;
-  font-family: var(--mono); font-size: 0.72rem;
+  display: grid;
+  grid-template-columns: 28px 100px 1fr auto auto auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--surface3);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 10px 12px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
   transition: border-color 0.2s;
 }
 .run-row:hover { border-color: var(--border2); }
 .run-row.empty { opacity: 0.35; }
+
+.run-row .inline-insight {
+  grid-column: 1 / -1;
+}
+.run-row .run-attribution {
+  grid-column: 1 / -1;
+}
 .run-num { color: var(--text3); }
 .run-model-badge {
   padding: 2px 8px; border-radius: 4px; font-size: 0.66rem;
