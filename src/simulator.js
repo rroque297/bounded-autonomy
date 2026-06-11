@@ -165,11 +165,16 @@ let currentModel = 'baseline'
 let runResults = []   // array of result objects from completed runs
 let runIndex = 0      // which scenario comes next (0–7)
 let running = false   // prevents double-clicks during the animation delay
+let runAllMode = false // suppresses inline insights during run all
+let langChangeMode = false // suppresses inline insights during language re-render
+let shownInsights = new Set() // tracks which run indices have shown insights
 
 // ─── UI: CONFIG PANEL ─────────────────────────────────────────────────────────
 // Updates the "Current configuration" panel on the right side of the simulator
 // to reflect whichever model is selected.
 
+export function setLangChangeMode(val) { langChangeMode = val }
+export function clearShownInsights() { shownInsights = new Set() }
 export function updateConfig() {
   const cfg = MODELS[currentModel]
 
@@ -228,18 +233,9 @@ function renderLog() {
       // Build sociotechnical harm label
       const harmText = s.sociotechnicalRisk ? t(`simulator.harm_${s.sociotechnicalRisk}`) : null
 
-      const insight = selectInsight(r, getLang())
-      row.innerHTML = `
-        <span class="run-num">#${i + 1}</span>
-        <span class="run-model-badge ${cfg.badgeClass}">${cfg.name}</span>
-        <span class="run-desc">${s.desc[getLang()] || s.desc.en}</span>
-        <span class="output-badge ob-${r.output}">${t(`outputs.${r.output}`)}</span>
-        <span class="score-chip ${r.score >= 80 ? 'score-high' : r.score >= 45 ? 'score-mid' : 'score-low'}">${r.score}</span>
-        <div class="run-attribution">
-          <span>↳ ${primitiveText}</span>
-          ${harmText ? `<span class="harm-tag">${harmText}</span>` : ''}
-        </div>
-        <div class="inline-insight ${i === runIndex - 1 ? 'inline-insight-open' : ''}">
+      const insight = (i === lastShown) ? selectInsight(r, getLang()) : null
+      const insightHTML = insight ? `
+        <div class="inline-insight inline-insight-open">
           <div class="inline-insight-body">
             <div class="inline-insight-block">
               <div class="inline-insight-label">${t('simulator.insightWhat')}</div>
@@ -254,7 +250,18 @@ function renderLog() {
               <p class="inline-insight-text insight-question">${insight.question}</p>
             </div>
           </div>
+        </div>` : ''
+      row.innerHTML = `
+        <span class="run-num">#${i + 1}</span>
+        <span class="run-model-badge ${cfg.badgeClass}">${cfg.name}</span>
+        <span class="run-desc">${s.desc[getLang()] || s.desc.en}</span>
+        <span class="output-badge ob-${r.output}">${t(`outputs.${r.output}`)}</span>
+        <span class="score-chip ${r.score >= 80 ? 'score-high' : r.score >= 45 ? 'score-mid' : 'score-low'}">${r.score}</span>
+        <div class="run-attribution">
+          <span>↳ ${primitiveText}</span>
+          ${harmText ? `<span class="harm-tag">${harmText}</span>` : ''}
         </div>
+        ${insightHTML}
       `
     
     } else {
@@ -393,6 +400,7 @@ function resetLog() {
   const btn = document.getElementById('run-btn')
   if (btn) { btn.disabled = false; btn.textContent = t('simulator.runNextBtn') }
   clearInsights()
+  lockSections()
   const runCountEl = document.getElementById('run-count')
   if (runCountEl) runCountEl.textContent = t('simulator.runAllBtn')
   populateResults(activeDomain, currentModel, [], activeScenarios)
@@ -426,11 +434,31 @@ export function runNext() {
     if (runIndex >= activeScenarios.length) {
     btn.textContent = t('simulator.allCompleteBtn')
     btn.disabled = true
+    unlockSections()
         } else {
     btn.textContent = t('simulator.runNextBtn')
     btn.disabled = false
     }
   }, 480)
+}
+
+// ─── SECTION UNLOCK ───────────────────────────────────────────────────────────
+function unlockSections() {
+  ['results', 'analysis', 'drift'].forEach(id => {
+    const locked = document.getElementById(`${id}-locked`)
+    const unlocked = document.getElementById(`${id}-unlocked`)
+    if (locked) locked.style.display = 'none'
+    if (unlocked) unlocked.style.display = 'block'
+  })
+}
+
+function lockSections() {
+  ['results', 'analysis', 'drift'].forEach(id => {
+    const locked = document.getElementById(`${id}-locked`)
+    const unlocked = document.getElementById(`${id}-unlocked`)
+    if (locked) locked.style.display = 'flex'
+    if (unlocked) unlocked.style.display = 'none'
+  })
 }
 
 // ─── INSIGHT STORE ────────────────────────────────────────────────────────────
@@ -442,6 +470,7 @@ function clearInsights() {
   container.innerHTML = ''
   container.style.display = 'none'
   insightResults = []
+shownInsights = new Set()
 }
 
 export function rerenderInsights() {
@@ -501,8 +530,8 @@ if (!container) return
       </div>
     </div>
   `
-  // Store for re-render on language change
-  insightResults.push({ result, runNumber })
+  // Store for re-render on language change (step-by-step only)
+  if (!runAllMode) insightResults.push({ result, runNumber })
   // Prepend so most recent is always on top
   container.prepend(card)
   container.style.display = 'block'
@@ -512,12 +541,15 @@ if (!container) return
 export function runAll() {
   if (running) return
   resetLog()
+  runAllMode = true
+  insightResults = []
   let i = 0
   function step() {
     if (i >= activeScenarios.length) return
     const result = runScenario(currentModel, activeScenarios[i])
     runResults.push(result)
-    runIndex = i + 1
+    runIndex++
+    shownInsights.add(runIndex - 1)
     renderLog()
     updateScore()
     updateChart()
@@ -526,11 +558,16 @@ export function runAll() {
     populateAnalysis(activeDomain, currentModel, runResults, activeScenarios)
     populateDrift()
     i++
+    if (i >= activeScenarios.length) {
+    insightResults = []
+    runAllMode = false
+    const btn = document.getElementById('run-btn')
+    if (btn) { btn.disabled = true; btn.textContent = t('simulator.allCompleteBtn') }
+    unlockSections()
+    }
     setTimeout(step, 180)
   }
-  step()
-  const btn = document.getElementById('run-btn')
-  if (btn) { btn.disabled = true; btn.textContent = 'All runs complete' }
+    step()
 }
 
 // ─── ACTIONS: SELECT DOMAIN ───────────────────────────────────────────────────

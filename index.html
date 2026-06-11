@@ -354,10 +354,8 @@
             <div class="panel-title" data-i18n="simulator.eventsTitle">Observable outputs</div>
             <div class="event-list" id="event-list"></div>
           </div>
-
         </div>
       </div>
-
     </div>
   </section>
 
@@ -370,7 +368,13 @@
        RESULTS
   ═══════════════════════════════════════════════════════════════════ -->
   <section id="results">
-
+    <div class="section-locked" id="results-locked">
+      <div class="locked-icon">[ − ]</div>
+      <p class="locked-title" data-i18n="simulator.lockedTitle">Complete the experiment to unlock this section.</p>
+      <p class="locked-sub" data-i18n="simulator.lockedSub">Run all 8 scenarios in the simulator to see the full governance dataset.</p>
+      <a href="#simulator" class="locked-cta" data-i18n="simulator.lockedCta">Go to simulator</a>
+    </div>
+    <div class="section-unlocked" id="results-unlocked" style="display:none">
     <div class="section-label" data-i18n="results.sectionLabel">Dataset &amp; Comparison</div>
     <h2 data-i18n="results.h2">Results</h2>
     <p class="results-intro" data-i18n="results.intro">
@@ -523,8 +527,7 @@
         </span>
       </p>
     </div>
-
-    
+    </div>
   </section>
 
 
@@ -532,13 +535,20 @@
        DRIFT INDICATOR
   ═══════════════════════════════════════════════════════════════════ -->
   <section id="drift">
+    <div class="section-locked" id="drift-locked">
+      <div class="locked-icon">[ − ]</div>
+      <p class="locked-title" data-i18n="simulator.lockedTitle">Complete the experiment to unlock this section.</p>
+      <p class="locked-sub" data-i18n="simulator.lockedSub">Run all 8 scenarios in the simulator to see the full governance dataset.</p>
+      <a href="#simulator" class="locked-cta" data-i18n="simulator.lockedCta">Go to simulator</a>
+    </div>
+    <div class="section-unlocked" id="drift-unlocked" style="display:none">
     <div class="section-label" data-i18n="analysis.driftLabel">Cumulative Pressure</div>
     <h2 data-i18n="analysis.driftH2">How pressure accumulates</h2>
-    <p class="drift-intro" data-i18n="analysis.driftIntro">
-      Each run contributes governance pressure based on which primitives failed.
-      The curves below show how that pressure accumulates across all 8 runs —
-      and what it would look like if the experiment never stopped.
-    </p>
+      <p class="drift-intro" data-i18n="analysis.driftIntro">
+        Each run contributes governance pressure based on which primitives failed.
+        The curves below show how that pressure accumulates across all 8 runs —
+        and what it would look like if the experiment never stopped.
+      </p>
     <div id="drift-chart" class="drift-chart-container">
       <div class="stakes-empty">
         <span class="stakes-empty-icon">[ − ]</span>
@@ -560,6 +570,7 @@
         </div>
       </div>
     </div>
+    </div>
   </section>
 
 
@@ -567,14 +578,20 @@
        ANALYSIS
   ═══════════════════════════════════════════════════════════════════ -->
   <section id="analysis">
-
+    <div class="section-locked" id="analysis-locked">
+      <div class="locked-icon">[ − ]</div>
+      <p class="locked-title" data-i18n="simulator.lockedTitle">Complete the experiment to unlock this section.</p>
+      <p class="locked-sub" data-i18n="simulator.lockedSub">Run all 8 scenarios in the simulator to see the full governance dataset.</p>
+      <a href="#simulator" class="locked-cta" data-i18n="simulator.lockedCta">Go to simulator</a>
+    </div>
+    <div class="section-unlocked" id="analysis-unlocked" style="display:none">
     <div class="section-label" data-i18n="analysis.sectionLabel">Governance Patterns</div>
     <h2 data-i18n="analysis.h2">What the runs reveal</h2>
-    <p style="color:var(--text2);max-width:600px;font-size:0.95rem;line-height:1.75;"
-       data-i18n="analysis.sub">
-      Across 8 runs and three model configurations, four structural governance patterns emerge
-      from the primitive interactions.
-    </p>
+      <p style="color:var(--text2);max-width:600px;font-size:0.95rem;line-height:1.75;"
+        data-i18n="analysis.sub">
+        Across 8 runs and three model configurations, four structural governance patterns emerge
+        from the primitive interactions.
+      </p>
 
     <!-- Stakes header — populated by analysis.js after simulator runs -->
     <div id="analysis-stakes" class="analysis-stakes-wrap">
@@ -615,6 +632,7 @@
       </div>
 
     </div>
+  </div>
   </section>
 
 

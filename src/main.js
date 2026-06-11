@@ -17,7 +17,7 @@ import './lang-switcher.css'
 
 import { initI18n, onLangChange, applyTranslations, t } from './i18n.js'
 import { mountLangSwitcher } from './langSwitcher.js'
-import { initSimulator, selectModel, runNext, runAll, selectDomain, updateConfig, rerenderInsights } from './simulator.js'
+import { initSimulator, selectModel, runNext, runAll, selectDomain, updateConfig, rerenderInsights, setLangChangeMode, clearShownInsights } from './simulator.js'
 import { initResults } from './results.js'
 import { initAnalysis, populateAnalysis } from './analysis.js'
 import { DOMAINS, DOMAIN_KEYS } from './data/domains.js'
@@ -32,8 +32,10 @@ mountLangSwitcher(switcherMount)
 
 // ── 3. When language changes, re-apply static translations
 onLangChange((lang) => {
-  applyTranslations()
-  document.querySelectorAll('.domain-btn').forEach(btn => {
+setLangChangeMode(true)
+clearShownInsights()
+applyTranslations()
+document.querySelectorAll('.domain-btn').forEach(btn => {
     const key = btn.dataset.domain
     if (key && DOMAINS[key]) btn.textContent = DOMAINS[key].label[lang] || DOMAINS[key].label.en
   })
@@ -45,6 +47,7 @@ onLangChange((lang) => {
   }
   updateConfig()
   rerenderInsights()
+  setLangChangeMode(false)
   const runBtn = document.getElementById('run-btn')
   if (runBtn && runBtn.textContent !== 'Running…') {
     runBtn.textContent = t('simulator.runNextBtn')

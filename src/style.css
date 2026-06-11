@@ -648,6 +648,51 @@ footer a { color: var(--cyan); text-decoration: none; }
 /* ─── RESULTS ─── */
 .results-intro { color: var(--text2); max-width: 600px; font-size: 0.95rem; line-height: 1.75; margin-bottom: 2.5rem; }
 
+/* ─── LOCKED SECTIONS ─── */
+.section-locked {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  gap: 1rem;
+}
+.locked-icon {
+  font-family: var(--mono);
+  font-size: 1rem;
+  color: var(--text3);
+  margin-bottom: 0.5rem;
+}
+.locked-title {
+  font-size: 1.1rem;
+  color: var(--text2);
+  font-weight: 500;
+  max-width: 480px;
+}
+.locked-sub {
+  font-size: 0.88rem;
+  color: var(--text3);
+  max-width: 420px;
+  line-height: 1.7;
+}
+.locked-cta {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  border: 1px solid rgba(0,229,200,0.3);
+  padding: 8px 20px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  margin-top: 0.5rem;
+  transition: background 0.2s;
+}
+.locked-cta:hover {
+  background: rgba(0,229,200,0.06);
+}
+
 .results-disclaimer {
   display: flex;
   align-items: flex-start;
@@ -736,6 +781,9 @@ footer a { color: var(--cyan); text-decoration: none; }
 .matrix-table tr:hover td { background: rgba(255,255,255,0.015); }
 .matrix-table .col-run { color: var(--text3); width: 40px; }
 .matrix-table .col-scenario { color: var(--text2); max-width: 200px; }
+.matrix-row-run { opacity: 1; }
+.matrix-row-pending { opacity: 0.4; }
+
 .matrix-table .col-risk { width: 70px; }
 .risk-badge {
   font-family: var(--mono); font-size: 0.62rem; padding: 2px 8px;
