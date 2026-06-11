@@ -141,9 +141,9 @@ const TRANSLATIONS = {
 
     // ── Results
     results: {
-      sectionLabel: 'Datensatz & Vergleich',
-      h2:           'Ergebnisse',
-      intro:        'Five models are evaluated across 8 experimental scenarios, each available across 12 domain contexts. Scores are computed deterministically by the rule engine: no statistical variance, no probabilistic modeling. Run the simulator above to populate the data set.',
+      sectionLabel: 'Dataset & Comparison',
+      h2:           'Results',
+      intro:        'Five models are evaluated across 8 experimental scenarios, each available across 12 domain contexts. Scores are computed deterministically by the rule engine: no statistical variance, no probabilistic modeling. Determinism is a methodological choice, not a limitation: it isolates governance structure as the independent variable. Run the simulator above to populate the data set.',
       baselineLabel:          'Baseline model',
       boundariesOnlyLabel:    'Boundaries only',
       reversibilityOnlyLabel: 'Reversibility only',
@@ -373,7 +373,7 @@ const TRANSLATIONS = {
     results: {
       sectionLabel: 'Ensemble de données et comparaison',
       h2:           'Résultats',
-      intro:        'Cinq modèles sont évalués sur 8 scénarios expérimentaux, disponibles dans 12 contextes de domaine. Les scores sont calculés de manière déterministe par le moteur de règles: sans variance statistique, sans modélisation probabiliste. Lancez le simulateur ci-dessus pour alimenter l\'ensemble de données.',
+      intro:        'Cinq modèles sont évalués sur 8 scénarios expérimentaux, disponibles dans 12 contextes de domaine. Les scores sont calculés de manière déterministe par le moteur de règles: sans variance statistique, sans modélisation probabiliste. Le déterminisme est un choix méthodologique, pas une limitation: il isole la structure de gouvernance comme variable indépendante. Lancez le simulateur ci-dessus pour alimenter l\'ensemble de données.',
       baselineLabel:          'Modèle de base',
       boundariesOnlyLabel:    'Limites uniquement',
       reversibilityOnlyLabel: 'Réversibilité uniquement',
@@ -601,7 +601,7 @@ const TRANSLATIONS = {
     results: {
       sectionLabel: 'Datensatz & Vergleich',
       h2:           'Ergebnisse',
-      intro:        'Fünf Modelle werden über 8 Experimentszenarien bewertet, verfügbar in 12 Domänenkontexten. Die Scores werden deterministisch vom Regelmotor berechnet — keine statistische Varianz, keine probabilistische Modellierung. Führen Sie den Simulator oben aus, um den Datensatz zu befüllen.',
+      intro:        'Fünf Modelle werden über 8 Experimentszenarien bewertet, verfügbar in 12 Domänenkontexten. Die Scores werden deterministisch vom Regelmotor berechnet: keine statistische Varianz, keine probabilistische Modellierung. Determinismus ist eine methodische Entscheidung, keine Einschränkung: er isoliert die Governance-Struktur als unabhängige Variable. Führen Sie den Simulator oben aus, um den Datensatz zu befüllen.',
       baselineLabel:          'Basismodell',
       boundariesOnlyLabel:    'Nur Grenzen',
       reversibilityOnlyLabel: 'Nur Reversibilität',
@@ -829,7 +829,7 @@ const TRANSLATIONS = {
     results: {
       sectionLabel: 'Conjunto de datos y comparación',
       h2:           'Resultados',
-      intro:        'Cinco modelos son evaluados en 8 escenarios experimentales, disponibles en 12 contextos de dominio. Las puntuaciones se calculan de forma determinista por el motor de reglas — sin varianza estadística, sin modelado probabilístico. Ejecute el simulador arriba para poblar el conjunto de datos.',
+      intro:        'Cinco modelos son evaluados en 8 escenarios experimentales, disponibles en 12 contextos de dominio. Las puntuaciones se calculan de forma determinista por el motor de reglas: sin varianza estadística, sin modelado probabilístico. El determinismo es una elección metodológica, no una limitación: aísla la estructura de gobernanza como variable independiente. Ejecute el simulador arriba para poblar el conjunto de datos.',
       baselineLabel:          'Modelo base',
       boundariesOnlyLabel:    'Solo límites',
       reversibilityOnlyLabel: 'Solo reversibilidad',
