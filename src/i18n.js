@@ -249,7 +249,7 @@ const TRANSLATIONS = {
     window: {
       sectionLabel: 'What this project and this instrument are trying to protect',
       h2:           'The Window',
-      lead:         'Everything above this point is measurement. The simulator isolates governance structure, the drift curve shows pressure accumulating, the analysis names the patterns. None of it answers the question the data cannot show: what is actually at stake if the structure is never built. What follows is the answer, assembled from five thinkers who never worked together but describe the same arc: a drift.',
+      lead:         'Everything above this point is measurement. The simulator isolates governance structure, the drift curve shows pressure accumulating, the analysis names the patterns. None of it answers the question the data cannot show: what is actually at stake if the structure is never built. What follows is the answer, assembled from five thinkers who never worked together but describe the same arc: a drift, a loss, a window, a question.',
       m1num: 'I',   m1thinker: 'Meadows',  m1title: 'The drift',
       m1p:   'Systems do not fail all at once. They drift to low performance: each small erosion of the standard becomes the new baseline, and the memory of better erodes along with the standard itself. The decay is invisible from inside because the reference point moves with the system. The pressure curve above is this mechanism made visible, and its most important feature is the part the experiment cannot show: what the curve does when no one stops the run.',
       m2num: 'II',  m2thinker: 'Gonzales', m2title: 'The atrophy',
