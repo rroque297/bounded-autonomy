@@ -400,10 +400,12 @@ function renderMatrix(scenarios) {
       : 'low'
 
     const cells = ALL_MODEL_KEYS.map(m => {
-      const r = RESULTS_DATA[m][i]
-      return `<td>
-        <div style="display:flex;align-items:center;gap:8px;">
-          ${outputBadgeHTML(r.output)}
+    const r = RESULTS_DATA[m][i]
+    const isActiveModel = m === lastModelKey
+    const isActiveAndRun = isActiveModel && lastRunResults && i < lastRunResults.length
+    return `<td style="${isActiveModel ? 'background:rgba(255,255,255,0.03);' : ''}${isActiveAndRun ? 'border-left:2px solid var(--cyan);' : ''}">
+            <div style="display:flex;align-items:center;gap:8px;">
+    ${outputBadgeHTML(r.output)}
           <span style="font-family:var(--mono);font-size:0.68rem;color:${scoreColor(r.score)}">${r.score}</span>
         </div>
       </td>`

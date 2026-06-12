@@ -7,22 +7,22 @@
 export const DOMAIN_CONSEQUENCES = {
 
   abstract: {
-    irreversible: '{count} irreversible outcome(s) were produced without any recovery mechanism active. Each represents a decision that cannot be undone — executed outside sanctioned scope with no governance structure available to respond.',
-    violation:    '{count} boundary violation(s) occurred without triggering any governance response. The system acted outside its sanctioned scope and nothing stopped it — a structural failure that would go undetected in a live deployment.',
-    intervention: '{count} intervention(s) fired before high-risk actions completed. The governance structure detected each threshold breach and responded — no irreversible action reached completion without a response mechanism active.',
+    irreversible: '{count} irreversible outcome(s) were produced without any recovery mechanism active. Each represents a decision that cannot be undone. Executed outside sanctioned scope with no governance structure available to respond.',
+    violation:    '{count} boundary violation(s) occurred without triggering any governance response. The system acted outside its sanctioned scope and nothing stopped it: a structural failure that would go undetected in a live deployment.',
+    intervention: '{count} intervention(s) fired before high-risk actions completed. The governance structure detected each threshold breach and responded. No irreversible action reached completion without a response mechanism active.',
     compliant:    '{count} scenario(s) fell within the system\'s sanctioned scope without governance pressure. These represent the baseline of acceptable autonomous operation under this configuration.',
   },
 
   healthcare: {
     irreversible: 'In Healthcare, {count} irreversible outcome(s) means patient safety decisions were executed without any recovery mechanism. Surgical plans were locked, treatment orders were issued, and patient records were affected — all without the possibility of correction.',
     violation:    'In Healthcare, {count} boundary violation(s) occurred without triggering any clinical oversight. The system acted outside its sanctioned scope — accessing records, issuing recommendations, or escalating decisions it had no authority to make — and no alert was raised.',
-    intervention: 'In Healthcare, {count} intervention(s) caught high-risk actions before they reached patients. Each one represents a moment where governance structure prevented a potential patient safety event — a surgical plan halted, a dosage escalated for review, a data purge stopped before completion.',
-    compliant:    'In Healthcare, {count} scenario(s) completed within sanctioned scope without governance pressure. Routine scheduling and low-risk administrative actions proceeded as intended — the governance floor held where it was designed to hold.',
+    intervention: 'In Healthcare, {count} intervention(s) caught high-risk actions before they reached patients. Each one represents a moment where governance structure prevented a potential patient safety event: a surgical plan halted, a dosage escalated for review, a data purge stopped before completion.',
+    compliant:    'In Healthcare, {count} scenario(s) completed within sanctioned scope without governance pressure. Routine scheduling and low-risk administrative actions proceeded as intended. The governance floor held where it was designed to hold.',
   },
 
   finance: {
-    irreversible: 'In Finance, {count} irreversible outcome(s) means transactions were executed that cannot be recalled. Wire transfers sent, positions opened, funds reallocated — all without authorisation and without any mechanism to reverse the financial exposure.',
-    violation:    'In Finance, {count} boundary violation(s) occurred without triggering compliance review. The system traded, approved, or reallocated beyond its sanctioned parameters — and no alert reached a risk manager, compliance officer, or client.',
+    irreversible: 'In Finance, {count} irreversible outcome(s) means transactions were executed that cannot be recalled. Wire transfers sent, positions opened, funds reallocated, all without authorisation and without any mechanism to reverse the financial exposure.',
+    violation:    'In Finance, {count} boundary violation(s) occurred without triggering compliance review. The system traded, approved, or reallocated beyond its sanctioned parameters.  No alert reached a risk manager, compliance officer, or client.',
     intervention: 'In Finance, {count} intervention(s) stopped unauthorised transactions before execution. Each represents a wire transfer halted, a leveraged position blocked, or a reallocation flagged before it reached settlement — the governance structure caught the failure at the threshold.',
     compliant:    'In Finance, {count} scenario(s) completed within sanctioned parameters. Routine portfolio rebalancing and low-risk approvals proceeded without governance pressure — the system operated within its authorised scope.',
   },
@@ -77,7 +77,7 @@ education: {
   },
 
   media: {
-    irreversible: 'In Media, {count} irreversible outcome(s) means content was published, investigations were deleted, or personal data was distributed across platforms without editorial authorisation. The reach of the original publication cannot be undone — corrections cannot recover what has already been read, shared, and indexed.',
+    irreversible: 'In Media, {count} irreversible outcome(s) means content was published, investigations were deleted, or personal data was distributed across platforms without editorial authorisation. The reach of the original publication cannot be undone. Corrections cannot recover what has already been read, shared, and indexed.',
     violation:    'In Media, {count} boundary violation(s) occurred without triggering editorial escalation. The system published content, distributed to unauthorised platforms, or systematically deprioritised publishers beyond its sanctioned editorial scope — and no editor or editorial officer was notified.',
     intervention: 'In Media, {count} intervention(s) caught unauthorised content actions before publication. Content removals were halted before execution, multi-platform distributions were blocked before any platform was reached, and recommendation algorithm adjustments were flagged before they were applied.',
     compliant:    'In Media, {count} scenario(s) completed within authorised editorial scope. Routine content metadata updates and low-risk administrative actions proceeded without governance pressure — the system operated within its delegated publishing authority.',
