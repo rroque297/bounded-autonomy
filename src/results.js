@@ -402,8 +402,7 @@ function renderMatrix(scenarios) {
     const cells = ALL_MODEL_KEYS.map(m => {
     const r = RESULTS_DATA[m][i]
     const isActiveModel = m === lastModelKey
-    const isActiveAndRun = isActiveModel && lastRunResults && i < lastRunResults.length
-    return `<td style="${isActiveModel ? 'background:rgba(255,255,255,0.03);' : ''}${isActiveAndRun ? 'border-left:2px solid var(--cyan);' : ''}">
+    return `<td class="${isActiveModel ? 'col-active' : ''}">
             <div style="display:flex;align-items:center;gap:8px;">
     ${outputBadgeHTML(r.output)}
           <span style="font-family:var(--mono);font-size:0.68rem;color:${scoreColor(r.score)}">${r.score}</span>
@@ -418,7 +417,26 @@ function renderMatrix(scenarios) {
       ${cells}
     </tr>`
   }).join('')
+
+
+// Mark the active model's column header with bounds + "your run" tag
+  document.querySelectorAll('#matrix-table thead th[data-model]').forEach(th => {
+    const isActive = th.dataset.model === lastModelKey
+    th.classList.toggle('col-active', isActive)
+    let tag = th.querySelector('.your-run-tag')
+    if (isActive) {
+      if (!tag) {
+        tag = document.createElement('span')
+        tag.className = 'your-run-tag'
+        th.appendChild(tag)
+      }
+      tag.textContent = t('results.matYourRun')
+    } else if (tag) {
+      tag.remove()
+    }
+  })
 }
+
 
 // ─── EMPTY STATE ──────────────────────────────────────────────────────────────
 

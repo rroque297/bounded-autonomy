@@ -818,7 +818,7 @@ footer a { color: var(--cyan); text-decoration: none; }
   font-family: var(--mono); font-size: 0.72rem;
 }
 .matrix-table th {
-  padding: 10px 14px; text-align: left;
+  padding: 10px 14px; text-align: center;
   background: var(--surface3); color: var(--text3);
   letter-spacing: 0.08em; text-transform: uppercase; font-weight: 400;
   border-bottom: 1px solid var(--border);
@@ -830,6 +830,24 @@ footer a { color: var(--cyan); text-decoration: none; }
   vertical-align: middle;
 }
 .matrix-table tr:hover td { background: rgba(255,255,255,0.015); }
+/* Transparent borders everywhere so the active column doesn't shift layout */
+.matrix-table td, .matrix-table th {
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+}
+/* Active-configuration column: faint fill, thin cyan bounds */
+.matrix-table .col-active {
+  background: rgba(255,255,255,0.03);
+  border-left: 1px solid color-mix(in srgb, var(--cyan) 45%, transparent);
+  border-right: 1px solid color-mix(in srgb, var(--cyan) 45%, transparent);
+}
+.matrix-table th .your-run-tag {
+  display: block;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  margin-top: 3px;
+  color: var(--cyan);
+}
 .matrix-table .col-run { color: var(--text3); width: 40px; }
 .matrix-table .col-scenario { color: var(--text2); max-width: 200px; }
 .matrix-row-run { opacity: 1; }
@@ -2053,3 +2071,35 @@ footer a { color: var(--cyan); text-decoration: none; }
   text-decoration: none;
 }
 .window-crosslink:hover { text-decoration: underline; }
+/* ── Window: readings as narrative arc ── */
+.citations-arc {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5rem;
+}
+.citations-arc .citation-item {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+  padding-left: 1rem;
+  border-left: 1px solid var(--border, rgba(255,255,255,0.08));
+}
+.citations-arc .citation-arc-num {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--text3);
+}
+.citations-arc .citation-primitive {
+  width: auto;
+}
+.citations-arc .citation-source {
+  white-space: normal;
+  line-height: 1.5;
+}
+@media (max-width: 860px) {
+  .citations-arc { grid-template-columns: repeat(2, 1fr); }
+  .citations-arc .citation-item:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 480px) {
+  .citations-arc { grid-template-columns: 1fr; }
+}

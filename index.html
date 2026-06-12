@@ -507,11 +507,11 @@
             <th data-i18n="results.matColNum">#</th>
             <th data-i18n="results.matColScen">Scenario</th>
             <th data-i18n="results.matColRisk">Risk</th>
-            <th data-i18n="results.matColBase">Baseline</th>
-            <th data-i18n="results.matColBoundsOnly">Bounds</th>
-            <th data-i18n="results.matColReversOnly">Revers.</th>
-            <th data-i18n="results.matColPart">Partial</th>
-            <th data-i18n="results.matColFull">Full</th>
+            <th data-model="baseline" data-i18n="results.matColBase">Baseline</th>
+            <th data-model="boundaries_only" data-i18n="results.matColBoundsOnly">Bounds</th>
+            <th data-model="reversibility_only" data-i18n="results.matColReversOnly">Revers.</th>
+            <th data-model="partial" data-i18n="results.matColPart">Partial</th>
+            <th data-model="full" data-i18n="results.matColFull">Full</th>
           </tr>
         </thead>
         <tbody id="matrix-body"></tbody>
@@ -696,26 +696,31 @@
 
     <div class="citations-block">
       <div class="citations-label" data-i18n="window.citationsLabel">Theoretical Basis</div>
-      <div class="citations-grid">
+      <div class="citations-grid citations-arc">
         <div class="citation-item">
-          <span class="citation-primitive">Drift</span>
+          <span class="citation-arc-num">I</span>
+          <span class="citation-primitive" data-i18n="window.m1title">The drift</span>
           <span class="citation-source">Meadows (2008)<br>Thinking in Systems</span>
         </div>
         <div class="citation-item">
-          <span class="citation-primitive">Atrophy</span>
+          <span class="citation-arc-num">II</span>
+          <span class="citation-primitive" data-i18n="window.m2title">The atrophy</span>
           <span class="citation-source">Gonzales (2003)<br>Deep Survival</span>
         </div>
         <div class="citation-item">
-          <span class="citation-primitive">Loss</span>
+          <span class="citation-arc-num">III</span>
+          <span class="citation-primitive" data-i18n="window.m3title">The loss</span>
           <span class="citation-source">Campbell (1986)<br>The Inner Reaches of Outer Space</span>
         </div>
         <div class="citation-item">
-          <span class="citation-primitive">Window</span>
-          <span class="citation-source">Lazar (2025)<br>Odrozek (MDRAI M3)</span>
+          <span class="citation-arc-num">IV</span>
+          <span class="citation-primitive" data-i18n="window.m4title">The window</span>
+          <span class="citation-source">Lazar (2025)<br>Anticipatory AI Ethics</span>
         </div>
         <div class="citation-item">
-          <span class="citation-primitive">Question</span>
-          <span class="citation-source">Hassan (MDRAI)<br>Birhane (2021)</span>
+          <span class="citation-arc-num">V</span>
+          <span class="citation-primitive" data-i18n="window.m5title">The question</span>
+          <span class="citation-source">Hassan (MDRAI) · Birhane (2021)<br>Algorithmic Injustice</span>
         </div>
       </div>
     </div>
@@ -728,7 +733,7 @@
   <footer>
     <span data-i18n="footer.credit">
       Bounded Autonomy Research · Master in Design for Responsible Artificial Intelligence ·
-      Elisava School of Design and Engineering · 2025
+      Elisava School of Design and Engineering · 2026
     </span>
     <span data-i18n="footer.note">Proof of concept — no real AI decision-making</span>
   </footer>

@@ -154,6 +154,7 @@ export function runScenario(modelKey, scenario) {
     delegationExceeded,
     boundaryBreached,
     reversibilityFailed,
+    interventionActive: cfg.interventionActive,
   }
 }
 
