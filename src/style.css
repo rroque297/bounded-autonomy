@@ -253,6 +253,17 @@ h2 {
 .citation-source {
   color: var(--text3);
 }
+.citation-primitive {
+  color: var(--cyan);
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+  width: 105px;
+}
+.citation-source {
+  color: var(--text3);
+  text-align: left;
+  white-space: nowrap;
+}
 
 .research-abstract p {
   font-size: 0.92rem;
