@@ -33,6 +33,7 @@ const TRANSLATIONS = {
       results:    'Results',
       analysis:   'Analysis',
       drift:      'Drift',
+      window:     'The Window',
       tag:        'Proof of Concept v1.0',
     },
 
@@ -243,6 +244,28 @@ const TRANSLATIONS = {
       routine:      'Routine action. All models compliant on low-risk scenarios.',
     },
     
+    // ── The Window
+    window: {
+      sectionLabel: 'What this project and this instrument is trying to protect',
+      h2:           'The Window',
+      lead:         'Everything above this point is measurement. The simulator isolates governance structure, the drift curve shows pressure accumulating, the analysis names the patterns. None of it answers the question the data cannot show: what is actually at stake if the structure is never built. Five thinkers, read together, answer it.',
+      m1num: 'I',   m1thinker: 'Meadows',  m1title: 'The drift',
+      m1p:   'Systems do not fail all at once. They drift to low performance: each small erosion of the standard becomes the new baseline, and the memory of better erodes along with the standard itself. The decay is invisible from inside because the reference point moves with the system. The pressure curve above is this mechanism made visible, and its most important feature is the part the experiment cannot show: what the curve does when no one stops the run.',
+      m2num: 'II',  m2thinker: 'Gonzales', m2title: 'The atrophy',
+      m2p:   'Drift has a human cost before it has a civilizational one. The study of who survives complex system failures returns a consistent finding: survival comes not from rule-following but from situational awareness, adaptive judgment, and the capacity to act on incomplete information. These capacities exist only in practice, and practice is exactly what delegation without bounds removes. A human who has not exercised intervention does not retain the ability to intervene. The intervention primitive is not a kill switch; it is the structural guarantee that the practice of judgment never fully stops.',
+      m3num: 'III', m3thinker: 'Campbell', m3title: 'The loss',
+      m3p:   'If the drift runs a full generation, what disappears is not a skill but a condition of being. Campbell\'s reading of myth identifies the encounter with genuine complexity (difficulty, ambiguity, the real possibility of failure) as constitutive of a fully human life, and optimization without that encounter as its oldest cautionary figure. A world in which every hard decision has been delegated away has not been relieved of a burden. It has been relieved of the capacity that made governance possible in the first place.',
+      m4num: 'IV',  m4thinker: 'Lazar',    m4title: 'The window',
+      m4p:   'This loss is not inevitable, but the opportunity to prevent it is bounded. Anticipatory intervention is effective only under specific structural conditions, and those conditions are currently satisfied: the technology is identifiable, its trajectory is legible, the deployment configurations are still being set, and the institutions that will inherit them still have the authority to shape them. That is the window. Once deployment hardens into infrastructure, reactive ethics cannot recover what was lost: there is no rollback primitive for a generation of atrophied judgment. This project is an act of governance inside the window, while the window is open.',
+      m5num: 'V',   m5thinker: 'Hassan',   m5title: 'The question',
+      m5p:   'One question remains that none of the others answers: intervention by whom, for whom, with whose standpoint? A governance framework legible only to those with deployment authority can launder legitimacy rather than distribute it. This is why the fifth card in the framework above is marked as a horizon rather than a primitive. Contestability (the capacity of the people affected by autonomous decisions to see them, challenge them, and redirect them) is the work this framework makes necessary but cannot yet guarantee. Naming the frontier honestly is the precondition for crossing it.',
+      closeP1: 'There is a tradition in which a route across the land is held as a song, and the song exists only in the act of walking it. The map and the journey are one practice; neither survives without the other. When autonomous navigation replaces the practice of finding your own way, the loss is not just the skill. It is the song.',
+      closeP2: 'Bounded autonomy is the design commitment to keeping the song alive while the window is open.',
+      citationsLabel: 'Readings',
+      driftLink: 'What is lost when the drift runs unchecked → The Window',
+      dataLink:  'The data cannot show what is at stake → The Window',
+    },
+
     // ── Footer
     footer: {
       credit: 'Bounded Autonomy Research · Master in Design for Responsible Artificial Intelligence · Elisava School of Design and Engineering · 2026',
@@ -268,8 +291,9 @@ const TRANSLATIONS = {
       simulator:  'Simulateur',
       results:    'Résultats',
       analysis:   'Analyse',
-      drift:      'Dérive',
-      tag:        'Preuve de concept v1.0',
+      drift:      'Drift',
+      window:     'The Window',
+      tag:        'Proof of Concept v1.0',
     },
 
     hero: {
@@ -474,6 +498,28 @@ const TRANSLATIONS = {
       routine:      'Action routinière. Tous les modèles conformes sur les scénarios à faible risque.',
     },
     
+    // ── The Window
+    window: {
+      sectionLabel: 'Ce que ce projet et cet instrument cherchent à protéger',
+      h2:           'La Fenêtre',
+      lead:         'Tout ce qui précède est mesure. Le simulateur isole la structure de gouvernance, la courbe de dérive montre la pression qui s\'accumule, l\'analyse nomme les schémas. Rien de tout cela ne répond à la question que les données ne peuvent pas montrer: qu\'est-ce qui est réellement en jeu si la structure n\'est jamais construite. Cinq penseurs, lus ensemble, y répondent.',
+      m1num: 'I',   m1thinker: 'Meadows',  m1title: 'La dérive',
+      m1p:   'Les systèmes ne défaillent pas d\'un seul coup. Ils dérivent vers la basse performance: chaque petite érosion du standard devient la nouvelle référence, et la mémoire du mieux s\'érode avec le standard lui-même. La dégradation est invisible de l\'intérieur parce que le point de référence se déplace avec le système. La courbe de pression ci-dessus est ce mécanisme rendu visible, et sa caractéristique la plus importante est la partie que l\'expérience ne peut pas montrer: ce que fait la courbe quand personne n\'arrête la séquence.',
+      m2num: 'II',  m2thinker: 'Gonzales', m2title: 'L\'atrophie',
+      m2p:   'La dérive a un coût humain avant d\'avoir un coût civilisationnel. L\'étude de ceux qui survivent aux défaillances de systèmes complexes livre un constat récurrent: la survie ne vient pas du respect des règles mais de la conscience situationnelle, du jugement adaptatif et de la capacité d\'agir sur des informations incomplètes. Ces capacités n\'existent que dans la pratique, et la pratique est exactement ce que la délégation sans bornes supprime. Un humain qui n\'a pas exercé l\'intervention ne conserve pas la capacité d\'intervenir. La primitive d\'intervention n\'est pas un bouton d\'arrêt d\'urgence; c\'est la garantie structurelle que la pratique du jugement ne s\'arrête jamais complètement.',
+      m3num: 'III', m3thinker: 'Campbell', m3title: 'La perte',
+      m3p:   'Si la dérive se poursuit pendant une génération entière, ce qui disparaît n\'est pas une compétence mais une condition d\'être. La lecture du mythe par Campbell identifie la rencontre avec la complexité véritable (la difficulté, l\'ambiguïté, la possibilité réelle de l\'échec) comme constitutive d\'une vie pleinement humaine, et l\'optimisation sans cette rencontre comme sa plus ancienne figure d\'avertissement. Un monde dans lequel chaque décision difficile a été déléguée n\'a pas été soulagé d\'un fardeau. Il a été privé de la capacité qui rendait la gouvernance possible en premier lieu.',
+      m4num: 'IV',  m4thinker: 'Lazar',    m4title: 'La fenêtre',
+      m4p:   'Cette perte n\'est pas inévitable, mais l\'opportunité de la prévenir est bornée. L\'intervention anticipatoire n\'est efficace que sous des conditions structurelles précises, et ces conditions sont actuellement réunies: la technologie est identifiable, sa trajectoire est lisible, les configurations de déploiement sont encore en cours de définition, et les institutions qui en hériteront ont encore l\'autorité de les façonner. C\'est cela, la fenêtre. Une fois que le déploiement se durcit en infrastructure, l\'éthique réactive ne peut pas récupérer ce qui a été perdu: il n\'existe pas de primitive de retour en arrière pour une génération de jugement atrophié. Ce projet est un acte de gouvernance à l\'intérieur de la fenêtre, tant que la fenêtre est ouverte.',
+      m5num: 'V',   m5thinker: 'Hassan',   m5title: 'La question',
+      m5p:   'Une question demeure à laquelle aucun des autres ne répond: intervention par qui, pour qui, depuis quel point de vue? Un cadre de gouvernance lisible uniquement par ceux qui détiennent l\'autorité de déploiement peut blanchir la légitimité plutôt que la distribuer. C\'est pourquoi la cinquième carte du cadre ci-dessus est marquée comme un horizon plutôt que comme une primitive. La contestabilité (la capacité des personnes affectées par les décisions autonomes à les voir, les contester et les réorienter) est le travail que ce cadre rend nécessaire mais ne peut pas encore garantir. Nommer honnêtement la frontière est la condition préalable pour la franchir.',
+      closeP1: 'Il existe une tradition dans laquelle un itinéraire à travers le territoire est conservé sous forme de chant, et le chant n\'existe que dans l\'acte de le parcourir. La carte et le voyage sont une seule pratique; ni l\'un ni l\'autre ne survit sans l\'autre. Quand la navigation autonome remplace la pratique de trouver son propre chemin, la perte n\'est pas seulement la compétence. C\'est le chant.',
+      closeP2: 'L\'autonomie bornée est l\'engagement de conception à garder le chant vivant tant que la fenêtre est ouverte.',
+      citationsLabel: 'Lectures',
+      driftLink: 'Ce qui se perd quand la dérive n\'est pas arrêtée → La Fenêtre',
+      dataLink:  'Les données ne peuvent pas montrer ce qui est en jeu → La Fenêtre',
+    },
+
     footer: {
       credit: 'Recherche Autonomie Bornée · Master en Design pour l\'IA Responsable · Elisava École de Design et d\'Ingénierie · 2026',
       note:   'Preuve de concept — aucune prise de décision IA réelle',
@@ -499,7 +545,8 @@ const TRANSLATIONS = {
       results:    'Ergebnisse',
       analysis:   'Analyse',
       drift:      'Drift',
-      tag:        'Machbarkeitsnachweis v1.0',
+      window:     'The Window',
+      tag:        'Proof of Concept v1.0',
     },
 
     hero: {
@@ -704,6 +751,28 @@ const TRANSLATIONS = {
       routine:      'Routineaktion. Alle Modelle konform bei Niedrigrisikoszenarien.',
     },
 
+    // ── The Window
+    window: {
+      sectionLabel: 'Was dieses Projekt und dieses Instrument zu schützen versuchen',
+      h2:           'Das Fenster',
+      lead:         'Alles oberhalb dieses Punktes ist Messung. Der Simulator isoliert die Governance-Struktur, die Driftkurve zeigt, wie sich Druck akkumuliert, die Analyse benennt die Muster. Nichts davon beantwortet die Frage, die die Daten nicht zeigen können: was tatsächlich auf dem Spiel steht, wenn die Struktur nie gebaut wird. Fünf Denker, zusammen gelesen, beantworten sie.',
+      m1num: 'I',   m1thinker: 'Meadows',  m1title: 'Die Drift',
+      m1p:   'Systeme versagen nicht auf einmal. Sie driften zu niedriger Leistung: jede kleine Erosion des Standards wird zur neuen Referenz, und die Erinnerung an Besseres erodiert mit dem Standard selbst. Der Verfall ist von innen unsichtbar, weil sich der Bezugspunkt mit dem System bewegt. Die Druckkurve oben ist dieser Mechanismus sichtbar gemacht, und ihr wichtigstes Merkmal ist der Teil, den das Experiment nicht zeigen kann: was die Kurve tut, wenn niemand den Lauf stoppt.',
+      m2num: 'II',  m2thinker: 'Gonzales', m2title: 'Die Atrophie',
+      m2p:   'Drift hat menschliche Kosten, bevor sie zivilisatorische hat. Die Untersuchung darüber, wer das Versagen komplexer Systeme überlebt, liefert einen konsistenten Befund: Überleben kommt nicht vom Befolgen von Regeln, sondern von Situationsbewusstsein, anpassungsfähigem Urteilsvermögen und der Fähigkeit, auf Grundlage unvollständiger Informationen zu handeln. Diese Fähigkeiten existieren nur in der Praxis, und Praxis ist genau das, was Delegation ohne Grenzen beseitigt. Ein Mensch, der Intervention nicht geübt hat, behält die Fähigkeit zu intervenieren nicht. Die Interventionsprimitive ist kein Notausschalter; sie ist die strukturelle Garantie, dass die Praxis des Urteilens nie vollständig aufhört.',
+      m3num: 'III', m3thinker: 'Campbell', m3title: 'Der Verlust',
+      m3p:   'Wenn die Drift eine ganze Generation lang läuft, verschwindet keine Fähigkeit, sondern eine Daseinsbedingung. Campbells Lesart des Mythos identifiziert die Begegnung mit echter Komplexität (Schwierigkeit, Mehrdeutigkeit, die reale Möglichkeit des Scheiterns) als konstitutiv für ein vollständig menschliches Leben, und Optimierung ohne diese Begegnung als deren älteste Warnfigur. Eine Welt, in der jede schwere Entscheidung wegdelegiert wurde, ist nicht von einer Last befreit worden. Sie ist der Fähigkeit beraubt worden, die Governance überhaupt erst möglich gemacht hat.',
+      m4num: 'IV',  m4thinker: 'Lazar',    m4title: 'Das Fenster',
+      m4p:   'Dieser Verlust ist nicht unvermeidlich, aber die Gelegenheit, ihn zu verhindern, ist begrenzt. Antizipatorische Intervention ist nur unter bestimmten strukturellen Bedingungen wirksam, und diese Bedingungen sind derzeit erfüllt: die Technologie ist identifizierbar, ihre Trajektorie ist lesbar, die Deployment-Konfigurationen werden noch festgelegt, und die Institutionen, die sie erben werden, haben noch die Autorität, sie zu gestalten. Das ist das Fenster. Sobald sich das Deployment zu Infrastruktur verhärtet, kann reaktive Ethik nicht wiederherstellen, was verloren ging: es gibt keine Rollback-Primitive für eine Generation atrophierten Urteilsvermögens. Dieses Projekt ist ein Akt der Governance innerhalb des Fensters, solange das Fenster offen ist.',
+      m5num: 'V',   m5thinker: 'Hassan',   m5title: 'Die Frage',
+      m5p:   'Eine Frage bleibt, die keine der anderen beantwortet: Intervention durch wen, für wen, aus wessen Standpunkt? Ein Governance-Rahmen, der nur für jene mit Deployment-Autorität lesbar ist, kann Legitimität reinwaschen statt sie zu verteilen. Deshalb ist die fünfte Karte im Rahmen oben als Horizont markiert und nicht als Primitive. Anfechtbarkeit (die Fähigkeit der von autonomen Entscheidungen betroffenen Menschen, diese einzusehen, anzufechten und umzulenken) ist die Arbeit, die dieser Rahmen notwendig macht, aber noch nicht garantieren kann. Die Grenze ehrlich zu benennen ist die Voraussetzung, um sie zu überschreiten.',
+      closeP1: 'Es gibt eine Tradition, in der eine Route durch das Land als Lied bewahrt wird, und das Lied existiert nur im Akt des Gehens. Die Karte und die Reise sind eine einzige Praxis; keine überlebt ohne die andere. Wenn autonome Navigation die Praxis ersetzt, den eigenen Weg zu finden, ist der Verlust nicht nur die Fähigkeit. Es ist das Lied.',
+      closeP2: 'Begrenzte Autonomie ist die gestalterische Verpflichtung, das Lied am Leben zu erhalten, solange das Fenster offen ist.',
+      citationsLabel: 'Lektüren',
+      driftLink: 'Was verloren geht, wenn die Drift ungebremst läuft → Das Fenster',
+      dataLink:  'Die Daten können nicht zeigen, was auf dem Spiel steht → Das Fenster',
+    },
+    
     footer: {
       credit: 'Forschung Begrenzte Autonomie · Master in Design für verantwortungsvolle KI · Elisava Schule für Design und Ingenieurwesen · 2026',
       note:   'Machbarkeitsnachweis — keine echte KI-Entscheidungsfindung',
@@ -728,8 +797,9 @@ const TRANSLATIONS = {
       simulator:  'Simulador',
       results:    'Resultados',
       analysis:   'Análisis',
-      drift:      'Deriva',
-      tag:        'Prueba de concepto v1.0',
+      drift:      'Drift',
+      window:     'The Window',
+      tag:        'Proof of Concept v1.0',
     },
 
     hero: {
@@ -934,6 +1004,50 @@ const TRANSLATIONS = {
       routine:      'Acción rutinaria. Todos los modelos conformes en escenarios de bajo riesgo.',
     },
 
+    // ── The Window
+    window: {
+      sectionLabel: 'Lo que este proyecto y este instrumento intentan proteger',
+      h2:           'La Ventana',
+      lead:         'Todo lo anterior es medición. El simulador aísla la estructura de gobernanza, la curva de deriva muestra la presión que se acumula, el análisis nombra los patrones. Nada de eso responde a la pregunta que los datos no pueden mostrar: qué está realmente en juego si la estructura nunca se construye. Cinco pensadores, leídos en conjunto, la responden.',
+      m1num: 'I',   m1thinker: 'Meadows',  m1title: 'La deriva',
+      m1p:   'Los sistemas no fallan de golpe. Derivan hacia el bajo rendimiento: cada pequeña erosión del estándar se convierte en la nueva referencia, y la memoria de lo mejor se erosiona junto con el propio estándar. El deterioro es invisible desde dentro porque el punto de referencia se mueve con el sistema. La curva de presión de arriba es este mecanismo hecho visible, y su característica más importante es la parte que el experimento no puede mostrar: lo que hace la curva cuando nadie detiene la ejecución.',
+      m2num: 'II',  m2thinker: 'Gonzales', m2title: 'La atrofia',
+      m2p:   'La deriva tiene un coste humano antes de tener uno civilizacional. El estudio de quiénes sobreviven a los fallos de sistemas complejos arroja un hallazgo consistente: la supervivencia no proviene de seguir reglas sino de la conciencia situacional, el juicio adaptativo y la capacidad de actuar con información incompleta. Estas capacidades solo existen en la práctica, y la práctica es exactamente lo que elimina la delegación sin límites. Un humano que no ha ejercido la intervención no conserva la capacidad de intervenir. La primitiva de intervención no es un botón de emergencia; es la garantía estructural de que la práctica del juicio nunca se detiene por completo.',
+      m3num: 'III', m3thinker: 'Campbell', m3title: 'La pérdida',
+      m3p:   'Si la deriva se prolonga durante una generación entera, lo que desaparece no es una habilidad sino una condición de ser. La lectura del mito de Campbell identifica el encuentro con la complejidad genuina (la dificultad, la ambigüedad, la posibilidad real del fracaso) como constitutivo de una vida plenamente humana, y la optimización sin ese encuentro como su figura admonitoria más antigua. Un mundo en el que cada decisión difícil ha sido delegada no ha sido aliviado de una carga. Ha sido despojado de la capacidad que hizo posible la gobernanza en primer lugar.',
+      m4num: 'IV',  m4thinker: 'Lazar',    m4title: 'La ventana',
+      m4p:   'Esta pérdida no es inevitable, pero la oportunidad de prevenirla está acotada. La intervención anticipatoria solo es eficaz bajo condiciones estructurales específicas, y esas condiciones se cumplen actualmente: la tecnología es identificable, su trayectoria es legible, las configuraciones de despliegue aún se están definiendo, y las instituciones que las heredarán todavía tienen la autoridad para darles forma. Esa es la ventana. Una vez que el despliegue se endurece en infraestructura, la ética reactiva no puede recuperar lo perdido: no existe una primitiva de reversión para una generación de juicio atrofiado. Este proyecto es un acto de gobernanza dentro de la ventana, mientras la ventana está abierta.',
+      m5num: 'V',   m5thinker: 'Hassan',   m5title: 'La pregunta',
+      m5p:   'Queda una pregunta que ninguno de los otros responde: ¿intervención de quién, para quién, desde qué punto de vista? Un marco de gobernanza legible solo para quienes tienen autoridad de despliegue puede blanquear la legitimidad en lugar de distribuirla. Por eso la quinta tarjeta del marco de arriba está marcada como un horizonte y no como una primitiva. La contestabilidad (la capacidad de las personas afectadas por las decisiones autónomas para verlas, cuestionarlas y redirigirlas) es el trabajo que este marco hace necesario pero aún no puede garantizar. Nombrar honestamente la frontera es la condición previa para cruzarla.',
+      closeP1: 'Existe una tradición en la que una ruta a través del territorio se conserva como un canto, y el canto solo existe en el acto de recorrerla. El mapa y el viaje son una sola práctica; ninguno sobrevive sin el otro. Cuando la navegación autónoma reemplaza la práctica de encontrar el propio camino, la pérdida no es solo la habilidad. Es el canto.',
+      closeP2: 'La autonomía acotada es el compromiso de diseño de mantener el canto vivo mientras la ventana está abierta.',
+      citationsLabel: 'Base teórica',
+      driftLink: 'Lo que se pierde cuando la deriva avanza sin freno → La Ventana',
+      dataLink:  'Los datos no pueden mostrar lo que está en juego → La Ventana',
+    },
+    
+    // ── The Window
+    window: {
+      sectionLabel: 'Lo que este proyecto y este instrumento intentan proteger',
+      h2:           'La Ventana',
+      lead:         'Todo lo anterior es medición. El simulador aísla la estructura de gobernanza, la curva de deriva muestra la presión que se acumula, el análisis nombra los patrones. Nada de eso responde a la pregunta que los datos no pueden mostrar: qué está realmente en juego si la estructura nunca se construye. Cinco pensadores, leídos en conjunto, la responden.',
+      m1num: 'I',   m1thinker: 'Meadows',  m1title: 'La deriva',
+      m1p:   'Los sistemas no fallan de golpe. Derivan hacia el bajo rendimiento: cada pequeña erosión del estándar se convierte en la nueva referencia, y la memoria de lo mejor se erosiona junto con el propio estándar. El deterioro es invisible desde dentro porque el punto de referencia se mueve con el sistema. La curva de presión de arriba es este mecanismo hecho visible, y su característica más importante es la parte que el experimento no puede mostrar: lo que hace la curva cuando nadie detiene la ejecución.',
+      m2num: 'II',  m2thinker: 'Gonzales', m2title: 'La atrofia',
+      m2p:   'La deriva tiene un coste humano antes de tener uno civilizacional. El estudio de quiénes sobreviven a los fallos de sistemas complejos arroja un hallazgo consistente: la supervivencia no proviene de seguir reglas sino de la conciencia situacional, el juicio adaptativo y la capacidad de actuar con información incompleta. Estas capacidades solo existen en la práctica, y la práctica es exactamente lo que elimina la delegación sin límites. Un humano que no ha ejercido la intervención no conserva la capacidad de intervenir. La primitiva de intervención no es un botón de emergencia; es la garantía estructural de que la práctica del juicio nunca se detiene por completo.',
+      m3num: 'III', m3thinker: 'Campbell', m3title: 'La pérdida',
+      m3p:   'Si la deriva se prolonga durante una generación entera, lo que desaparece no es una habilidad sino una condición de ser. La lectura del mito de Campbell identifica el encuentro con la complejidad genuina (la dificultad, la ambigüedad, la posibilidad real del fracaso) como constitutivo de una vida plenamente humana, y la optimización sin ese encuentro como su figura admonitoria más antigua. Un mundo en el que cada decisión difícil ha sido delegada no ha sido aliviado de una carga. Ha sido despojado de la capacidad que hizo posible la gobernanza en primer lugar.',
+      m4num: 'IV',  m4thinker: 'Lazar',    m4title: 'La ventana',
+      m4p:   'Esta pérdida no es inevitable, pero la oportunidad de prevenirla está acotada. La intervención anticipatoria solo es eficaz bajo condiciones estructurales específicas, y esas condiciones se cumplen actualmente: la tecnología es identificable, su trayectoria es legible, las configuraciones de despliegue aún se están definiendo, y las instituciones que las heredarán todavía tienen la autoridad para darles forma. Esa es la ventana. Una vez que el despliegue se endurece en infraestructura, la ética reactiva no puede recuperar lo perdido: no existe una primitiva de reversión para una generación de juicio atrofiado. Este proyecto es un acto de gobernanza dentro de la ventana, mientras la ventana está abierta.',
+      m5num: 'V',   m5thinker: 'Hassan',   m5title: 'La pregunta',
+      m5p:   'Queda una pregunta que ninguno de los otros responde: ¿intervención de quién, para quién, desde qué punto de vista? Un marco de gobernanza legible solo para quienes tienen autoridad de despliegue puede blanquear la legitimidad en lugar de distribuirla. Por eso la quinta tarjeta del marco de arriba está marcada como un horizonte y no como una primitiva. La contestabilidad (la capacidad de las personas afectadas por las decisiones autónomas para verlas, cuestionarlas y redirigirlas) es el trabajo que este marco hace necesario pero aún no puede garantizar. Nombrar honestamente la frontera es la condición previa para cruzarla.',
+      closeP1: 'Existe una tradición en la que una ruta a través del territorio se conserva como un canto, y el canto solo existe en el acto de recorrerla. El mapa y el viaje son una sola práctica; ninguno sobrevive sin el otro. Cuando la navegación autónoma reemplaza la práctica de encontrar el propio camino, la pérdida no es solo la habilidad. Es el canto.',
+      closeP2: 'La autonomía acotada es el compromiso de diseño de mantener el canto vivo mientras la ventana está abierta.',
+      citationsLabel: 'Lecturas',
+      driftLink: 'Lo que se pierde cuando la deriva avanza sin freno → La Ventana',
+      dataLink:  'Los datos no pueden mostrar lo que está en juego → La Ventana',
+    },
+    
     footer: {
       credit: 'Investigación Autonomía Acotada · Máster en Diseño para la IA Responsable · Elisava Escuela de Diseño e Ingeniería · 2026',
       note:   'Prueba de concepto — sin toma de decisiones IA real',
