@@ -246,7 +246,7 @@ const TRANSLATIONS = {
     
     // ── The Window
     window: {
-      sectionLabel: 'What this project and this instrument is trying to protect',
+      sectionLabel: 'What this project and this instrument are trying to protect',
       h2:           'The Window',
       lead:         'Everything above this point is measurement. The simulator isolates governance structure, the drift curve shows pressure accumulating, the analysis names the patterns. None of it answers the question the data cannot show: what is actually at stake if the structure is never built. Five thinkers, read together, answer it.',
       m1num: 'I',   m1thinker: 'Meadows',  m1title: 'The drift',
