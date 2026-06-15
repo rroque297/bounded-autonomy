@@ -271,7 +271,7 @@ h2 {
   line-height: 1.8;
 }
 
-.primitives-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem; }
+.primitives-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; }
 .primitive-card {
   background: var(--surface2); border: 1px solid var(--border);
   border-radius: var(--radius-lg); padding: 2rem;
@@ -1037,6 +1037,7 @@ footer a { color: var(--cyan); text-decoration: none; }
 .primitive-card {
   display: flex;
   flex-direction: column;
+  height: 100%,
 }
 
 .primitive-desc {
