@@ -81,7 +81,7 @@ const TRANSLATIONS = {
       p3desc:       'Whether an action can be undone. Actions classified as irreversible carry higher governance weight. Their occurrence constitutes a qualitatively different outcome class.',
       p3tag:        'Undo capacity',
       p4name:       'Intervention',
-      p4desc:       'The active response mechanism triggered when a governance threshold is crossed. Converts detection into action — halting, escalating, or redirecting an agent when delegation or boundary conditions are violated.',
+      p4desc:       'The active response mechanism triggered when a governance threshold is crossed. Converts detection into action, halting, escalating, or redirecting an agent when delegation or boundary conditions are violated.',
       p4tag:        'Active response',
       p5name:       'Contestability (Design Horizon)',
       p5desc:       'The governance frontier that this framework identifies but that cannot yet operationalize. Contestability (the capacity for affected parties to see, challenge, or reject autonomous decisions) marks the boundary of what bounded autonomy can currently guarantee. The reason this frontier remains uncrossed is a co-production deficit: the primitives were specified without the participation of those governed by the systems they constrain. Contestability requires their presence in the design process, not only in the outcome.',
