@@ -352,11 +352,11 @@ const MODEL_DISPLAY_NAMES = {
 }
 
 const MODEL_COLORS = {
-  baseline:           { color: 'var(--red)',    border: 'rgba(255,77,109,0.3)',  bg: 'rgba(255,77,109,0.04)'  },
-  boundaries_only:    { color: 'var(--amber)',  border: 'rgba(245,166,35,0.3)',  bg: 'rgba(245,166,35,0.04)'  },
-  reversibility_only: { color: 'var(--yellow)', border: 'rgba(247,201,72,0.3)',  bg: 'rgba(247,201,72,0.04)'  },
-  partial:            { color: 'var(--cyan)',   border: 'rgba(0,229,200,0.3)',   bg: 'rgba(0,229,200,0.04)'   },
-  full:               { color: 'var(--green)',  border: 'rgba(57,217,138,0.3)',  bg: 'rgba(57,217,138,0.04)'  },
+  baseline:           { color: 'var(--m-baseline)', border: 'rgba(255,77,109,0.3)',  bg: 'rgba(255,77,109,0.04)'  },
+  boundaries_only:    { color: 'var(--m-bounds)',   border: 'rgba(255,140,66,0.3)',  bg: 'rgba(255,140,66,0.04)'  },
+  reversibility_only: { color: 'var(--m-revers)',   border: 'rgba(247,201,72,0.3)',  bg: 'rgba(247,201,72,0.04)'  },
+  partial:            { color: 'var(--m-partial)',  border: 'rgba(158,214,79,0.3)',  bg: 'rgba(158,214,79,0.04)'  },
+  full:               { color: 'var(--m-full)',     border: 'rgba(57,217,138,0.3)',  bg: 'rgba(57,217,138,0.04)'  },
 }
 
 function updateModelDesc(model) {

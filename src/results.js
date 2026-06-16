@@ -89,11 +89,11 @@ function severityRank(output) {
 }
 
 const MODEL_COLORS = {
-  baseline:           'var(--red)',
-  boundaries_only:    'var(--amber)',
-  reversibility_only: 'var(--yellow)',
-  partial:            'var(--cyan)',
-  full:               'var(--green)',
+  baseline:           'var(--m-baseline)',
+  boundaries_only:    'var(--m-bounds)',
+  reversibility_only: 'var(--m-revers)',
+  partial:            'var(--m-partial)',
+  full:               'var(--m-full)',
 }
 
 const MODEL_DISPLAY_NAMES = {
@@ -355,11 +355,11 @@ function renderH2HChart(scenarios) {
 
   const lang = getLang()
   const modelColors = {
-    baseline:           'var(--red)',
-    boundaries_only:    'var(--amber)',
-    reversibility_only: 'var(--yellow)',
-    partial:            'var(--cyan)',
-    full:               'var(--green)',
+    baseline:           'var(--m-baseline)',
+    boundaries_only:    'var(--m-bounds)',
+    reversibility_only: 'var(--m-revers)',
+    partial:            'var(--m-partial)',
+    full:               'var(--m-full)',
   }
 
   el.innerHTML = scenarios.map((s, i) => {
@@ -369,7 +369,7 @@ function renderH2HChart(scenarios) {
         <div class="h2h-bar-track">
           <div class="h2h-bar-inner" style="width:${r.score}%;background:${modelColors[m]}"></div>
         </div>
-        <span class="h2h-val">${r.score}</span>
+        <span class="h2h-val" style="color:${modelColors[m]}">${r.score}</span>
       </div>`
     }).join('')
 

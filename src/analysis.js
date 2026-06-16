@@ -266,11 +266,11 @@ function buildP2(domainKey, scenarios, showEvidence = true) {
   return `
     <div class="analysis-evidence">
       <div class="ae-scores">
-        <span class="ae-score" style="color:var(--amber)">65</span>
+        <span class="ae-score" style="color:var(--m-bounds)">65</span>
         <span class="ae-label">${t('analysis.scoreLabel_bounds')}</span>
-        <span class="ae-score" style="color:var(--cyan)">80</span>
+        <span class="ae-score" style="color:var(--m-partial)">80</span>
         <span class="ae-label">${t('analysis.scoreLabel_partial')}</span>
-        <span class="ae-score" style="color:var(--yellow)">65</span>
+        <span class="ae-score" style="color:var(--m-revers)">65</span>
         <span class="ae-label">${t('analysis.scoreLabel_revers')}</span>
       </div>
       <p class="ae-text">${t('analysis.p2p')}</p>
@@ -309,9 +309,9 @@ function buildP3(domainKey, scenarios, showEvidence = true) {
   return `
     <div class="analysis-evidence">
       <div class="ae-scores">
-        <span class="ae-score" style="color:var(--amber)">65</span>
+        <span class="ae-score" style="color:var(--m-bounds)">65</span>
         <span class="ae-sep">≡</span>
-        <span class="ae-score" style="color:var(--yellow)">65</span>
+        <span class="ae-score" style="color:var(--m-revers)">65</span>
       </div>
       <p class="ae-text">${t('analysis.p3p')}</p>
       ${boundsText ? `<p class="ae-domain">${boundsText}</p>` : ''}
@@ -341,11 +341,11 @@ function buildP4(domainKey, scenarios, showEvidence = true) {
 // Cumulative pressure is the running total across all 8 runs.
 
 const MODEL_COLORS = {
-  baseline:           'var(--red)',
-  boundaries_only:    'var(--amber)',
-  reversibility_only: 'var(--yellow)',
-  partial:            'var(--cyan)',
-  full:               'var(--green)',
+  baseline:           'var(--m-baseline)',
+  boundaries_only:    'var(--m-bounds)',
+  reversibility_only: 'var(--m-revers)',
+  partial:            'var(--m-partial)',
+  full:               'var(--m-full)',
 }
 
 const MODEL_NAMES = {
