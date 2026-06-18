@@ -2433,3 +2433,14 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
   .nav-links a:hover,
   .nav-links a:focus-visible { background: var(--surface3); }
 }
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 7b — Nav spacing correction (append after Block 7)
+   Pushes the logo and the .nav-end cluster (hamburger + lang picker) to
+   opposite ends so the menu bars aren't crowding the Bounded Autonomy logo.
+   Also adds a small guaranteed gap as a floor. Safe to delete to revert.
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  nav { justify-content: space-between; }
+  .nav-end { margin-left: auto; }      /* shove the cluster to the right edge */
+  .nav-toggle { margin-left: 0.5rem; } /* minimum breathing room as a floor */
+}
