@@ -2234,3 +2234,32 @@ h1 {
 footer {
   line-height: 1.9;
 }
+/* ═══════════════════════════════════════════════════════════════════
+   SIMULATOR REFLOW — Phase 2, Block 5
+   Two-pane (log | panel) stacks vertically when the simulator is
+   narrow. Container query: responds to the frame's own width.
+   Additive — safe to delete to revert.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Make the simulator frame a "query container" so its inner layout
+   can respond to the frame's own width. sim-frame already has
+   overflow:hidden, so this adds no new clipping behavior. */
+.sim-frame {
+  container-type: inline-size;
+  container-name: simframe;
+}
+
+/* When the frame is under 760px wide (phones + tablets in portrait),
+   stack the two panes into one column. Desktop and tablet-landscape
+   keep the side-by-side layout. */
+@container simframe (max-width: 760px) {
+  .sim-body {
+    grid-template-columns: 1fr;
+  }
+  /* The divider between panes was a right border (correct when
+     side-by-side). Stacked, it should be a bottom border instead. */
+  .sim-left {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+}
