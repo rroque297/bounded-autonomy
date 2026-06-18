@@ -2152,3 +2152,45 @@ footer a { color: var(--cyan); text-decoration: none; }
 .analysis-grid {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
 }
+/* ═══════════════════════════════════════════════════════════════════
+   RESPONSIVE FOUNDATION — Phase 1, Block 2
+   Hero + toolbar overflow fixes, modern viewport units, safe areas.
+   Additive — safe to delete this whole block to revert.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Hero height: 100vh overshoots on mobile because browser chrome
+   (address bar) isn't subtracted. svh = "small viewport height",
+   the modern fix. Fallback to vh for any old browser. */
+#hero {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+/* Hero stats row: was a fixed 3rem-gap flex that overflowed with
+   4 stats on a phone. Let it wrap, tighten gap when it does. */
+.hero-stats {
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+/* Hero CTAs already wrap; just ensure buttons don't force overflow. */
+.hero-ctas { flex-wrap: wrap; }
+
+/* Simulator toolbar config row: was flex-direction:row with four
+   80px config items + run buttons, overflowing on narrow screens.
+   Allow it to wrap so items flow to the next line. */
+.toolbar-config { flex-wrap: wrap; }
+.sim-toolbar-row3 { flex-wrap: wrap; }
+
+/* Model selector: five buttons in a row overflowed ~380px phones.
+   Let them wrap. */
+.model-select { flex-wrap: wrap; }
+
+/* Safe-area padding for notched phones (iPhone X and later).
+   max() keeps your existing padding on normal screens, and only
+   adds inset space where the device actually has a notch/rounded
+   corner. Applied to the two fixed/edge elements. */
+nav {
+  padding-left: max(2.5rem, env(safe-area-inset-left));
+  padding-right: max(2.5rem, env(safe-area-inset-right));
+}
