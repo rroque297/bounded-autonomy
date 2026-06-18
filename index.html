@@ -28,7 +28,7 @@
       <span data-i18n="nav.logo">Bounded</span><span data-i18n="nav.logoSpan">Autonomy</span>
     </a>
 
-    <ul class="nav-links">
+    <ul class="nav-links" id="nav-menu" popover>
       <li><a href="#research"  data-i18n="nav.research">Research</a></li>
       <li><a href="#simulator" data-i18n="nav.simulator">Simulator</a></li>
       <li><a href="#results"   data-i18n="nav.results">Results</a></li>
@@ -39,6 +39,11 @@
 
     <!-- nav-end: groups the tag + the language switcher pill -->
     <div class="nav-end">
+      <button class="nav-toggle" type="button" popovertarget="nav-menu" aria-label="Open navigation menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
       <span class="nav-tag" data-i18n="nav.tag">Proof of Concept v1.0</span>
       <!-- Language switcher mounts here via JS (mountLangSwitcher) -->
       <div id="lang-switcher-mount"></div>

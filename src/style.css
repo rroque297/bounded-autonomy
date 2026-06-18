@@ -2344,3 +2344,92 @@ footer {
     grid-row: 4;
   }
 }
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 7 — Nav collapse to popover menu (phones / small tablets)
+   Below 900px: the 6 anchor links collapse into a native <popover> dropdown
+   opened by a hamburger button. Language switcher stays ALWAYS visible.
+   The version tag (.nav-tag) hides to reclaim space. Zero JS — the native
+   popover API handles open/close/light-dismiss.
+   Desktop (>=900px) is untouched: the existing .nav-links flex row keeps
+   showing inline (an author display rule overrides the popover hide), and
+   the hamburger stays hidden.
+   ONE knob: --nav-h must roughly match your sticky bar height. If the
+   dropdown overlaps the bar, lower it; if there's a gap, raise it.
+   Safe to delete this whole block to revert (pair with reverting the two
+   index.html edits).
+   ════════════════════════════════════════════════════════════════════════ */
+:root { --nav-h: 3.75rem; }
+
+/* Hamburger button — hidden on desktop, shown only when collapsed */
+.nav-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.nav-toggle-bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--text);
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+/* Bars morph into an X while the menu is open */
+nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(2) { opacity: 0; }
+nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 900px) {
+  nav { flex-wrap: nowrap; }
+  .nav-logo { min-width: 0; }      /* let the logo shrink, not overflow */
+  .nav-end  { gap: 0.5rem; min-width: 0; }
+  .nav-tag  { display: none; }     /* reclaim space on phones */
+  .nav-toggle { display: inline-flex; }
+
+  /* Collapsed: hide the inline list (it becomes the popover). Beats the
+     existing .nav-links flex rule by specificity. */
+  .nav-links:not(:popover-open) { display: none; }
+
+  /* Open state: a card dropdown anchored under the bar, top-right. */
+  .nav-links:popover-open {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    position: fixed;
+    inset: auto;
+    top: calc(var(--nav-h) + env(safe-area-inset-top, 0px));
+    right: max(0.75rem, env(safe-area-inset-right, 0px));
+    left: auto;
+    margin: 0;
+    padding: 0.5rem;
+    min-width: 200px;
+    max-width: min(78vw, 320px);
+    max-height: calc(100svh - var(--nav-h) - 1.5rem);
+    overflow: auto;
+    list-style: none;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
+  .nav-links::backdrop { background: rgba(5,7,16,0.35); }
+
+  .nav-links li { width: 100%; }
+  .nav-links a {
+    display: block;
+    padding: 0.7rem 0.9rem;       /* ~44px touch target */
+    border-radius: var(--radius);
+  }
+  .nav-links a:hover,
+  .nav-links a:focus-visible { background: var(--surface3); }
+}
