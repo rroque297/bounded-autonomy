@@ -2444,3 +2444,31 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
   .nav-end { margin-left: auto; }      /* shove the cluster to the right edge */
   .nav-toggle { margin-left: 0.5rem; } /* minimum breathing room as a floor */
 }
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 8 — Hero stats: consistent 2x2 grid on phones (all languages)
+   Block 2's flex-wrap let line breaks depend on string width, so FR stacked
+   1-per-line while EN/DE/ES left a ragged side-by-side line. An explicit
+   2-column grid makes every language lay out identically: two rows of two.
+   Safe to delete to revert (falls back to Block 2 flex-wrap).
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  .hero-stats > * { min-width: 0; }
+}
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 8b — Logo breathing room on phones (append after Block 8)
+   space-between already maxes the gap, so the residual tightness is the
+   logo's own width. Trim its size slightly and prevent wrap at phone widths
+   to open up space between it and the hamburger. Safe to delete to revert.
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .nav-logo {
+    font-size: 1rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
