@@ -2502,3 +2502,37 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
   nav { gap: 1rem; }                 /* hard floor between logo and cluster */
   .nav-logo { max-width: 55%; }      /* wrap before reaching the hamburger */
 }
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 8e — Two-row nav on phones (append after Block 8d)
+   Supersedes the one-line fit attempts in 8b/8c/8d: instead of cramming
+   logo + hamburger + picker onto one line, stack into two rows.
+     Row 1: logo, centered, full width
+     Row 2: hamburger (full left)  ...  language picker (full right)
+   This removes the logo/hamburger collision entirely — they're no longer
+   on the same line. The bar is now taller, so --nav-h is raised here so the
+   popover dropdown still opens BELOW the bar (that's the one tunable knob).
+   Safe to delete to revert.
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  nav {
+    flex-wrap: wrap;
+    row-gap: 0.6rem;
+    --nav-h: 6.5rem;   /* taller two-row bar; dropdown opens below it. KNOB. */
+  }
+
+  /* Row 1 — logo centered across the full width */
+  .nav-logo {
+    flex: 1 0 100%;
+    max-width: 100%;            /* override 8d's 55% cap */
+    justify-content: center;    /* if logo is flex */
+    text-align: center;         /* if logo is inline/block */
+    white-space: nowrap;        /* fits easily now it owns the whole row */
+  }
+
+  /* Row 2 — hamburger hard-left, picker hard-right */
+  .nav-end {
+    flex: 1 0 100%;
+    justify-content: space-between;
+    margin-left: 0;             /* undo 7b's margin-left:auto */
+  }
+}
