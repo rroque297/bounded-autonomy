@@ -2109,3 +2109,46 @@ footer a { color: var(--cyan); text-decoration: none; }
 @media (max-width: 480px) {
   .citations-arc { grid-template-columns: 1fr; }
 }
+/* ═══════════════════════════════════════════════════════════════════
+   RESPONSIVE FOUNDATION — Phase 1, Block 1
+   Intrinsic grids: cards reflow to available width, no breakpoints.
+   Additive overrides — safe to delete this whole block to revert.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Prevent grid/flex children from overflowing their container.
+   Children default to min-width:auto, which is the #1 cause of
+   horizontal clipping on phones. This is the core discipline fix. */
+.primitives-grid > *,
+.results-summary > *,
+.freq-grid > *,
+.analysis-grid > *,
+.this-run-summary-cards > * {
+  min-width: 0;
+}
+
+/* Primitive cards: 4-up on desktop, auto-collapsing down to 1-up.
+   minmax(min(100%, 240px), 1fr) — the min(100%,…) guard is what
+   prevents overflow when the screen is narrower than 240px-ish. */
+.primitives-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 1.5rem;
+}
+
+/* Verified-scores strip: was flex-wrap:nowrap (forced 5-across,
+   clipped on mobile). Now wraps intrinsically. */
+.results-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+  gap: 0.75rem;
+}
+
+/* Output-frequency cards: 4-up desktop, reflow down. */
+.freq-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
+}
+
+/* Analysis pattern cards: 2-up desktop, 1-up phone. */
+.analysis-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+}
