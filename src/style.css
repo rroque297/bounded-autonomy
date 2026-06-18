@@ -2490,4 +2490,15 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
   }
   .nav-end             { flex-shrink: 0; }  /* protect the cluster... */
   #lang-switcher-mount { flex-shrink: 0; }  /* ...and the picker specifically */
+}/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 8d — Nav collision guard (append after Block 8c)
+   8c let the logo shrink/wrap, but with nothing reserving space between the
+   logo and the menu cluster the logo's second line ("Autonomy") could reach
+   the hamburger and overlap it. Fix: a hard gap on the nav as a floor, and
+   cap the logo's max width so it wraps before it ever reaches .nav-end.
+   Safe to delete to revert.
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  nav { gap: 1rem; }                 /* hard floor between logo and cluster */
+  .nav-logo { max-width: 55%; }      /* wrap before reaching the hamburger */
 }
