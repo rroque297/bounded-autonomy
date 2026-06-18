@@ -2471,4 +2471,23 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     white-space: nowrap;
     flex-shrink: 0;
   }
+}/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 8c — Nav fit correction (append after Block 8b)
+   8b's nowrap + flex-shrink:0 on .nav-logo made the logo refuse to shrink,
+   so on narrow phones the row overflowed and pushed the lang picker off the
+   right edge. Fix: let the LOGO yield first (shrink, and wrap to its two
+   spans if truly needed) and PIN the lang picker so it is never what
+   overflows. The picker is the primary control for a 4-language thesis and
+   must always stay on screen. Keeps 8b's smaller font. Safe to delete to
+   revert.
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .nav-logo {
+    white-space: normal;   /* undo 8b nowrap so it can wrap instead of overflow */
+    flex-shrink: 1;        /* undo 8b's hard hold — let it give up width */
+    min-width: 0;          /* the standard overflow guard */
+    line-height: 1.1;
+  }
+  .nav-end             { flex-shrink: 0; }  /* protect the cluster... */
+  #lang-switcher-mount { flex-shrink: 0; }  /* ...and the picker specifically */
 }
