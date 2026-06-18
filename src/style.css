@@ -2263,3 +2263,32 @@ footer {
     border-bottom: 1px solid var(--border);
   }
 }
+/* ═══════════════════════════════════════════════════════════════════
+   FOUNDATION CORRECTION — Phase 2, Block 5b
+   Pin desktop column counts for primitives (4-up) and analysis (2-up).
+   Block 1's auto-fit let the count drift with width; these grids want
+   a guaranteed desktop layout, reflowing only on smaller screens.
+   Additive — safe to delete to revert.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Primitives: explicit 4-up on desktop. Below 900px → 2-up.
+   Below 560px → 1-up. The horizon card keeps spanning full width
+   via its existing grid-column: 1 / -1. */
+.primitives-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+@media (max-width: 900px) {
+  .primitives-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .primitives-grid { grid-template-columns: 1fr; }
+}
+
+/* Analysis: explicit 2-up on desktop. Below 700px → 1-up.
+   The full-width limit card keeps spanning via grid-column: 1 / -1. */
+.analysis-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (max-width: 700px) {
+  .analysis-grid { grid-template-columns: 1fr; }
+}
