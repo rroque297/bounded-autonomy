@@ -2216,3 +2216,27 @@ h1 {
 #hero {
   padding: 120px clamp(1.25rem, 5vw, 2.5rem) 80px;
 }
+/* ═══════════════════════════════════════════════════════════════════
+   RESPONSIVE FOUNDATION — Phase 1, Block 4
+   Hero label separation + footer wrap legibility.
+   Additive — safe to delete to revert.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Hero label: the two spans (program + school) stacked with gap:0,
+   so when each wraps on a phone they ran together. Add vertical
+   spacing, and a cyan middot between them as a separator (respects
+   the no-em-dash rule; matches the footer's middot style). */
+.hero-label-text {
+  gap: 0.4rem;
+}
+.hero-label-text span:not(:first-child)::before {
+  content: '· ';
+  color: var(--cyan);
+}
+
+/* Footer: it's one string with middots already in the text. On a
+   phone it wraps mid-segment and the middots lose their meaning.
+   Give it more line spacing so the wrapped lines stay legible. */
+footer {
+  line-height: 1.9;
+}
