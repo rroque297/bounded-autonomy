@@ -2194,3 +2194,25 @@ nav {
   padding-left: max(2.5rem, env(safe-area-inset-left));
   padding-right: max(2.5rem, env(safe-area-inset-right));
 }
+/* ═══════════════════════════════════════════════════════════════════
+   RESPONSIVE FOUNDATION — Phase 1, Block 3
+   Hero title scaling fix (was clipping on phones).
+   Additive — safe to delete to revert.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Title clamp floor was 3rem (48px) — too wide for a long word on a
+   phone, so it clipped. Lower the floor and raise the vw coefficient
+   so it scales smoothly down. Desktop unchanged: still caps at 5.5rem
+   above ~1100px viewport. overflow-wrap is a last-resort guard so an
+   unexpectedly long word breaks instead of clipping. */
+h1 {
+  font-size: clamp(2.25rem, 8vw, 5.5rem);
+  overflow-wrap: break-word;
+}
+
+/* Shrink hero side padding on phones to reclaim width (top/bottom
+   preserved at their original 120px/80px). On desktop the clamp sits
+   at its 2.5rem max, so the hero looks identical to before. */
+#hero {
+  padding: 120px clamp(1.25rem, 5vw, 2.5rem) 80px;
+}
