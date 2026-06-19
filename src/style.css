@@ -2555,3 +2555,31 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     --nav-h: 7rem;   /* taller two-row bar; dropdown opens below it. KNOB. */
   }
 }
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 9 — Domain selector: compact wrap on phones (all 12 visible)
+   Decision: keep all 12 .domain-btn pills visible (single-select where
+   seeing every option is the task), but shrink them so the set forms a
+   tidy 2–3 row cluster instead of a tall heavy block. No swipe rail — zero
+   hidden options, no gesture to learn. CSS-only; .active state preserved.
+   Safe to delete to revert.
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .domain-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    justify-content: center;   /* balanced cluster, tidy last-row */
+  }
+
+  .domain-btn {
+    flex: 0 0 auto;
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    padding: 0.45rem 0.7rem;
+    min-height: 36px;          /* compact but still tappable */
+    border-radius: var(--radius);
+    line-height: 1.15;
+    white-space: nowrap;       /* each label stays on one line */
+    min-width: 0;
+  }
+}
