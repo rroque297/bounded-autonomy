@@ -2763,3 +2763,31 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     align-self: flex-start;
   }
 }
+/* ============================================================
+   BLOCK 15 — 44px touch targets at coarse pointer (WCAG 2.5.5)
+   On touch devices (pointer: coarse) lift the primary tap targets
+   to a ~44px minimum height for comfortable finger hits. Scoped to
+   coarse pointer ONLY, so mouse/desktop sizing is untouched. Domain
+   pills were min-height:36px (Block 9) — the main lift. inline-flex
+   centering keeps labels centered in the taller controls without
+   changing how the pills wrap in their flex row.
+   Additive override — safe to delete this whole block to revert.
+   ============================================================ */
+@media (pointer: coarse) {
+  .domain-btn,
+  .model-btn {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-toggle {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .nav-links a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}
