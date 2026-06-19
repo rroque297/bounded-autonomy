@@ -2919,3 +2919,21 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
 @media (min-width: 601px) {
   .back-to-top { display: none; }
 }
+/* ===== Block 21 — Model selector single-column stack on phones =====
+   Replaces flex-wrap (which gave uneven 1,1,1,2 rows driven by label width)
+   with an explicit single-column grid, so all 5 model buttons stack
+   identically across devices and languages. Explicit grid count, not
+   flex-wrap, per the per-language consistency rule. Phone-only (max 600px),
+   so desktop is untouched. Touches layout only, not button colors, so the
+   selected-model highlight is unaffected. Safe to delete to revert. */
+@media (max-width: 600px) {
+  .model-select {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  .model-select .model-btn {
+    min-width: 0;
+    width: 100%;
+  }
+}
