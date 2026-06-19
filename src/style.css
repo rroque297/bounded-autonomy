@@ -2614,3 +2614,28 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
   }
   .horizon-body { min-width: 0; }
 }
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 11 — Desktop popover reset for .nav-links (fixes white box / shift)
+   Making .nav-links a [popover] in Block 7 attached the browser's default
+   popover box styles: position:fixed, inset:0, margin:auto, border, padding,
+   and a white Canvas background. On phones these never show (closed = hidden,
+   open = fully restyled). On desktop, where the links show inline, those
+   defaults leaked through as a white bordered floating box that displaced the
+   logo. Reset them so desktop nav is a normal inline flex row again.
+   Scoped >=901px so the mobile popover (<=900px) is untouched.
+   Safe to delete to revert (pairs with Block 7).
+   ════════════════════════════════════════════════════════════════════════ */
+@media (min-width: 901px) {
+  .nav-links {
+    position: static;
+    inset: auto;
+    width: auto;
+    height: auto;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    overflow: visible;
+    background: transparent;
+    color: inherit;
+  }
+}
