@@ -2719,3 +2719,25 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     margin-top: auto;                 /* belt-and-suspenders: shove to floor */
   }
 }
+/* ============================================================
+   BLOCK 13 — Reduced-motion fallback (prefers-reduced-motion)
+   Respects the OS "reduce motion" accessibility setting.
+   Animations still COMPLETE (so fadeUp elements are never left
+   stuck invisible) but effectively instantly; infinite loops
+   (pulse/scanline) run once and stop; chart transitions snap.
+   !important is required: a universal (*) selector is lower
+   specificity than the class-targeted animation rules it must
+   override. Scoped entirely inside the reduce query, so it
+   cannot affect users who have NOT requested reduced motion.
+   Additive override — safe to delete this whole block to revert.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
