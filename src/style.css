@@ -2667,3 +2667,18 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     overflow-wrap: break-word;
   }
 }
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 12b — Config 2x2 alignment fix (append after Block 12)
+   Block 12's `align-items: flex-start` made cells look centered when the
+   label was short (shrink-wrapped) but snap hard-left when the label wrapped
+   to two lines — so alignment flipped per cell and per language. Force every
+   cell centered: center the column's children AND center wrapped text so
+   multi-line labels stay centered too. Higher specificity so it wins over 12.
+   Safe to delete to revert.
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .sim-toolbar-row3 .toolbar-config .config-row {
+    align-items: center;
+    text-align: center;
+  }
+}
