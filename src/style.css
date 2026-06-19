@@ -2865,3 +2865,57 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     margin-top: 2px;
   }
 }
+/* ============================================================
+   BLOCK 19 — Back-to-top button (bottom-left, mirrors hamburger)
+   A fixed anchor link to #hero for quick re-orientation on the
+   long scroll. Bottom-left so both nav controls share one thumb
+   zone. Plain in-page anchor = zero JS for the jump itself.
+   Scroll-aware hide/show uses animation-timeline: scroll(), which
+   is gated behind @supports: where supported it fades in after the
+   user scrolls past the hero; where NOT supported (older iOS
+   Safari) it safely falls back to always-visible. Phones only.
+   Additive override — delete this block (and the <a> in index.html)
+   to revert.
+   ============================================================ */
+@media (max-width: 600px) {
+  .back-to-top {
+    position: fixed;
+    left: max(1rem, env(safe-area-inset-left, 0px));
+    bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+    z-index: 90;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(13, 16, 32, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border2);
+    color: var(--cyan);
+    font-size: 1.1rem;
+    text-decoration: none;
+    line-height: 1;
+  }
+
+  /* Default (no scroll-timeline support): always visible, functional. */
+
+  /* Progressive enhancement: fade in only after scrolling past hero. */
+  @supports (animation-timeline: scroll()) {
+    .back-to-top {
+      opacity: 0;
+      pointer-events: none;
+      animation: bttReveal linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 90vh 140vh;
+    }
+    @keyframes bttReveal {
+      to { opacity: 1; pointer-events: auto; }
+    }
+  }
+}
+
+/* Hide on larger screens — phone-only aid. */
+@media (min-width: 601px) {
+  .back-to-top { display: none; }
+}
