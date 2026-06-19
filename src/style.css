@@ -2583,3 +2583,18 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     min-width: 0;
   }
 }
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 9b — Restore .domain-btn.active styling on phones (append after 9)
+   Block 9's generic .domain-btn overrides flattened the selected pill's
+   cyan look. Re-assert the original active recipe (faint cyan fill, cyan
+   text, translucent cyan border) inside the same 600px query so it wins.
+   Values copied verbatim from the base .domain-btn.active rule.
+   Safe to delete to revert.
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .domain-btn.active {
+    background: rgba(0,229,200,0.08);
+    color: var(--cyan);
+    border-color: rgba(0,229,200,0.35);
+  }
+}
