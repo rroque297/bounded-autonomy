@@ -2598,3 +2598,19 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     border-color: rgba(0,229,200,0.35);
   }
 }
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 10 — Contestability (horizon) card: stack on phones
+   Base .primitive-card.horizon is `flex-direction: row` with gap:2rem, so
+   .horizon-left (num above icon) sits beside .horizon-body, crushing the
+   text on phones. Fix: flip the CARD to column at phone width so the icon
+   block sits on top and text flows full-width below. .horizon-left keeps its
+   original column direction (number above icon) — untouched. Desktop intact.
+   Safe to delete to revert.
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .primitive-card.horizon {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .horizon-body { min-width: 0; }
+}
