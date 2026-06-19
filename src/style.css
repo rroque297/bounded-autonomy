@@ -2837,3 +2837,31 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     flex: 0 0 auto;
   }
 }
+/* ============================================================
+   BLOCK 18 — Label the hamburger "Menu" for discoverability
+   The nav-toggle is a bare 3-bar glyph; a text label markedly
+   improves discoverability (labeled menus beat bare icons in
+   usability research). Added as a CSS pseudo-element so this stays
+   CSS-only; the button already has aria-label="Open navigation
+   menu" (Block 7) so screen readers are unaffected. Phones only.
+   Additive override — safe to delete this whole block to revert.
+   ============================================================ */
+@media (max-width: 600px) {
+  .nav-toggle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+  .nav-toggle::after {
+    content: "Menu";
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text2);
+    line-height: 1;
+    margin-top: 2px;
+  }
+}
