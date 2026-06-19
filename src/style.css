@@ -2682,3 +2682,22 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     text-align: center;
   }
 }
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 12c — Config 2x2 even switch baseline (append after 12b)
+   In EN/DE one bottom-row label wraps to two lines while its neighbor stays
+   one line, so the cells differ in height and their switches sit at different
+   heights. FR/ES only looked aligned because both labels wrapped equally.
+   Fix: reserve a uniform two-line min-height for every .config-label and
+   center its text in that space, so all four labels occupy equal vertical
+   room and the switches below them land on one baseline in every language.
+   Safe to delete to revert.
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .sim-toolbar-row3 .toolbar-config .config-label {
+    min-height: 2.4em;          /* room for up to two lines */
+    display: flex;
+    align-items: center;        /* center label text vertically in that space */
+    justify-content: center;    /* keep it horizontally centered too */
+    text-align: center;
+  }
+}
