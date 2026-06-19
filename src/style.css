@@ -2937,3 +2937,14 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     width: 100%;
   }
 }
+/* ===== Block 22 — Matrix scenario text wrapping (German overflow fix) =====
+   Long German scenario strings are single compound words with no space to
+   wrap at, so they overflowed .col-scenario and overlapped the risk column.
+   This lets an overlong word break inside its own cell instead of spilling
+   sideways. Affects ONLY text flow inside .col-scenario: does NOT touch the
+   col-active marker, the transparent side borders, the th cells, or any JS.
+   Applied at all widths (no-op on short English text, which never needs to
+   break). Safe to delete to revert. */
+.matrix-table .col-scenario {
+  overflow-wrap: break-word;
+}
