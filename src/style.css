@@ -2701,3 +2701,21 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     text-align: center;
   }
 }
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 12d — Config 2x2: pin switches to a shared baseline (after 12c)
+   12c reserved label height but switches still drifted, so cell content
+   isn't anchoring uniformly. Because .toolbar-config is a grid, paired cells
+   already share an equal-height row track; the fix is to make each cell a
+   column that pushes its value to the BOTTOM. Then every switch sits on the
+   cell floor — identical height across the row regardless of label wrap.
+   Safe to delete to revert.
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .sim-toolbar-row3 .toolbar-config .config-row {
+    height: 100%;
+    justify-content: space-between;   /* label top, value pinned bottom */
+  }
+  .sim-toolbar-row3 .toolbar-config .config-val {
+    margin-top: auto;                 /* belt-and-suspenders: shove to floor */
+  }
+}
