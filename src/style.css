@@ -2639,3 +2639,31 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     color: inherit;
   }
 }
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 12 — Config primitives as 2x2 on phones (label over value)
+   The four .config-row items (Delegation/Boundaries/Reversibility/
+   Intervention) are the four governance primitives — a set of four peers.
+   Block 2's flex-wrap broke them into a 2-1-1 stagger implying a hierarchy
+   that isn't there. A 2x2 grid presents them as equals. Inside each cell the
+   label sits on top with the on/off value below (robust for long German
+   labels in half-width cells). CSS-only; values still update via JS.
+   Safe to delete to revert (overrides Block 2 wrap for this container).
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .toolbar-config {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+  .config-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+    min-width: 0;            /* let long DE labels wrap inside the cell */
+  }
+  .config-label {
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+}
