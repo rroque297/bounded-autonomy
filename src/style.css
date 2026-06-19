@@ -2792,19 +2792,24 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
   }
 }
 /* ============================================================
-   BLOCK 16 — Recovery-pair card: lock scores to labels on phones
-   .ae-scores is six spans in score,label,score,label,score,label
-   order. On desktop they read as an inline row; on phones the row
-   flex-wraps ~3-per-line and tears each score away from its label
-   (65 bounds 80 / partial 65 revers). Pin to an explicit 3-col
-   grid that flows DOWN each column, so each label sits directly
-   under its own score. Reading order (65, 80, 65) matches desktop.
-   Tight row gap + wider column gap makes the pairing obvious.
-   Explicit grid, not flex-wrap — same lesson as Blocks 8 and 12.
+   BLOCK 17 — Analysis evidence rows on phones (supersedes Block 16)
+   Three cards share .ae-scores but hold different content:
+     p1 "cost of absent structure": score arrow score (30 → 91)
+     p2 "recovery pair": three score+label pairs
+     p3 "two ways to score 65": score sep score (65 ≡ 65)
+   Block 16 forced ALL of them into a 3-col grid, which dropped the
+   arrow/sep into a second row under the first number. Fix: scope
+   the pair grid to the recovery card ONLY via :has(.ae-label), and
+   give the icon cards (arrow/sep) a centered inline row that keeps
+   the glyph BETWEEN the two scores.
    Additive override — safe to delete this whole block to revert.
    ============================================================ */
 @media (max-width: 600px) {
-  .ae-scores {
+
+  /* Recovery pair (p2): the only .ae-scores containing labels.
+     Explicit 3-col grid, flowing down each column, so each label
+     sits directly under its own score. Order 65, 80, 65 = desktop. */
+  .ae-scores:has(.ae-label) {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto auto;
@@ -2813,8 +2818,22 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     justify-items: center;
     text-align: center;
   }
-  .ae-scores .ae-score,
-  .ae-scores .ae-label {
+  .ae-scores:has(.ae-label) .ae-score,
+  .ae-scores:has(.ae-label) .ae-label {
     min-width: 0;
+  }
+
+  /* Icon cards (p1, p3): score glyph score on ONE centered line.
+     :not(:has(.ae-label)) excludes the recovery card above. */
+  .ae-scores:not(:has(.ae-label)) {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+  .ae-scores:not(:has(.ae-label)) .ae-arrow,
+  .ae-scores:not(:has(.ae-label)) .ae-sep {
+    flex: 0 0 auto;
   }
 }
