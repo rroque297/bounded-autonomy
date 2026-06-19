@@ -2536,3 +2536,16 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     margin-left: 0;             /* undo 7b's margin-left:auto */
   }
 }
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 8f — Logo top breathing room on phones (append after Block 8e)
+   In the two-row nav (8e) the centered logo sits tight against the top of
+   the viewport / browser chrome. Add a little top padding to the bar so the
+   logo isn't butting the URL bar. Uses max(...) so notched phones keep their
+   safe-area inset and everyone else gets the floor value.
+   Safe to delete to revert.
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  nav {
+    padding-top: max(0.7rem, env(safe-area-inset-top, 0px));
+  }
+}
