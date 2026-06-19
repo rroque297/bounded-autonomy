@@ -2740,4 +2740,26 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}/* ============================================================
+   BLOCK 14 — Results forward-pointer stacking on phones
+   #results-forward has an INLINE display:flex (a row). On narrow
+   screens the narrative <p> is crushed into a tall skinny column
+   while the "Go to Analysis" link stays beside it and spills past
+   the edge. Flip the container to a column: text goes full-width
+   and wraps; the link drops below, sized to content, left-aligned.
+   Only flex-direction is set, so the inline display:flex is left
+   intact (no !important needed). Same fix family as Block 10.
+   Additive override — safe to delete this whole block to revert.
+   ============================================================ */
+@media (max-width: 600px) {
+  #results-forward {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .results-forward-text {
+    min-width: 0;
+  }
+  .results-forward-link {
+    align-self: flex-start;
+  }
 }
