@@ -2791,3 +2791,30 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     align-items: center;
   }
 }
+/* ============================================================
+   BLOCK 16 — Recovery-pair card: lock scores to labels on phones
+   .ae-scores is six spans in score,label,score,label,score,label
+   order. On desktop they read as an inline row; on phones the row
+   flex-wraps ~3-per-line and tears each score away from its label
+   (65 bounds 80 / partial 65 revers). Pin to an explicit 3-col
+   grid that flows DOWN each column, so each label sits directly
+   under its own score. Reading order (65, 80, 65) matches desktop.
+   Tight row gap + wider column gap makes the pairing obvious.
+   Explicit grid, not flex-wrap — same lesson as Blocks 8 and 12.
+   Additive override — safe to delete this whole block to revert.
+   ============================================================ */
+@media (max-width: 600px) {
+  .ae-scores {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    grid-auto-flow: column;
+    gap: 0.3rem 0.75rem;
+    justify-items: center;
+    text-align: center;
+  }
+  .ae-scores .ae-score,
+  .ae-scores .ae-label {
+    min-width: 0;
+  }
+}
