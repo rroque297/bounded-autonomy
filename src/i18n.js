@@ -293,7 +293,7 @@ const TRANSLATIONS = {
       results:    'Résultats',
       analysis:   'Analyse',
       drift:      'Drift',
-      window:     'The Window',
+      window:     'La Fenêtre',
       tag:        'Proof of Concept v1.0',
     },
 
@@ -547,7 +547,7 @@ const TRANSLATIONS = {
       results:    'Ergebnisse',
       analysis:   'Analyse',
       drift:      'Drift',
-      window:     'The Window',
+      window:     'Das Fenster',
       tag:        'Proof of Concept v1.0',
     },
 
@@ -801,7 +801,7 @@ const TRANSLATIONS = {
       results:    'Resultados',
       analysis:   'Análisis',
       drift:      'Drift',
-      window:     'The Window',
+      window:     'La Ventana',
       tag:        'Proof of Concept v1.0',
     },
 
