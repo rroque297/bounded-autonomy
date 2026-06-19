@@ -2537,15 +2537,21 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
   }
 }
 /* ════════════════════════════════════════════════════════════════════════
-   BLOCK 8f — Logo top breathing room on phones (append after Block 8e)
-   In the two-row nav (8e) the centered logo sits tight against the top of
-   the viewport / browser chrome. Add a little top padding to the bar so the
-   logo isn't butting the URL bar. Uses max(...) so notched phones keep their
-   safe-area inset and everyone else gets the floor value.
-   Safe to delete to revert.
+   BLOCK 8g — Two-row nav height + top room (replaces 8f)
+   Root cause: the base `nav` rule sets `height: 64px` (fixed). That fixed
+   height squashes the two-row phone layout (8e) and left no room for 8f's
+   top padding to push the logo down. Fix: on phones, drop the fixed height
+   to `auto` so the bar grows to fit two rows, and add top + bottom padding
+   (safe-area aware) so the centered logo clears the URL bar.
+   Because the bar is now taller, --nav-h is set to match so the popover
+   dropdown still opens below it. KNOB: --nav-h.
+   Delete Block 8f before adding this. Safe to delete to revert.
    ════════════════════════════════════════════════════════════════════════ */
 @media (max-width: 900px) {
   nav {
-    padding-top: max(0.7rem, env(safe-area-inset-top, 0px));
+    height: auto;                                        /* release the 64px pin */
+    padding-top: max(0.85rem, env(safe-area-inset-top, 0px));
+    padding-bottom: 0.7rem;
+    --nav-h: 7rem;   /* taller two-row bar; dropdown opens below it. KNOB. */
   }
 }
