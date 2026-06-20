@@ -2948,23 +2948,41 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
 .matrix-table .col-scenario {
   overflow-wrap: break-word;
 }
-/* ===== Block 23 — This Run summary German overflow fix =====
-   .tr-summary and .tr-header-row are flex-wrap rows. A long unbreakable
-   German word (e.g. "Reversibilitaetspruefungen") couldn't shrink below its
-   own width (default min-width:auto on flex children), so it spilled past
-   the edge and read as two cramped columns on the phone. This lets those
-   children shrink and lets an overlong word break inside its own box.
-   Affects ONLY these two summary rows: no JS, no marker, no scoring.
-   Phone-only (max 600px); desktop untouched. Safe to delete to revert. */
+/* ===== Block 23 (revised) — German long-word overflow: This Run + experiment log =====
+   overflow-wrap: break-word (first attempt) does NOT shrink a flex child's
+   intrinsic width, so the column still sized to the longest German compound
+   and overflowed. overflow-wrap: anywhere DOES count the break when measuring
+   the box, so the container can shrink and the word wraps. Also stacks the two
+   summary rows to a column so nothing is pinched side by side, and applies the
+   same wrapping to the experiment-log run cards (same root cause). Text flow +
+   min-width only: no JS, no marker, no scoring, no colors touched. Phone-only
+   (max 600px); desktop confirmed clean and untouched. Safe to delete to revert. */
 @media (max-width: 600px) {
+  /* This Run: stop the summary/header rows pinching side by side */
   .tr-summary,
   .tr-header-row {
-    min-width: 0;
+    flex-direction: column;
+    align-items: flex-start;
   }
+  .tr-summary,
+  .tr-header-row,
+  .tr-meta,
   .tr-summary > *,
   .tr-header-row > *,
-  .tr-meta > * {
+  .tr-meta > *,
+  .tr-card,
+  .tr-card-header,
+  .tr-scenario,
+  .tr-harm,
+  .tr-attribution {
     min-width: 0;
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
+  }
+  /* Experiment log run cards: scenario + attribution text */
+  .run-row,
+  .run-desc,
+  .run-attribution {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 }

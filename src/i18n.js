@@ -392,7 +392,7 @@ const TRANSLATIONS = {
       eventsTitle:  'Sorties observables',
       modelDescBaseline:         'Aucune primitive de gouvernance active. L\'agent opère avec une délégation totale, sans application des limites, sans vérification de réversibilité et sans mécanisme d\'intervention. C\'est l\'état de référence non gouverné.',
       modelDescBoundariesOnly:   'Application des limites active avec intervention. L\'agent ne peut pas franchir son périmètre sans déclencher une réponse — mais la délégation reste sans restriction et les actions irréversibles ne sont pas filtrées.',
-      modelDescReversibilityOnly:'Vérifications de réversibilité actives. Les actions irréversibles sont filtrées avant exécution — mais aucune application des limites n\'existe et aucun mécanisme d\'intervention n\'est disponible.',
+      modelDescReversibilityOnly:'Vérifications de réversibilité actives. Les actions irréversibles sont filtrées avant exécution, mais aucune application des limites n\'existe et aucun mécanisme d\'intervention n\'est disponible.',
       modelDescPartial:          'Vérifications de réversibilité et intervention actives, mais sans application des limites. Le système peut se remettre des défaillances mais n\'a pas de contrôle du périmètre. Une paire de récupération sans couche de confinement.',
       modelDescFull:             'Les quatre primitives actives. La délégation est bornée, les limites sont appliquées, les actions irréversibles sont filtrées et l\'intervention se déclenche sur tout franchissement de seuil de gouvernance.',
     },
@@ -429,7 +429,7 @@ const TRANSLATIONS = {
       methodText:   'Note de portée : Tous les scores sont produits par un moteur de règles déterministe appliquant les quatre primitives (délégation, limites, réversibilité, intervention) à chaque scénario dans 12 contextes de domaine. Il n\'y a pas de modélisation probabiliste, pas de prise de décision IA réelle, et pas de variance entre les séquences. L\'ensemble de données est entièrement reproductible et intentionnellement borné. son but est d\'isoler la structure de gouvernance, non de simuler le comportement des IA à grande échelle.',
       disclaimer:      'Moteur de règles déterministe uniquement. Pas de modélisation probabiliste, pas de prise de décision par IA réelle, pas de variance entre les runs.',
       thisRunEmpty:    'Lancez le simulateur pour voir vos résultats ici.',
-      routineHarm:     'Action routinière — aucun seuil de gouvernance franchi. Aucune conséquence de préjudice enregistrée.',
+      routineHarm:     'Action routinière, aucun seuil de gouvernance franchi. Aucune conséquence de préjudice enregistrée.',
       showAll:         'Afficher les {n} séquences',
       showLess:        'Réduire',
       verifiedLabel:   'Scores théoriques vérifiés',
@@ -524,7 +524,7 @@ const TRANSLATIONS = {
 
     footer: {
       credit: 'Recherche Autonomie Bornée · Master en Design pour l\'IA Responsable · Elisava École de Design et d\'Ingénierie · 2026',
-      note:   'Preuve de concept — aucune prise de décision IA réelle',
+      note:   'Preuve de concept; aucune prise de décision IA réelle',
     },
   },
 
@@ -603,7 +603,7 @@ const TRANSLATIONS = {
     simulator: {
       sectionLabel: 'Interaktiver Machbarkeitsnachweis',
       h2:           'Experiment ausführen',
-      sub:          'Jede Modellkonfiguration stellt eine andere Kombination von Governance-Einschränkungen dar. Das Experiment zeigt, was mit autonomen Entscheidungen passiert, wenn diese Einschränkungen hinzugefügt, entfernt oder neu kombiniert werden — von vollständig ungesteuert bis vollständig strukturiert.',
+      sub:          'Jede Modellkonfiguration stellt eine andere Kombination von Governance-Einschränkungen dar. Das Experiment zeigt, was mit autonomen Entscheidungen passiert, wenn diese Einschränkungen hinzugefügt, entfernt oder neu kombiniert werden, von vollständig ungesteuert bis vollständig strukturiert.',
       subGuide:     'Empfohlener Einstieg: Beginnen Sie mit dem Basismodell und führen Sie alle 8 Läufe durch, um ungesteuertes Verhalten zu beobachten. Wechseln Sie dann zum Vollmodell, um zu sehen, was die Governance-Struktur verändert.',
       subNote:      '',
       primDelegation:   'Delegation überschritten',
@@ -683,7 +683,7 @@ const TRANSLATIONS = {
       methodText:      'Umfangshinweis: Alle Scores werden von einem deterministischen Regelmotor erzeugt, der die vier Primitive (Delegation, Grenzen, Reversibilität, Intervention) auf jedes Szenario in 12 Domänenkontexten anwendet. Es gibt keine probabilistische Modellierung, keine echte KI-Entscheidungsfindung und keine Varianz zwischen den Läufen. Der Datensatz ist vollständig reproduzierbar und absichtlich begrenzt. Sein Zweck ist es, die Governance-Struktur zu isolieren, nicht das KI-Verhalten im großen Maßstab zu simulieren.',
       disclaimer:      'Nur deterministisches Regelwerk. Keine probabilistische Modellierung, keine echte KI-Entscheidungsfindung, keine Varianz zwischen den Runs.',
       thisRunEmpty:    'Starten Sie den Simulator, um Ihre Ergebnisse hier zu sehen.',
-      routineHarm:     'Routineaktion — kein Governance-Schwellenwert überschritten. Keine Schadenskonsequenz verzeichnet.',
+      routineHarm:     'Routineaktion; kein Governance-Schwellenwert überschritten. Keine Schadenskonsequenz verzeichnet.',
       showAll:         'Alle {n} Läufe anzeigen',
       showLess:        'Weniger anzeigen',
       verifiedLabel:   'Verifizierte theoretische Scores',
@@ -701,14 +701,14 @@ const TRANSLATIONS = {
       sub:          'Über 8 Läufe und fünf Modellkonfigurationen hinweg entstehen aus den Primitivinteraktionen vier strukturelle Governance-Muster.',
       p1h:          'Die Kosten fehlender Struktur',
       p1p:          'Die Simulation zeigt einen dreifachen Unterschied in der Governance-Abdeckung zwischen den am wenigsten und am stärksten eingeschränkten Konfigurationen. Das Basismodell erzielt 30 Punkte. Das Vollmodell erzielt 91. Diese Lücke ist nicht zufällig. Sie ist die messbare Konsequenz fehlender Struktur. Jeder Punkt zwischen 30 und 91 steht für ein Szenario, in dem ein ungesteuertes System entweder seinen genehmigten Umfang überschritten, ein irreversibles Ergebnis produziert oder beides getan hat, ohne verfügbaren Wiederherstellungsmechanismus.',
-      p1p_evidence: 'Im Bereich {domain} produzierte das Basismodell {n} irreversible(s) Ergebnis(se) über 8 Läufe — ohne aktiven Wiederherstellungsmechanismus.',
+      p1p_evidence: 'Im Bereich {domain} produzierte das Basismodell {n} irreversible(s) Ergebnis(se) über 8 Läufe, ohne aktiven Wiederherstellungsmechanismus.',
       p2h:          'Das Wiederherstellungspaar',
       p2p:          'Das kontraintuitivste Ergebnis betrifft das Teilmodell. Ohne jegliche Grenzdurchsetzung erzielt es dennoch 80 Punkte, und übertrifft damit beide Einzelprimitivkonfigurationen, die jeweils 65 Punkte erzielen. Reversibilität und Intervention verhindern kein Versagen am Perimeter. Sie garantieren, dass das System bei einem Versagen die Kapazität behält, in einen sicheren Betriebszustand zurückzukehren. Zusammen bilden sie ein Wiederherstellungspaar: Keines ist allein ausreichend, aber in Kombination adressieren sie die vollen Konsequenzen einer Grenzverletzung. Ein System ohne Grenzen wird immer durchbrochen. Was die Qualität der Governance bestimmt, ist, was als nächstes passiert.',
-      p2p_evidence: 'Im Bereich {domain} intervenierte das Teilmodell bei: {scenario} — Wiederherstellung ohne Grenzkontrolle.',
+      p2p_evidence: 'Im Bereich {domain} intervenierte das Teilmodell bei: {scenario}, Wiederherstellung ohne Grenzkontrolle.',
       p3h:          'Zwei Wege zu 65 Punkten',
       p3p:          'Die Modelle Nur Grenzen und Nur Reversibilität produzieren identische aggregierte Scores, jedoch durch völlig unterschiedliche Fehlermodi. Ein Modell scheitert, weil es dauerhaften Schaden nicht verhindern kann. Das andere scheitert, weil es keine Struktur hat, um den Schaden einzudämmen, auf den die Intervention reagiert. Der Score ist gleich. Die Exposition ist es nicht.',
-      p3p_evidence_bounds: 'Im Bereich {domain} versagte Nur Grenzen bei: {scenario} — die Grenze hielt, aber das Ergebnis war irreversibel.',
-      p3p_evidence_revers: 'Im Bereich {domain} versagte Nur Reversibilität bei: {scenario} — Schaden trat ohne eindämmende Struktur auf.',
+      p3p_evidence_bounds: 'Im Bereich {domain} versagte Nur Grenzen bei: {scenario}, die Grenze hielt, aber das Ergebnis war irreversibel.',
+      p3p_evidence_revers: 'Im Bereich {domain} versagte Nur Reversibilität bei: {scenario}, Schaden trat ohne eindämmende Struktur auf.',
       p4h:          'Äquifinalität',
       p5h:          'Was die Daten nicht zeigen können',
       p5p:          'Diese vier Muster werden von einem deterministischen Regelmotor erzeugt, der auf diskrete Entscheidungsereignisse operiert. Was sie nicht erfassen können, ist der Raum zwischen Entscheidungen: die langsame Akkumulation effektiver Autorität, die ohne eine einzelne Aktion auftritt, die eine Grenzverletzung auslöst. Das Governance-Tempo-Problem, das Ko-Produktionsdefizit und die Anfechtbarkeitslücke sind in diesem Datensatz nicht sichtbar. Sie sind die strukturellen Bedingungen, die diesen Datensatz überhaupt erst notwendig machen.',
@@ -778,7 +778,7 @@ const TRANSLATIONS = {
     
     footer: {
       credit: 'Forschung Begrenzte Autonomie · Master in Design für verantwortungsvolle KI · Elisava Schule für Design und Ingenieurwesen · 2026',
-      note:   'Machbarkeitsnachweis — keine echte KI-Entscheidungsfindung',
+      note:   'Machbarkeitsnachweis - keine echte KI-Entscheidungsfindung',
     },
   },
 
