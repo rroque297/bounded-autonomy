@@ -2986,3 +2986,37 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     overflow-wrap: anywhere;
   }
 }
+/* ===== Block 24 — Run card: full-width scenario lane (supersedes Block 6 rows 2+) =====
+   Block 6's row 1 (num + badge + score) is correct and untouched. The problem
+   was row 2: the scenario shared the row with the output badge (cols 1-2 only)
+   and used overflow-wrap:break-word, which doesn't let the column shrink, so
+   long German compound words overflowed. This gives the scenario its OWN
+   full-width row with overflow-wrap:anywhere (which DOES let the box shrink so
+   the word wraps), drops the output badge to its own line, and shifts
+   attribution + insight down one row each. Same container query + threshold as
+   Block 6 (@container simframe, 540px), so they engage together; appended at
+   end so it wins on order. CSS-only, DOM and renderLog() untouched. Safe to
+   delete to revert (Block 6 then governs again). */
+@container simframe (max-width: 540px) {
+  .run-desc {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    line-height: 1.6;
+  }
+  .output-badge {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    justify-self: start;
+    align-self: start;
+  }
+  .run-attribution {
+    grid-column: 1 / -1;
+    grid-row: 4;
+  }
+  .inline-insight {
+    grid-column: 1 / -1;
+    grid-row: 5;
+  }
+}
