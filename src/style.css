@@ -2948,3 +2948,23 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
 .matrix-table .col-scenario {
   overflow-wrap: break-word;
 }
+/* ===== Block 23 — This Run summary German overflow fix =====
+   .tr-summary and .tr-header-row are flex-wrap rows. A long unbreakable
+   German word (e.g. "Reversibilitaetspruefungen") couldn't shrink below its
+   own width (default min-width:auto on flex children), so it spilled past
+   the edge and read as two cramped columns on the phone. This lets those
+   children shrink and lets an overlong word break inside its own box.
+   Affects ONLY these two summary rows: no JS, no marker, no scoring.
+   Phone-only (max 600px); desktop untouched. Safe to delete to revert. */
+@media (max-width: 600px) {
+  .tr-summary,
+  .tr-header-row {
+    min-width: 0;
+  }
+  .tr-summary > *,
+  .tr-header-row > *,
+  .tr-meta > * {
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+}
