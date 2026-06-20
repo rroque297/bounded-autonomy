@@ -3067,3 +3067,19 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     hyphens: auto;
   }
 }
+/* ===== Block 27 — Results summary cards: stack on phones =====
+   .results-summary is repeat(5,1fr) at all widths. Five cards side by side
+   crush to ~70px each on phones, where the score, label, and output pills
+   overflow (worst when a model has 2+ pills, e.g. "7 irreversible / 1
+   compliant"). This reflows to a single full-width column on phones so each
+   card has full room and pills wrap cleanly. Explicit count + media query,
+   per the project's designed-grid rule. min-width:0 clears the grid-child
+   auto-min clipping. Desktop/tablet 5-up untouched. Safe to delete to revert. */
+@media (max-width: 600px) {
+  .results-summary {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .rs-card { min-width: 0; }
+  .rs-output-pills { min-width: 0; }
+}
