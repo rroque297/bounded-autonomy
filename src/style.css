@@ -3020,3 +3020,32 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     grid-row: 5;
   }
 }
+/* ===== Block 25 — Run card: left-justify all elements (TEST, reversible) =====
+   Repacks the identity line so number + badge + score group together on the
+   LEFT (was: score pushed to the right via a 1fr gap), and flushes the text
+   lanes to the same left edge, clearing the indent on long scenario words.
+   Same container query as Block 6/24 so it engages together; appended so it
+   wins. Badge padding is left intact (only text-indent/margin reset, on the
+   text elements only, so the pills keep their shape). CSS-only, DOM/JS
+   untouched. Delete this block to revert to score-on-the-right. */
+@container simframe (max-width: 540px) {
+  .run-row {
+    grid-template-columns: auto auto 1fr;
+  }
+  .run-num,
+  .run-model-badge,
+  .score-chip,
+  .run-desc,
+  .output-badge,
+  .run-attribution,
+  .inline-insight {
+    justify-self: start;
+  }
+  .run-desc,
+  .run-attribution {
+    text-align: left;
+    text-indent: 0;
+    margin-left: 0;
+    padding-left: 0;
+  }
+}
