@@ -3083,3 +3083,44 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
   .rs-card { min-width: 0; }
   .rs-output-pills { min-width: 0; }
 }
+/* ===== Block 28 — This Run outcome cards: m-* colors + phone stacking =====
+   Two fixes for the .this-run-summary-cards (the big-count outcome cards).
+   (1) LAYOUT: they're flex with flex:1 + min-width:180px, so on phones they
+   stay side by side until cramped and the German text overflows. Stack to one
+   full-width column below 600px.
+   (2) COLOR: align to the canonical --m-* model ramp (worst->best red->green),
+   recoloring the left border AND the count together so they stay in sync.
+   The only visible change is intervention: cyan -> lime (--m-partial), its
+   second-best position on the ramp. Applies at all widths (color), with the
+   stack scoped to phones. Backgrounds left as-is (faint tints, already fine).
+   CSS-only, DOM/JS untouched. Safe to delete to revert. */
+
+/* Color: canonical --m-* mapping (all widths) */
+.trs-irreversible { border-left-color: var(--m-baseline); }
+.trs-violation    { border-left-color: var(--m-bounds); }
+.trs-intervention { border-left-color: var(--m-partial); }
+.trs-compliant    { border-left-color: var(--m-full); }
+
+.trs-irreversible .trs-count { color: var(--m-baseline); }
+.trs-violation    .trs-count { color: var(--m-bounds); }
+.trs-intervention .trs-count { color: var(--m-partial); }
+.trs-compliant    .trs-count { color: var(--m-full); }
+
+/* Layout: stack full-width on phones */
+@media (max-width: 600px) {
+  .this-run-summary-cards {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+  .trs-card {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .trs-harm,
+  .trs-scenario {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+}
