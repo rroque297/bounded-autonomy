@@ -3049,3 +3049,21 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     padding-left: 0;
   }
 }
+/* ===== Block 26 — German hyphenation in run card (grammatical word breaks) =====
+   overflow-wrap:anywhere (Block 24) breaks long German compounds at arbitrary
+   characters (e.g. "...diffusionsr/isiko"). hyphens:auto lets the browser break
+   at dictionary-correct morpheme points and insert a real hyphen
+   (e.g. "...diffusions-/risiko"). Hyphenation is PREFERRED; the anywhere
+   fallback now only catches words the dictionary can't hyphenate.
+   -webkit-hyphens covers older iOS Safari. REQUIRES the page language to be
+   "de" while the German UI is active (hyphens:auto needs a lang attribute to
+   choose the dictionary). If German still breaks arbitrarily after this, the
+   <html lang> is not switching to "de" and a one-line JS set is needed.
+   Same container query as Block 24. CSS-only. Safe to delete to revert. */
+@container simframe (max-width: 540px) {
+  .run-desc,
+  .run-attribution {
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+}
