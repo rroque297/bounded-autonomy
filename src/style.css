@@ -3124,3 +3124,17 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     hyphens: auto;
   }
 }
+/* ===== Block 29 — Matrix scenario labels: grammatical hyphenation =====
+   Block 22 gave .col-scenario only overflow-wrap:break-word (blunt, breaks
+   mid-word). This adds hyphens:auto so long German compounds break at
+   dictionary morpheme points with a real hyphen, matching the run-card fix
+   (Block 26). overflow-wrap:anywhere kept as the fallback for words the
+   dictionary can't hyphenate. -webkit-hyphens covers older iOS Safari.
+   Needs the page lang="de" while German is active (same dependency as Block
+   26, already confirmed working there). Does NOT touch the col-active marker,
+   side borders, th cells, or any JS. Safe to delete to revert. */
+.matrix-table .col-scenario {
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  overflow-wrap: anywhere;
+}
