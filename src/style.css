@@ -3138,3 +3138,31 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
   hyphens: auto;
   overflow-wrap: anywhere;
 }
+/* ===== Block 30 — Matrix: widen scenario column + horizontal-scroll hint =====
+   (1) WIDTH: the scenario column was being starved to ~8 chars by the table's
+   auto-layout on phones. min-width:160px gives it ~20 readable characters.
+   This intentionally makes the table wider than the phone, so the matrix
+   scrolls horizontally (it already can: .matrix-wrap is overflow-x:auto).
+   (2) HINT: because the wider table now needs sideways scroll, add a CSS-only
+   fade on the right edge of .matrix-wrap as a "more this way" affordance.
+   No JS, no text to translate. The fade is a pseudo-element on the wrapper, so
+   it never touches the table, the col-active marker, or any cell borders.
+   Phone-only (max 600px). Safe to delete to revert. */
+@media (max-width: 600px) {
+  .matrix-table .col-scenario {
+    min-width: 160px;
+  }
+  .matrix-wrap {
+    position: relative;
+  }
+  .matrix-wrap::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 32px;
+    pointer-events: none;
+    background: linear-gradient(to right, transparent, var(--ink));
+  }
+}
