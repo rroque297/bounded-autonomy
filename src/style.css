@@ -3151,20 +3151,7 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
 @media (max-width: 600px) {
   .matrix-table .col-scenario {
     min-width: 160px;
-  }
-  .matrix-wrap {
-    position: relative;
-  }
-  .matrix-wrap::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 32px;
-    pointer-events: none;
-    background: linear-gradient(to right, transparent, var(--ink));
-  }
+  } 
 }
 /* ===== Block 31 — Matrix horizontal-scroll hint (phones) =====
    Replaces the removed edge-fade (Block 30) with a text affordance that sits
@@ -3188,4 +3175,19 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
 }
 @media (min-width: 601px) {
   .matrix-scroll-hint { display: none; }
+}
+/* ===== Block 32 — Theoretical-basis citation labels: reserve label width =====
+   .citations-grid is flex-wrap with a 2rem gap; the primitive label had no
+   reserved width, so the long localized labels (German "Anfechtbarkeit
+   (Designhorizont)", tight in Spanish too) crowded the citation sources to
+   their right. Give .citation-primitive a min-width so every row's sources
+   start at a consistent left edge with breathing room, and add hyphens:auto
+   as a safety net for the longest compound. Applies at all widths (this is a
+   desktop+phone spacing issue, confirmed on desktop). CSS-only. Safe to
+   delete to revert. */
+.citation-primitive {
+  min-width: 140px;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  overflow-wrap: anywhere;
 }
