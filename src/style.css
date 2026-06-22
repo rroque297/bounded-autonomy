@@ -3250,3 +3250,22 @@ html {
     padding: 0.35rem 1.5rem;
   }
 }
+/* ============================================================
+   BLOCK 37 — Re-assert domain-pill active state in LANDSCAPE
+   Safe to delete to revert.
+   Block 9b re-asserts .domain-btn.active only @media
+   (max-width:600px); landscape phones are wider than 600px so
+   it drops, and on a fresh tap the lingering :hover (grey
+   var(--text)) wins -> the selected pill greys out. Re-assert
+   the cyan active state for short-viewport landscape, and beat
+   sticky-hover by also covering .active:hover.
+   Mirrors the base .domain-btn.active values exactly.
+   ============================================================ */
+@media (orientation: landscape) and (max-height: 600px) {
+  .domain-btn.active,
+  .domain-btn.active:hover {
+    background: rgba(0,229,200,0.08);
+    color: var(--cyan);
+    border-color: rgba(0,229,200,0.35);
+  }
+}
