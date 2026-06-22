@@ -2459,49 +2459,7 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
   }
   .hero-stats > * { min-width: 0; }
 }
-/* ════════════════════════════════════════════════════════════════════════
-   BLOCK 8b — Logo breathing room on phones (append after Block 8)
-   space-between already maxes the gap, so the residual tightness is the
-   logo's own width. Trim its size slightly and prevent wrap at phone widths
-   to open up space between it and the hamburger. Safe to delete to revert.
-   ════════════════════════════════════════════════════════════════════════ */
-@media (max-width: 900px) {
-  .nav-logo {
-    font-size: 1rem;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-}/* ════════════════════════════════════════════════════════════════════════
-   BLOCK 8c — Nav fit correction (append after Block 8b)
-   8b's nowrap + flex-shrink:0 on .nav-logo made the logo refuse to shrink,
-   so on narrow phones the row overflowed and pushed the lang picker off the
-   right edge. Fix: let the LOGO yield first (shrink, and wrap to its two
-   spans if truly needed) and PIN the lang picker so it is never what
-   overflows. The picker is the primary control for a 4-language thesis and
-   must always stay on screen. Keeps 8b's smaller font. Safe to delete to
-   revert.
-   ════════════════════════════════════════════════════════════════════════ */
-@media (max-width: 900px) {
-  .nav-logo {
-    white-space: normal;   /* undo 8b nowrap so it can wrap instead of overflow */
-    flex-shrink: 1;        /* undo 8b's hard hold — let it give up width */
-    min-width: 0;          /* the standard overflow guard */
-    line-height: 1.1;
-  }
-  .nav-end             { flex-shrink: 0; }  /* protect the cluster... */
-  #lang-switcher-mount { flex-shrink: 0; }  /* ...and the picker specifically */
-}/* ════════════════════════════════════════════════════════════════════════
-   BLOCK 8d — Nav collision guard (append after Block 8c)
-   8c let the logo shrink/wrap, but with nothing reserving space between the
-   logo and the menu cluster the logo's second line ("Autonomy") could reach
-   the hamburger and overlap it. Fix: a hard gap on the nav as a floor, and
-   cap the logo's max width so it wraps before it ever reaches .nav-end.
-   Safe to delete to revert.
-   ════════════════════════════════════════════════════════════════════════ */
-@media (max-width: 900px) {
-  nav { gap: 1rem; }                 /* hard floor between logo and cluster */
-  .nav-logo { max-width: 55%; }      /* wrap before reaching the hamburger */
-}
+
 /* ════════════════════════════════════════════════════════════════════════
    BLOCK 8e — Two-row nav on phones (append after Block 8d)
    Supersedes the one-line fit attempts in 8b/8c/8d: instead of cramming
