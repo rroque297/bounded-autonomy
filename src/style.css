@@ -3191,3 +3191,61 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
   hyphens: auto;
   overflow-wrap: anywhere;
 }
+/* ============================================================
+   BLOCK 33 — Prevent iOS Safari font auto-inflation on rotate
+   Safe to delete to revert.
+   iOS Safari enlarges text when the viewport widens
+   (portrait -> landscape). Pin to 100% so the designed sizes
+   hold in every orientation. Does NOT disable user pinch-zoom.
+   ============================================================ */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* ============================================================
+   BLOCK 34 — Matrix scenario column floor in LANDSCAPE phones
+   Safe to delete to revert.
+   Block 30's min-width:160px lives in @media (max-width:600px).
+   A phone in landscape is WIDER than 600px, so that rule drops
+   and the scenario column starves back to ~8 chars. Re-assert
+   the floor for short-viewport landscape (phones only) -
+   tablets/desktop have a taller viewport and are excluded.
+   ============================================================ */
+@media (orientation: landscape) and (max-height: 600px) {
+  .matrix-table .col-scenario {
+    min-width: 160px;
+  }
+}
+/* ============================================================
+   BLOCK 35 — Hero stats: pin 4-across in LANDSCAPE phones
+   Safe to delete to revert.
+   Block 8's 2x2 grid is @media (max-width:600px); landscape
+   phones are WIDER than 600px so it drops and the stats row
+   wraps 3+1. Force an explicit 4-column grid for short-viewport
+   landscape (phones only; tablets/desktop are taller, excluded).
+   ============================================================ */
+@media (orientation: landscape) and (max-height: 600px) {
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .hero-stats > * {
+    min-width: 0;
+  }
+}
+/* ============================================================
+   BLOCK 36 — Compress fixed nav in LANDSCAPE phones
+   Safe to delete to revert.
+   nav is height:64px fixed; in a short landscape viewport
+   (~375-430px tall) that eats ~17-20% of the screen, more once
+   Safari's URL bar shows. Shrink to 44px (still a valid touch
+   target) for short-viewport landscape only. Portrait, tablet,
+   and desktop keep 64px untouched.
+   ============================================================ */
+@media (orientation: landscape) and (max-height: 600px) {
+  nav {
+    height: 44px;
+    padding: 0 1.5rem;
+  }
+}
