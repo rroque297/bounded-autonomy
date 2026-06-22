@@ -3227,3 +3227,52 @@ html {
     border-color: rgba(0,229,200,0.35);
   }
 }
+/* ============================================================
+   BLOCK 38 — Model selector: single row in LANDSCAPE phones
+   Safe to delete to revert.
+   Block 21 makes .model-select a single-column grid, but only
+   @media (max-width:600px). A landscape phone is wider than
+   600px, so Block 21 drops and the base flex-wrap takes over,
+   wrapping the 5 model buttons onto two lines even though one
+   row fits. Re-assert an explicit 5-column row for short-
+   viewport landscape (phones only; tablets/desktop are taller
+   and excluded by max-height:600px). Explicit grid count, not
+   flex-wrap, per the per-language consistency rule.
+   ============================================================ */
+@media (orientation: landscape) and (max-height: 600px) {
+  .model-select {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+  }
+  .model-select .model-btn {
+    min-width: 0;
+    width: 100%;
+  }
+}
+/* ============================================================
+   BLOCK 39 — Matrix scroll hint: also show in LANDSCAPE phones
+   Safe to delete to revert.
+   Block 31 shows .matrix-scroll-hint only @media (max-width:600px)
+   and hides it @media (min-width:601px). A landscape phone is
+   wider than 600px, so it hit the hide rule and vanished, even
+   though the matrix still scrolls sideways in landscape (Block 34
+   keeps the scenario column wide). Re-show AND re-style it for
+   short-viewport landscape (the Block 31 styling lives in the
+   max-width:600px query, which also drops here, so font / colour
+   / arrow must be restated). Appended after Block 31's
+   min-width:601px hide, so display:block wins on source order.
+   ============================================================ */
+@media (orientation: landscape) and (max-height: 600px) {
+  .matrix-scroll-hint {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    color: var(--text3);
+    margin-bottom: 0.5rem;
+  }
+  .matrix-scroll-hint::after {
+    content: " \2192";
+  }
+}
