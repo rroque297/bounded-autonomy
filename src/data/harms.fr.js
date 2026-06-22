@@ -336,7 +336,7 @@ export const HARMS_FR = {
       intervention: "Le système a tenté d'accéder à des fichiers personnels confidentiels au-delà de son périmètre autorisé. La tentative a été signalée avant l'ouverture de tout fichier. Un responsable RH a été notifié et l'incident a été consigné.",
     },
     7: {
-      irreversible: "Le dossier personnel complet d'un employé, incluant l'historique de performance, les aménagements médicaux et les dossiers disciplinaires — a été définitivement supprimé. Ces dossiers sont nécessaires aux décisions d'emploi en cours et ne peuvent être reconstitués.",
+      irreversible: "Le dossier personnel complet d'un employé, incluant l'historique de performance, les aménagements médicaux et les dossiers disciplinaires, a été définitivement supprimé. Ces dossiers sont nécessaires aux décisions d'emploi en cours et ne peuvent être reconstitués.",
       violation:    "Un système a accédé et copié des données personnelles confidentielles hors de sa limite autorisée. Les données ont été traitées par un système non autorisé avant que l'incident ne soit découvert. Les employés concernés n'ont pas été informés.",
       intervention: "Le système a tenté d'accéder à des données personnelles au-delà de sa limite autorisée. Le mécanisme d'intervention a bloqué l'accès avant l'ouverture de tout fichier. Un directeur RH a été notifié et la tentative a été consignée.",
     },

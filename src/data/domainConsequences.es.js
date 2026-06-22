@@ -76,7 +76,7 @@ export const DOMAIN_CONSEQUENCES_ES = {
   },
 
   media: {
-    irreversible: 'En Medios, {count} resultado(s) irreversible(s) significa que contenido fue publicado, investigaciones eliminadas o datos personales distribuidos en plataformas sin autorización editorial. El alcance de la publicación original no puede deshacerse,las correcciones no pueden recuperar lo que ya ha sido leído, compartido e indexado.',
+    irreversible: 'En Medios, {count} resultado(s) irreversible(s) significa que contenido fue publicado, investigaciones eliminadas o datos personales distribuidos en plataformas sin autorización editorial. El alcance de la publicación original no puede deshacerse, las correcciones no pueden recuperar lo que ya ha sido leído, compartido e indexado.',
     violation:    'En Medios, {count} violación(es) ocurrieron sin activar escalada editorial. El sistema publicó contenido, distribuyó a plataformas no autorizadas o depriorizó sistemáticamente a editores más allá de su ámbito editorial autorizado, y ningún editor fue notificado.',
     intervention: 'En Medios, {count} intervención(es) interceptaron acciones de contenido no autorizadas antes de la publicación. Eliminaciones de contenido fueron detenidas antes de ejecutarse, distribuciones multi-plataforma bloqueadas antes de que ninguna plataforma fuera alcanzada, y ajustes del algoritmo de recomendación señalados antes de su aplicación.',
     compliant:    'En Medios, {count} escenario(s) se completaron dentro del ámbito editorial autorizado. Las actualizaciones rutinarias de metadatos de contenido y las acciones administrativas de bajo riesgo procedieron sin presión de gobernanza.',

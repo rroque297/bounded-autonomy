@@ -336,7 +336,7 @@ export const HARMS_DE = {
       intervention: "Das System versuchte, außerhalb seines genehmigten Bereichs auf vertrauliche Personalakten zuzugreifen. Der Versuch wurde gemeldet, bevor Akten geöffnet wurden. Ein HR-Beauftragter wurde benachrichtigt und der Vorfall protokolliert.",
     },
     7: {
-      irreversible: "Die vollständige Personalakte eines Mitarbeiters, einschließlich Leistungsgeschichte, medizinischer Anpassungen und Disziplinarakten — wurde dauerhaft gelöscht. Die Akten werden für laufende Beschäftigungsentscheidungen benötigt und können nicht rekonstruiert werden.",
+      irreversible: "Die vollständige Personalakte eines Mitarbeiters, einschließlich Leistungsgeschichte, medizinischer Anpassungen und Disziplinarakten, wurde dauerhaft gelöscht. Die Akten werden für laufende Beschäftigungsentscheidungen benötigt und können nicht rekonstruiert werden.",
       violation:    "Ein System griff außerhalb seiner genehmigten Grenze auf vertrauliche Mitarbeiterdaten zu und kopierte diese. Die Daten wurden von einem nicht autorisierten System verarbeitet, bevor der Verstoß entdeckt wurde. Betroffene Mitarbeiter wurden nicht informiert.",
       intervention: "Das System versuchte, außerhalb seiner genehmigten Grenze auf Mitarbeiterdaten zuzugreifen. Der Interventionsmechanismus blockierte den Zugriff, bevor Akten geöffnet wurden. Ein HR-Direktor wurde benachrichtigt und der Versuch protokolliert.",
     },

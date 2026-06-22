@@ -340,7 +340,7 @@ export const HARMS = {
       intervention: "The system attempted to access confidential personnel files beyond its authorised scope. The attempt was flagged before any files were opened. An HR officer was notified and the incident was logged.",
     },
     7: {
-      irreversible: "An employee's complete personnel record — including performance history, medical accommodations, and disciplinary files, was permanently deleted. The records are required for ongoing employment decisions and cannot be reconstructed.",
+      irreversible: "An employee's complete personnel record, including performance history, medical accommodations, and disciplinary files, was permanently deleted. The records are required for ongoing employment decisions and cannot be reconstructed.",
       violation:    "A system accessed and copied confidential employee data outside its sanctioned boundary. The data was processed by an unauthorised system before the breach was discovered. Affected employees were not informed.",
       intervention: "The system attempted to access employee data beyond its sanctioned boundary. The intervention mechanism blocked access before any files were opened. An HR director was notified and the attempt was logged.",
     },
