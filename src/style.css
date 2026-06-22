@@ -2895,44 +2895,6 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     width: 100%;
   }
 }
-/* ===== Block 23 (revised) — German long-word overflow: This Run + experiment log =====
-   overflow-wrap: break-word (first attempt) does NOT shrink a flex child's
-   intrinsic width, so the column still sized to the longest German compound
-   and overflowed. overflow-wrap: anywhere DOES count the break when measuring
-   the box, so the container can shrink and the word wraps. Also stacks the two
-   summary rows to a column so nothing is pinched side by side, and applies the
-   same wrapping to the experiment-log run cards (same root cause). Text flow +
-   min-width only: no JS, no marker, no scoring, no colors touched. Phone-only
-   (max 600px); desktop confirmed clean and untouched. Safe to delete to revert. */
-@media (max-width: 600px) {
-  /* This Run: stop the summary/header rows pinching side by side */
-  .tr-summary,
-  .tr-header-row {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .tr-summary,
-  .tr-header-row,
-  .tr-meta,
-  .tr-summary > *,
-  .tr-header-row > *,
-  .tr-meta > *,
-  .tr-card,
-  .tr-card-header,
-  .tr-scenario,
-  .tr-harm,
-  .tr-attribution {
-    min-width: 0;
-    overflow-wrap: anywhere;
-  }
-  /* Experiment log run cards: scenario + attribution text */
-  .run-row,
-  .run-desc,
-  .run-attribution {
-    min-width: 0;
-    overflow-wrap: anywhere;
-  }
-}
 /* ===== Block 24 — Run card: full-width scenario lane (supersedes Block 6 rows 2+) =====
    Block 6's row 1 (num + badge + score) is correct and untouched. The problem
    was row 2: the scenario shared the row with the output badge (cols 1-2 only)
@@ -3259,5 +3221,39 @@ html {
 @media (max-width: 600px) {
   .matrix-table .col-scenario {
     min-width: 160px;
+  }
+}
+/* ===== Block 23 (trimmed) — This Run header/summary: stack + German wrap =====
+   Trimmed during cleanup. Original Block 23 had two halves: a This-Run-header
+   half (.tr-* rows) and an experiment-log half (.run-* rows). The log half is
+   superseded by the container-query run-card blocks (Block 6 + 24), which fully
+   own .run-desc / .run-attribution wrapping inside @container simframe — so the
+   old viewport-query .run-* duplicate is dropped here. This keeps ONLY the
+   This-Run-header behaviour, unchanged:
+     - stack .tr-summary / .tr-header-row to a column so they don't pinch side
+       by side on phones;
+     - min-width:0 + overflow-wrap:anywhere across the .tr-* elements so long
+       German compounds wrap instead of overflowing.
+   Phone-only (max-width:600px). No JS, no marker, no scoring touched.
+   Safe to delete to revert. */
+@media (max-width: 600px) {
+  .tr-summary,
+  .tr-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .tr-summary,
+  .tr-header-row,
+  .tr-meta,
+  .tr-summary > *,
+  .tr-header-row > *,
+  .tr-meta > *,
+  .tr-card,
+  .tr-card-header,
+  .tr-scenario,
+  .tr-harm,
+  .tr-attribution {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 }
