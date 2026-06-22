@@ -3235,17 +3235,18 @@ html {
   }
 }
 /* ============================================================
-   BLOCK 36 — Compress fixed nav in LANDSCAPE phones
+   BLOCK 36 (revised) — Compress nav in LANDSCAPE phones
    Safe to delete to revert.
-   nav is height:64px fixed; in a short landscape viewport
-   (~375-430px tall) that eats ~17-20% of the screen, more once
-   Safari's URL bar shows. Shrink to 44px (still a valid touch
-   target) for short-viewport landscape only. Portrait, tablet,
-   and desktop keep 64px untouched.
+   Fixed height:44px fought the nav controls: the hamburger and
+   language pill sit at the 44px touch-target floor (Block 15),
+   so they overflowed the bar and the border-bottom sliced across
+   them. Release to height:auto so the bar hugs its content -
+   same lesson as Block 8g. Still far slimmer than the 64px
+   default; align-items:center from the base nav still applies.
    ============================================================ */
 @media (orientation: landscape) and (max-height: 600px) {
   nav {
-    height: 44px;
-    padding: 0 1.5rem;
+    height: auto;
+    padding: 0.35rem 1.5rem;
   }
 }
