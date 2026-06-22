@@ -2895,17 +2895,6 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     width: 100%;
   }
 }
-/* ===== Block 22 — Matrix scenario text wrapping (German overflow fix) =====
-   Long German scenario strings are single compound words with no space to
-   wrap at, so they overflowed .col-scenario and overlapped the risk column.
-   This lets an overlong word break inside its own cell instead of spilling
-   sideways. Affects ONLY text flow inside .col-scenario: does NOT touch the
-   col-active marker, the transparent side borders, the th cells, or any JS.
-   Applied at all widths (no-op on short English text, which never needs to
-   break). Safe to delete to revert. */
-.matrix-table .col-scenario {
-  overflow-wrap: break-word;
-}
 /* ===== Block 23 (revised) — German long-word overflow: This Run + experiment log =====
    overflow-wrap: break-word (first attempt) does NOT shrink a flex child's
    intrinsic width, so the column still sized to the longest German compound
@@ -3082,35 +3071,6 @@ nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: trans
     hyphens: auto;
   }
 }
-/* ===== Block 29 — Matrix scenario labels: grammatical hyphenation =====
-   Block 22 gave .col-scenario only overflow-wrap:break-word (blunt, breaks
-   mid-word). This adds hyphens:auto so long German compounds break at
-   dictionary morpheme points with a real hyphen, matching the run-card fix
-   (Block 26). overflow-wrap:anywhere kept as the fallback for words the
-   dictionary can't hyphenate. -webkit-hyphens covers older iOS Safari.
-   Needs the page lang="de" while German is active (same dependency as Block
-   26, already confirmed working there). Does NOT touch the col-active marker,
-   side borders, th cells, or any JS. Safe to delete to revert. */
-.matrix-table .col-scenario {
-  -webkit-hyphens: auto;
-  hyphens: auto;
-  overflow-wrap: anywhere;
-}
-/* ===== Block 30 — Matrix: widen scenario column + horizontal-scroll hint =====
-   (1) WIDTH: the scenario column was being starved to ~8 chars by the table's
-   auto-layout on phones. min-width:160px gives it ~20 readable characters.
-   This intentionally makes the table wider than the phone, so the matrix
-   scrolls horizontally (it already can: .matrix-wrap is overflow-x:auto).
-   (2) HINT: because the wider table now needs sideways scroll, add a CSS-only
-   fade on the right edge of .matrix-wrap as a "more this way" affordance.
-   No JS, no text to translate. The fade is a pseudo-element on the wrapper, so
-   it never touches the table, the col-active marker, or any cell borders.
-   Phone-only (max 600px). Safe to delete to revert. */
-@media (max-width: 600px) {
-  .matrix-table .col-scenario {
-    min-width: 160px;
-  } 
-}
 /* ===== Block 31 — Matrix horizontal-scroll hint (phones) =====
    Replaces the removed edge-fade (Block 30) with a text affordance that sits
    ABOVE the matrix in normal flow, so it can never overlap a column the way
@@ -3274,5 +3234,30 @@ html {
   }
   .matrix-scroll-hint::after {
     content: " \2192";
+  }
+}
+/* ===== Block 22 (consolidated) — Matrix scenario column: wrapping + width floor =====
+   Consolidates the three scattered .col-scenario blocks (old 22 + 29 + 30) into
+   one. Old Block 22 only had overflow-wrap:break-word, which never shrank the
+   column and was already fully superseded by Block 29's overflow-wrap:anywhere,
+   so it's dropped. What remains is the real behaviour, unchanged:
+     - all widths: grammatical German hyphenation (hyphens:auto, -webkit- for
+       iOS Safari), with overflow-wrap:anywhere as the fallback for compounds
+       the dictionary can't hyphenate. Needs page lang="de" while German is
+       active (confirmed working on real devices).
+     - phones (max-width:600px): min-width:160px (~20 readable chars), which
+       intentionally widens the table so .matrix-wrap scrolls horizontally.
+   Does NOT touch the col-active marker, the transparent side borders, the th
+   cells, or any JS. The LANDSCAPE floor for this column lives separately in
+   Block 34 and is intentionally left there with the landscape family.
+   Safe to delete to revert. */
+.matrix-table .col-scenario {
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 600px) {
+  .matrix-table .col-scenario {
+    min-width: 160px;
   }
 }
