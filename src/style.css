@@ -39,7 +39,6 @@ body {
   font-family: var(--sans);
   font-size: 16px;
   line-height: 1.7;
-  overflow-x: hidden;
 }
 
 /* ─── NAV ─── */
@@ -2108,4 +2107,1152 @@ footer a { color: var(--cyan); text-decoration: none; }
 }
 @media (max-width: 480px) {
   .citations-arc { grid-template-columns: 1fr; }
+}
+/* ═══════════════════════════════════════════════════════════════════
+   RESPONSIVE FOUNDATION — Phase 1, Block 1
+   Intrinsic grids: cards reflow to available width, no breakpoints.
+   Additive overrides — safe to delete this whole block to revert.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Prevent grid/flex children from overflowing their container.
+   Children default to min-width:auto, which is the #1 cause of
+   horizontal clipping on phones. This is the core discipline fix. */
+.primitives-grid > *,
+.results-summary > *,
+.freq-grid > *,
+.analysis-grid > *,
+.this-run-summary-cards > * {
+  min-width: 0;
+}
+
+/* Primitive cards: 4-up on desktop, auto-collapsing down to 1-up.
+   minmax(min(100%, 240px), 1fr) — the min(100%,…) guard is what
+   prevents overflow when the screen is narrower than 240px-ish. */
+.primitives-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 1.5rem;
+}
+
+/* Verified-scores strip: was flex-wrap:nowrap (forced 5-across,
+   clipped on mobile). Now wraps intrinsically. */
+.results-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+  gap: 0.75rem;
+}
+
+/* Output-frequency cards: 4-up desktop, reflow down. */
+.freq-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
+}
+
+/* Analysis pattern cards: 2-up desktop, 1-up phone. */
+.analysis-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+}
+/* ═══════════════════════════════════════════════════════════════════
+   RESPONSIVE FOUNDATION — Phase 1, Block 2
+   Hero + toolbar overflow fixes, modern viewport units, safe areas.
+   Additive — safe to delete this whole block to revert.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Hero height: 100vh overshoots on mobile because browser chrome
+   (address bar) isn't subtracted. svh = "small viewport height",
+   the modern fix. Fallback to vh for any old browser. */
+#hero {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+/* Hero stats row: was a fixed 3rem-gap flex that overflowed with
+   4 stats on a phone. Let it wrap, tighten gap when it does. */
+.hero-stats {
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+/* Hero CTAs already wrap; just ensure buttons don't force overflow. */
+.hero-ctas { flex-wrap: wrap; }
+
+/* Simulator toolbar config row: was flex-direction:row with four
+   80px config items + run buttons, overflowing on narrow screens.
+   Allow it to wrap so items flow to the next line. */
+.toolbar-config { flex-wrap: wrap; }
+.sim-toolbar-row3 { flex-wrap: wrap; }
+
+/* Model selector: five buttons in a row overflowed ~380px phones.
+   Let them wrap. */
+.model-select { flex-wrap: wrap; }
+
+/* Safe-area padding for notched phones (iPhone X and later).
+   max() keeps your existing padding on normal screens, and only
+   adds inset space where the device actually has a notch/rounded
+   corner. Applied to the two fixed/edge elements. */
+nav {
+  padding-left: max(2.5rem, env(safe-area-inset-left));
+  padding-right: max(2.5rem, env(safe-area-inset-right));
+}
+/* ═══════════════════════════════════════════════════════════════════
+   RESPONSIVE FOUNDATION — Phase 1, Block 3
+   Hero title scaling fix (was clipping on phones).
+   Additive — safe to delete to revert.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Title clamp floor was 3rem (48px) — too wide for a long word on a
+   phone, so it clipped. Lower the floor and raise the vw coefficient
+   so it scales smoothly down. Desktop unchanged: still caps at 5.5rem
+   above ~1100px viewport. overflow-wrap is a last-resort guard so an
+   unexpectedly long word breaks instead of clipping. */
+h1 {
+  font-size: clamp(2.25rem, 8vw, 5.5rem);
+  overflow-wrap: break-word;
+}
+
+/* Shrink hero side padding on phones to reclaim width (top/bottom
+   preserved at their original 120px/80px). On desktop the clamp sits
+   at its 2.5rem max, so the hero looks identical to before. */
+#hero {
+  padding: 120px clamp(1.25rem, 5vw, 2.5rem) 80px;
+}
+/* ═══════════════════════════════════════════════════════════════════
+   RESPONSIVE FOUNDATION — Phase 1, Block 4
+   Hero label separation + footer wrap legibility.
+   Additive — safe to delete to revert.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Hero label: the two spans (program + school) stacked with gap:0,
+   so when each wrapped on a phone they ran together. Just add vertical
+   spacing — the existing cyan hairline accent stays as-is. */
+.hero-label-text {
+  gap: 0.4rem;
+}
+
+/* Footer: one string with middots already in the text. On a phone it
+   wraps mid-segment; more line spacing keeps the wrapped lines legible. */
+footer {
+  line-height: 1.9;
+}
+/* ═══════════════════════════════════════════════════════════════════
+   SIMULATOR REFLOW — Phase 2, Block 5
+   Two-pane (log | panel) stacks vertically when the simulator is
+   narrow. Container query: responds to the frame's own width.
+   Additive — safe to delete to revert.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Make the simulator frame a "query container" so its inner layout
+   can respond to the frame's own width. sim-frame already has
+   overflow:hidden, so this adds no new clipping behavior. */
+.sim-frame {
+  container-type: inline-size;
+  container-name: simframe;
+}
+
+/* When the frame is under 760px wide (phones + tablets in portrait),
+   stack the two panes into one column. Desktop and tablet-landscape
+   keep the side-by-side layout. */
+@container simframe (max-width: 760px) {
+  .sim-body {
+    grid-template-columns: 1fr;
+  }
+  /* The divider between panes was a right border (correct when
+     side-by-side). Stacked, it should be a bottom border instead. */
+  .sim-left {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+}
+/* ═══════════════════════════════════════════════════════════════════
+   FOUNDATION CORRECTION — Phase 2, Block 5b
+   Pin desktop column counts for primitives (4-up) and analysis (2-up).
+   Block 1's auto-fit let the count drift with width; these grids want
+   a guaranteed desktop layout, reflowing only on smaller screens.
+   Additive — safe to delete to revert.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Primitives: explicit 4-up on desktop. Below 900px → 2-up.
+   Below 560px → 1-up. The horizon card keeps spanning full width
+   via its existing grid-column: 1 / -1. */
+.primitives-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+@media (max-width: 900px) {
+  .primitives-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .primitives-grid { grid-template-columns: 1fr; }
+}
+
+/* Analysis: explicit 2-up on desktop. Below 700px → 1-up.
+   The full-width limit card keeps spanning via grid-column: 1 / -1. */
+.analysis-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (max-width: 700px) {
+  .analysis-grid { grid-template-columns: 1fr; }
+}
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 6 — Run-log row reflow (phones)
+   Reflows each .run-row from the 6-column desktop strip into a stacked
+   card at narrow simframe widths. Same DOM, same JS — CSS only.
+   Narrow layout:
+     row 1:  #num   model-badge ............ score
+     row 2:  scenario description .......... output-badge
+     row 3:  attribution (↳ primitives, harm)        [completed runs]
+     row 4:  inline insight card                       [most-recent run]
+   Scoped to the `simframe` container established in Block 5. Placeholder
+   (empty) rows reflow identically; they simply have no row 3 or 4.
+   Safe to delete this whole block to revert.
+   ════════════════════════════════════════════════════════════════════════ */
+@container simframe (max-width: 540px) {
+  .run-row {
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: none;
+    grid-template-areas: none;
+    grid-auto-rows: auto;
+    column-gap: 0.55rem;
+    row-gap: 0.4rem;
+    align-items: center;
+  }
+
+  .run-num         { grid-column: 1; grid-row: 1; }
+  .run-model-badge { grid-column: 2; grid-row: 1; justify-self: start; }
+  .score-chip      { grid-column: 3; grid-row: 1; justify-self: end; }
+
+  .run-desc {
+    grid-column: 1 / 3;
+    grid-row: 2;
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+  .output-badge {
+    grid-column: 3;
+    grid-row: 2;
+    justify-self: end;
+    align-self: start;
+  }
+
+  .run-attribution {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    flex-wrap: wrap;
+  }
+
+  .inline-insight {
+    grid-column: 1 / -1;
+    grid-row: 4;
+  }
+}
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 7 — Nav collapse to popover menu (phones / small tablets)
+   Below 900px: the 6 anchor links collapse into a native <popover> dropdown
+   opened by a hamburger button. Language switcher stays ALWAYS visible.
+   The version tag (.nav-tag) hides to reclaim space. Zero JS — the native
+   popover API handles open/close/light-dismiss.
+   Desktop (>=900px) is untouched: the existing .nav-links flex row keeps
+   showing inline (an author display rule overrides the popover hide), and
+   the hamburger stays hidden.
+   ONE knob: --nav-h must roughly match your sticky bar height. If the
+   dropdown overlaps the bar, lower it; if there's a gap, raise it.
+   Safe to delete this whole block to revert (pair with reverting the two
+   index.html edits).
+   ════════════════════════════════════════════════════════════════════════ */
+:root { --nav-h: 3.75rem; }
+
+/* Hamburger button — hidden on desktop, shown only when collapsed */
+.nav-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.nav-toggle-bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--text);
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+/* Bars morph into an X while the menu is open */
+nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(2) { opacity: 0; }
+nav:has(.nav-links:popover-open) .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 900px) {
+  nav { flex-wrap: nowrap; }
+  .nav-logo { min-width: 0; }      /* let the logo shrink, not overflow */
+  .nav-end  { gap: 0.5rem; min-width: 0; }
+  .nav-tag  { display: none; }     /* reclaim space on phones */
+  .nav-toggle { display: inline-flex; }
+
+  /* Collapsed: hide the inline list (it becomes the popover). Beats the
+     existing .nav-links flex rule by specificity. */
+  .nav-links:not(:popover-open) { display: none; }
+
+  /* Open state: a card dropdown anchored under the bar, top-right. */
+  .nav-links:popover-open {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    position: fixed;
+    inset: auto;
+    top: calc(var(--nav-h) + env(safe-area-inset-top, 0px));
+    right: max(0.75rem, env(safe-area-inset-right, 0px));
+    left: auto;
+    margin: 0;
+    padding: 0.5rem;
+    min-width: 200px;
+    max-width: min(78vw, 320px);
+    max-height: calc(100svh - var(--nav-h) - 1.5rem);
+    overflow: auto;
+    list-style: none;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
+  .nav-links::backdrop { background: rgba(5,7,16,0.35); }
+
+  .nav-links li { width: 100%; }
+  .nav-links a {
+    display: block;
+    padding: 0.7rem 0.9rem;       /* ~44px touch target */
+    border-radius: var(--radius);
+  }
+  .nav-links a:hover,
+  .nav-links a:focus-visible { background: var(--surface3); }
+}
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 7b — Nav spacing correction (append after Block 7)
+   Pushes the logo and the .nav-end cluster (hamburger + lang picker) to
+   opposite ends so the menu bars aren't crowding the Bounded Autonomy logo.
+   Also adds a small guaranteed gap as a floor. Safe to delete to revert.
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  nav { justify-content: space-between; }
+  .nav-end { margin-left: auto; }      /* shove the cluster to the right edge */
+  .nav-toggle { margin-left: 0.5rem; } /* minimum breathing room as a floor */
+}
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 8 — Hero stats: consistent 2x2 grid on phones (all languages)
+   Block 2's flex-wrap let line breaks depend on string width, so FR stacked
+   1-per-line while EN/DE/ES left a ragged side-by-side line. An explicit
+   2-column grid makes every language lay out identically: two rows of two.
+   Safe to delete to revert (falls back to Block 2 flex-wrap).
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  .hero-stats > * { min-width: 0; }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 8e — Two-row nav on phones (append after Block 8d)
+   Supersedes the one-line fit attempts in 8b/8c/8d: instead of cramming
+   logo + hamburger + picker onto one line, stack into two rows.
+     Row 1: logo, centered, full width
+     Row 2: hamburger (full left)  ...  language picker (full right)
+   This removes the logo/hamburger collision entirely — they're no longer
+   on the same line. The bar is now taller, so --nav-h is raised here so the
+   popover dropdown still opens BELOW the bar (that's the one tunable knob).
+   Safe to delete to revert.
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  nav {
+    flex-wrap: wrap;
+    row-gap: 0.6rem;
+    --nav-h: 6.5rem;   /* taller two-row bar; dropdown opens below it. KNOB. */
+  }
+
+  /* Row 1 — logo centered across the full width */
+  .nav-logo {
+    flex: 1 0 100%;
+    max-width: 100%;            /* override 8d's 55% cap */
+    justify-content: center;    /* if logo is flex */
+    text-align: center;         /* if logo is inline/block */
+    white-space: nowrap;        /* fits easily now it owns the whole row */
+  }
+
+  /* Row 2 — hamburger hard-left, picker hard-right */
+  .nav-end {
+    flex: 1 0 100%;
+    justify-content: space-between;
+    margin-left: 0;             /* undo 7b's margin-left:auto */
+  }
+}
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 8g — Two-row nav height + top room (replaces 8f)
+   Root cause: the base `nav` rule sets `height: 64px` (fixed). That fixed
+   height squashes the two-row phone layout (8e) and left no room for 8f's
+   top padding to push the logo down. Fix: on phones, drop the fixed height
+   to `auto` so the bar grows to fit two rows, and add top + bottom padding
+   (safe-area aware) so the centered logo clears the URL bar.
+   Because the bar is now taller, --nav-h is set to match so the popover
+   dropdown still opens below it. KNOB: --nav-h.
+   Delete Block 8f before adding this. Safe to delete to revert.
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  nav {
+    height: auto;                                        /* release the 64px pin */
+    padding-top: max(0.85rem, env(safe-area-inset-top, 0px));
+    padding-bottom: 0.7rem;
+    --nav-h: 7rem;   /* taller two-row bar; dropdown opens below it. KNOB. */
+  }
+}
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 9 — Domain selector: compact wrap on phones (all 12 visible)
+   Decision: keep all 12 .domain-btn pills visible (single-select where
+   seeing every option is the task), but shrink them so the set forms a
+   tidy 2–3 row cluster instead of a tall heavy block. No swipe rail — zero
+   hidden options, no gesture to learn. CSS-only; .active state preserved.
+   Safe to delete to revert.
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .domain-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    justify-content: center;   /* balanced cluster, tidy last-row */
+  }
+
+  .domain-btn {
+    flex: 0 0 auto;
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    padding: 0.45rem 0.7rem;
+    min-height: 36px;          /* compact but still tappable */
+    border-radius: var(--radius);
+    line-height: 1.15;
+    white-space: nowrap;       /* each label stays on one line */
+    min-width: 0;
+  }
+}
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 9b — Restore .domain-btn.active styling on phones (append after 9)
+   Block 9's generic .domain-btn overrides flattened the selected pill's
+   cyan look. Re-assert the original active recipe (faint cyan fill, cyan
+   text, translucent cyan border) inside the same 600px query so it wins.
+   Values copied verbatim from the base .domain-btn.active rule.
+   Safe to delete to revert.
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .domain-btn.active {
+    background: rgba(0,229,200,0.08);
+    color: var(--cyan);
+    border-color: rgba(0,229,200,0.35);
+  }
+}
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 10 — Contestability (horizon) card: stack on phones
+   Base .primitive-card.horizon is `flex-direction: row` with gap:2rem, so
+   .horizon-left (num above icon) sits beside .horizon-body, crushing the
+   text on phones. Fix: flip the CARD to column at phone width so the icon
+   block sits on top and text flows full-width below. .horizon-left keeps its
+   original column direction (number above icon) — untouched. Desktop intact.
+   Safe to delete to revert.
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .primitive-card.horizon {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .horizon-body { min-width: 0; }
+}
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 11 — Desktop popover reset for .nav-links (fixes white box / shift)
+   Making .nav-links a [popover] in Block 7 attached the browser's default
+   popover box styles: position:fixed, inset:0, margin:auto, border, padding,
+   and a white Canvas background. On phones these never show (closed = hidden,
+   open = fully restyled). On desktop, where the links show inline, those
+   defaults leaked through as a white bordered floating box that displaced the
+   logo. Reset them so desktop nav is a normal inline flex row again.
+   Scoped >=901px so the mobile popover (<=900px) is untouched.
+   Safe to delete to revert (pairs with Block 7).
+   ════════════════════════════════════════════════════════════════════════ */
+@media (min-width: 901px) {
+  .nav-links {
+    position: static;
+    inset: auto;
+    width: auto;
+    height: auto;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    overflow: visible;
+    background: transparent;
+    color: inherit;
+  }
+}
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 12 — Config primitives as 2x2 on phones (label over value)
+   The four .config-row items (Delegation/Boundaries/Reversibility/
+   Intervention) are the four governance primitives — a set of four peers.
+   Block 2's flex-wrap broke them into a 2-1-1 stagger implying a hierarchy
+   that isn't there. A 2x2 grid presents them as equals. Inside each cell the
+   label sits on top with the on/off value below (robust for long German
+   labels in half-width cells). CSS-only; values still update via JS.
+   Safe to delete to revert (overrides Block 2 wrap for this container).
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .toolbar-config {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+  .config-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+    min-width: 0;            /* let long DE labels wrap inside the cell */
+  }
+  .config-label {
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+}
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 12b — Config 2x2 alignment fix (append after Block 12)
+   Block 12's `align-items: flex-start` made cells look centered when the
+   label was short (shrink-wrapped) but snap hard-left when the label wrapped
+   to two lines — so alignment flipped per cell and per language. Force every
+   cell centered: center the column's children AND center wrapped text so
+   multi-line labels stay centered too. Higher specificity so it wins over 12.
+   Safe to delete to revert.
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .sim-toolbar-row3 .toolbar-config .config-row {
+    align-items: center;
+    text-align: center;
+  }
+}
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 12c — Config 2x2 even switch baseline (append after 12b)
+   In EN/DE one bottom-row label wraps to two lines while its neighbor stays
+   one line, so the cells differ in height and their switches sit at different
+   heights. FR/ES only looked aligned because both labels wrapped equally.
+   Fix: reserve a uniform two-line min-height for every .config-label and
+   center its text in that space, so all four labels occupy equal vertical
+   room and the switches below them land on one baseline in every language.
+   Safe to delete to revert.
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .sim-toolbar-row3 .toolbar-config .config-label {
+    min-height: 2.4em;          /* room for up to two lines */
+    display: flex;
+    align-items: center;        /* center label text vertically in that space */
+    justify-content: center;    /* keep it horizontally centered too */
+    text-align: center;
+  }
+}
+/* ════════════════════════════════════════════════════════════════════════
+   BLOCK 12d — Config 2x2: pin switches to a shared baseline (after 12c)
+   12c reserved label height but switches still drifted, so cell content
+   isn't anchoring uniformly. Because .toolbar-config is a grid, paired cells
+   already share an equal-height row track; the fix is to make each cell a
+   column that pushes its value to the BOTTOM. Then every switch sits on the
+   cell floor — identical height across the row regardless of label wrap.
+   Safe to delete to revert.
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .sim-toolbar-row3 .toolbar-config .config-row {
+    height: 100%;
+    justify-content: space-between;   /* label top, value pinned bottom */
+  }
+  .sim-toolbar-row3 .toolbar-config .config-val {
+    margin-top: auto;                 /* belt-and-suspenders: shove to floor */
+  }
+}
+/* ============================================================
+   BLOCK 13 — Reduced-motion fallback (prefers-reduced-motion)
+   Respects the OS "reduce motion" accessibility setting.
+   Animations still COMPLETE (so fadeUp elements are never left
+   stuck invisible) but effectively instantly; infinite loops
+   (pulse/scanline) run once and stop; chart transitions snap.
+   !important is required: a universal (*) selector is lower
+   specificity than the class-targeted animation rules it must
+   override. Scoped entirely inside the reduce query, so it
+   cannot affect users who have NOT requested reduced motion.
+   Additive override — safe to delete this whole block to revert.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}/* ============================================================
+   BLOCK 14 — Results forward-pointer stacking on phones
+   #results-forward has an INLINE display:flex (a row). On narrow
+   screens the narrative <p> is crushed into a tall skinny column
+   while the "Go to Analysis" link stays beside it and spills past
+   the edge. Flip the container to a column: text goes full-width
+   and wraps; the link drops below, sized to content, left-aligned.
+   Only flex-direction is set, so the inline display:flex is left
+   intact (no !important needed). Same fix family as Block 10.
+   Additive override — safe to delete this whole block to revert.
+   ============================================================ */
+@media (max-width: 600px) {
+  #results-forward {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .results-forward-text {
+    min-width: 0;
+  }
+  .results-forward-link {
+    align-self: flex-start;
+  }
+}
+/* ============================================================
+   BLOCK 15 — 44px touch targets at coarse pointer (WCAG 2.5.5)
+   On touch devices (pointer: coarse) lift the primary tap targets
+   to a ~44px minimum height for comfortable finger hits. Scoped to
+   coarse pointer ONLY, so mouse/desktop sizing is untouched. Domain
+   pills were min-height:36px (Block 9) — the main lift. inline-flex
+   centering keeps labels centered in the taller controls without
+   changing how the pills wrap in their flex row.
+   Additive override — safe to delete this whole block to revert.
+   ============================================================ */
+@media (pointer: coarse) {
+  .domain-btn,
+  .model-btn {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-toggle {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .nav-links a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}
+/* ============================================================
+   BLOCK 17 — Analysis evidence rows on phones (supersedes Block 16)
+   Three cards share .ae-scores but hold different content:
+     p1 "cost of absent structure": score arrow score (30 → 91)
+     p2 "recovery pair": three score+label pairs
+     p3 "two ways to score 65": score sep score (65 ≡ 65)
+   Block 16 forced ALL of them into a 3-col grid, which dropped the
+   arrow/sep into a second row under the first number. Fix: scope
+   the pair grid to the recovery card ONLY via :has(.ae-label), and
+   give the icon cards (arrow/sep) a centered inline row that keeps
+   the glyph BETWEEN the two scores.
+   Additive override — safe to delete this whole block to revert.
+   ============================================================ */
+@media (max-width: 600px) {
+
+  /* Recovery pair (p2): the only .ae-scores containing labels.
+     Explicit 3-col grid, flowing down each column, so each label
+     sits directly under its own score. Order 65, 80, 65 = desktop. */
+  .ae-scores:has(.ae-label) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    grid-auto-flow: column;
+    gap: 0.3rem 0.75rem;
+    justify-items: center;
+    text-align: center;
+  }
+  .ae-scores:has(.ae-label) .ae-score,
+  .ae-scores:has(.ae-label) .ae-label {
+    min-width: 0;
+  }
+
+  /* Icon cards (p1, p3): score glyph score on ONE centered line.
+     :not(:has(.ae-label)) excludes the recovery card above. */
+  .ae-scores:not(:has(.ae-label)) {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+  .ae-scores:not(:has(.ae-label)) .ae-arrow,
+  .ae-scores:not(:has(.ae-label)) .ae-sep {
+    flex: 0 0 auto;
+  }
+}
+/* ============================================================
+   BLOCK 18 — Label the hamburger "Menu" for discoverability
+   The nav-toggle is a bare 3-bar glyph; a text label markedly
+   improves discoverability (labeled menus beat bare icons in
+   usability research). Added as a CSS pseudo-element so this stays
+   CSS-only; the button already has aria-label="Open navigation
+   menu" (Block 7) so screen readers are unaffected. Phones only.
+   Additive override — safe to delete this whole block to revert.
+   ============================================================ */
+@media (max-width: 600px) {
+  .nav-toggle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+  .nav-toggle::after {
+    content: "Menu";
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text2);
+    line-height: 1;
+    margin-top: 2px;
+  }
+}
+/* ============================================================
+   BLOCK 19 — Back-to-top button (bottom-left, mirrors hamburger)
+   A fixed anchor link to #hero for quick re-orientation on the
+   long scroll. Bottom-left so both nav controls share one thumb
+   zone. Plain in-page anchor = zero JS for the jump itself.
+   Scroll-aware hide/show uses animation-timeline: scroll(), which
+   is gated behind @supports: where supported it fades in after the
+   user scrolls past the hero; where NOT supported (older iOS
+   Safari) it safely falls back to always-visible. Phones only.
+   Additive override — delete this block (and the <a> in index.html)
+   to revert.
+   ============================================================ */
+@media (max-width: 600px) {
+  .back-to-top {
+    position: fixed;
+    left: max(1rem, env(safe-area-inset-left, 0px));
+    bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+    z-index: 90;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(13, 16, 32, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border2);
+    color: var(--cyan);
+    font-size: 1.1rem;
+    text-decoration: none;
+    line-height: 1;
+  }
+
+  /* Default (no scroll-timeline support): always visible, functional. */
+
+  /* Progressive enhancement: fade in only after scrolling past hero. */
+  @supports (animation-timeline: scroll()) {
+    .back-to-top {
+      opacity: 0;
+      pointer-events: none;
+      animation: bttReveal linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 90vh 140vh;
+    }
+    @keyframes bttReveal {
+      to { opacity: 1; pointer-events: auto; }
+    }
+  }
+}
+
+/* Hide on larger screens — phone-only aid. */
+@media (min-width: 601px) {
+  .back-to-top { display: none; }
+}
+/* ===== Block 21 — Model selector single-column stack on phones =====
+   Replaces flex-wrap (which gave uneven 1,1,1,2 rows driven by label width)
+   with an explicit single-column grid, so all 5 model buttons stack
+   identically across devices and languages. Explicit grid count, not
+   flex-wrap, per the per-language consistency rule. Phone-only (max 600px),
+   so desktop is untouched. Touches layout only, not button colors, so the
+   selected-model highlight is unaffected. Safe to delete to revert. */
+@media (max-width: 600px) {
+  .model-select {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  .model-select .model-btn {
+    min-width: 0;
+    width: 100%;
+  }
+}
+/* ===== Block 24 — Run card: full-width scenario lane (supersedes Block 6 rows 2+) =====
+   Block 6's row 1 (num + badge + score) is correct and untouched. The problem
+   was row 2: the scenario shared the row with the output badge (cols 1-2 only)
+   and used overflow-wrap:break-word, which doesn't let the column shrink, so
+   long German compound words overflowed. This gives the scenario its OWN
+   full-width row with overflow-wrap:anywhere (which DOES let the box shrink so
+   the word wraps), drops the output badge to its own line, and shifts
+   attribution + insight down one row each. Same container query + threshold as
+   Block 6 (@container simframe, 540px), so they engage together; appended at
+   end so it wins on order. CSS-only, DOM and renderLog() untouched. Safe to
+   delete to revert (Block 6 then governs again). */
+@container simframe (max-width: 540px) {
+  .run-desc {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    line-height: 1.6;
+  }
+  .output-badge {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    justify-self: start;
+    align-self: start;
+  }
+  .run-attribution {
+    grid-column: 1 / -1;
+    grid-row: 4;
+  }
+  .inline-insight {
+    grid-column: 1 / -1;
+    grid-row: 5;
+  }
+}
+/* ===== Block 25 — Run card: left-justify all elements (TEST, reversible) =====
+   Repacks the identity line so number + badge + score group together on the
+   LEFT (was: score pushed to the right via a 1fr gap), and flushes the text
+   lanes to the same left edge, clearing the indent on long scenario words.
+   Same container query as Block 6/24 so it engages together; appended so it
+   wins. Badge padding is left intact (only text-indent/margin reset, on the
+   text elements only, so the pills keep their shape). CSS-only, DOM/JS
+   untouched. Delete this block to revert to score-on-the-right. */
+@container simframe (max-width: 540px) {
+  .run-row {
+    grid-template-columns: auto auto 1fr;
+  }
+  .run-num,
+  .run-model-badge,
+  .score-chip,
+  .run-desc,
+  .output-badge,
+  .run-attribution,
+  .inline-insight {
+    justify-self: start;
+  }
+  .run-desc,
+  .run-attribution {
+    text-align: left;
+    text-indent: 0;
+    margin-left: 0;
+    padding-left: 0;
+  }
+}
+/* ===== Block 26 — German hyphenation in run card (grammatical word breaks) =====
+   overflow-wrap:anywhere (Block 24) breaks long German compounds at arbitrary
+   characters (e.g. "...diffusionsr/isiko"). hyphens:auto lets the browser break
+   at dictionary-correct morpheme points and insert a real hyphen
+   (e.g. "...diffusions-/risiko"). Hyphenation is PREFERRED; the anywhere
+   fallback now only catches words the dictionary can't hyphenate.
+   -webkit-hyphens covers older iOS Safari. REQUIRES the page language to be
+   "de" while the German UI is active (hyphens:auto needs a lang attribute to
+   choose the dictionary). If German still breaks arbitrarily after this, the
+   <html lang> is not switching to "de" and a one-line JS set is needed.
+   Same container query as Block 24. CSS-only. Safe to delete to revert. */
+@container simframe (max-width: 540px) {
+  .run-desc,
+  .run-attribution {
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+}
+/* ===== Block 27 — Results summary cards: stack on phones =====
+   .results-summary is repeat(5,1fr) at all widths. Five cards side by side
+   crush to ~70px each on phones, where the score, label, and output pills
+   overflow (worst when a model has 2+ pills, e.g. "7 irreversible / 1
+   compliant"). This reflows to a single full-width column on phones so each
+   card has full room and pills wrap cleanly. Explicit count + media query,
+   per the project's designed-grid rule. min-width:0 clears the grid-child
+   auto-min clipping. Desktop/tablet 5-up untouched. Safe to delete to revert. */
+@media (max-width: 600px) {
+  .results-summary {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .rs-card { min-width: 0; }
+  .rs-output-pills { min-width: 0; }
+}
+/* ===== Block 28 — This Run outcome cards: m-* colors + phone stacking =====
+   Two fixes for the .this-run-summary-cards (the big-count outcome cards).
+   (1) LAYOUT: they're flex with flex:1 + min-width:180px, so on phones they
+   stay side by side until cramped and the German text overflows. Stack to one
+   full-width column below 600px.
+   (2) COLOR: align to the canonical --m-* model ramp (worst->best red->green),
+   recoloring the left border AND the count together so they stay in sync.
+   The only visible change is intervention: cyan -> lime (--m-partial), its
+   second-best position on the ramp. Applies at all widths (color), with the
+   stack scoped to phones. Backgrounds left as-is (faint tints, already fine).
+   CSS-only, DOM/JS untouched. Safe to delete to revert. */
+
+/* Color: canonical --m-* mapping (all widths) */
+.trs-irreversible { border-left-color: var(--m-baseline); }
+.trs-violation    { border-left-color: var(--m-bounds); }
+.trs-intervention { border-left-color: var(--m-partial); }
+.trs-compliant    { border-left-color: var(--m-full); }
+
+.trs-irreversible .trs-count { color: var(--m-baseline); }
+.trs-violation    .trs-count { color: var(--m-bounds); }
+.trs-intervention .trs-count { color: var(--m-partial); }
+.trs-compliant    .trs-count { color: var(--m-full); }
+
+/* Layout: stack full-width on phones */
+@media (max-width: 600px) {
+  .this-run-summary-cards {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+  .trs-card {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .trs-harm,
+  .trs-scenario {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+}
+/* ===== Block 31 — Matrix horizontal-scroll hint (phones) =====
+   Replaces the removed edge-fade (Block 30) with a text affordance that sits
+   ABOVE the matrix in normal flow, so it can never overlap a column the way
+   the fade did on Android. Pulls the translated string via data-i18n
+   (results.scrollHint, all 4 langs). The arrow is appended in CSS so it stays
+   out of the translated text. Phone-only: the table fits on desktop, so the
+   hint is hidden there. Safe to delete to revert (also remove the i18n key
+   and the index.html div if fully reverting). */
+@media (max-width: 600px) {
+  .matrix-scroll-hint {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    color: var(--text3);
+    margin-bottom: 0.5rem;
+  }
+  .matrix-scroll-hint::after {
+    content: " \2192";
+  }
+}
+@media (min-width: 601px) {
+  .matrix-scroll-hint { display: none; }
+}
+/* ===== Block 32 — Theoretical-basis citation labels: reserve label width =====
+   .citations-grid is flex-wrap with a 2rem gap; the primitive label had no
+   reserved width, so the long localized labels (German "Anfechtbarkeit
+   (Designhorizont)", tight in Spanish too) crowded the citation sources to
+   their right. Give .citation-primitive a min-width so every row's sources
+   start at a consistent left edge with breathing room, and add hyphens:auto
+   as a safety net for the longest compound. Applies at all widths (this is a
+   desktop+phone spacing issue, confirmed on desktop). CSS-only. Safe to
+   delete to revert. */
+.citation-primitive {
+  min-width: 140px;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  overflow-wrap: anywhere;
+}
+/* ============================================================
+   BLOCK 33 — Prevent iOS Safari font auto-inflation on rotate
+   Safe to delete to revert.
+   iOS Safari enlarges text when the viewport widens
+   (portrait -> landscape). Pin to 100% so the designed sizes
+   hold in every orientation. Does NOT disable user pinch-zoom.
+   ============================================================ */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* ============================================================
+   BLOCK 34 — Matrix scenario column floor in LANDSCAPE phones
+   Safe to delete to revert.
+   Block 30's min-width:160px lives in @media (max-width:600px).
+   A phone in landscape is WIDER than 600px, so that rule drops
+   and the scenario column starves back to ~8 chars. Re-assert
+   the floor for short-viewport landscape (phones only) -
+   tablets/desktop have a taller viewport and are excluded.
+   ============================================================ */
+@media (orientation: landscape) and (max-height: 600px) {
+  .matrix-table .col-scenario {
+    min-width: 160px;
+  }
+}
+/* ============================================================
+   BLOCK 35 — Hero stats: pin 4-across in LANDSCAPE phones
+   Safe to delete to revert.
+   Block 8's 2x2 grid is @media (max-width:600px); landscape
+   phones are WIDER than 600px so it drops and the stats row
+   wraps 3+1. Force an explicit 4-column grid for short-viewport
+   landscape (phones only; tablets/desktop are taller, excluded).
+   ============================================================ */
+@media (orientation: landscape) and (max-height: 600px) {
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .hero-stats > * {
+    min-width: 0;
+  }
+}
+/* ============================================================
+   BLOCK 36 (revised) — Compress nav in LANDSCAPE phones
+   Safe to delete to revert.
+   Fixed height:44px fought the nav controls: the hamburger and
+   language pill sit at the 44px touch-target floor (Block 15),
+   so they overflowed the bar and the border-bottom sliced across
+   them. Release to height:auto so the bar hugs its content -
+   same lesson as Block 8g. Still far slimmer than the 64px
+   default; align-items:center from the base nav still applies.
+   ============================================================ */
+@media (orientation: landscape) and (max-height: 600px) {
+  nav {
+    height: auto;
+    padding: 0.35rem 1.5rem;
+  }
+}
+/* ============================================================
+   BLOCK 37 — Re-assert domain-pill active state in LANDSCAPE
+   Safe to delete to revert.
+   Block 9b re-asserts .domain-btn.active only @media
+   (max-width:600px); landscape phones are wider than 600px so
+   it drops, and on a fresh tap the lingering :hover (grey
+   var(--text)) wins -> the selected pill greys out. Re-assert
+   the cyan active state for short-viewport landscape, and beat
+   sticky-hover by also covering .active:hover.
+   Mirrors the base .domain-btn.active values exactly.
+   ============================================================ */
+@media (orientation: landscape) and (max-height: 600px) {
+  .domain-btn.active,
+  .domain-btn.active:hover {
+    background: rgba(0,229,200,0.08);
+    color: var(--cyan);
+    border-color: rgba(0,229,200,0.35);
+  }
+}
+/* ============================================================
+   BLOCK 38 — Model selector: single row in LANDSCAPE phones
+   Safe to delete to revert.
+   Block 21 makes .model-select a single-column grid, but only
+   @media (max-width:600px). A landscape phone is wider than
+   600px, so Block 21 drops and the base flex-wrap takes over,
+   wrapping the 5 model buttons onto two lines even though one
+   row fits. Re-assert an explicit 5-column row for short-
+   viewport landscape (phones only; tablets/desktop are taller
+   and excluded by max-height:600px). Explicit grid count, not
+   flex-wrap, per the per-language consistency rule.
+   ============================================================ */
+@media (orientation: landscape) and (max-height: 600px) {
+  .model-select {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+  }
+  .model-select .model-btn {
+    min-width: 0;
+    width: 100%;
+  }
+}
+/* ============================================================
+   BLOCK 39 — Matrix scroll hint: also show in LANDSCAPE phones
+   Safe to delete to revert.
+   Block 31 shows .matrix-scroll-hint only @media (max-width:600px)
+   and hides it @media (min-width:601px). A landscape phone is
+   wider than 600px, so it hit the hide rule and vanished, even
+   though the matrix still scrolls sideways in landscape (Block 34
+   keeps the scenario column wide). Re-show AND re-style it for
+   short-viewport landscape (the Block 31 styling lives in the
+   max-width:600px query, which also drops here, so font / colour
+   / arrow must be restated). Appended after Block 31's
+   min-width:601px hide, so display:block wins on source order.
+   ============================================================ */
+@media (orientation: landscape) and (max-height: 600px) {
+  .matrix-scroll-hint {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+    color: var(--text3);
+    margin-bottom: 0.5rem;
+  }
+  .matrix-scroll-hint::after {
+    content: " \2192";
+  }
+}
+/* ===== Block 22 (consolidated) — Matrix scenario column: wrapping + width floor =====
+   Consolidates the three scattered .col-scenario blocks (old 22 + 29 + 30) into
+   one. Old Block 22 only had overflow-wrap:break-word, which never shrank the
+   column and was already fully superseded by Block 29's overflow-wrap:anywhere,
+   so it's dropped. What remains is the real behaviour, unchanged:
+     - all widths: grammatical German hyphenation (hyphens:auto, -webkit- for
+       iOS Safari), with overflow-wrap:anywhere as the fallback for compounds
+       the dictionary can't hyphenate. Needs page lang="de" while German is
+       active (confirmed working on real devices).
+     - phones (max-width:600px): min-width:160px (~20 readable chars), which
+       intentionally widens the table so .matrix-wrap scrolls horizontally.
+   Does NOT touch the col-active marker, the transparent side borders, the th
+   cells, or any JS. The LANDSCAPE floor for this column lives separately in
+   Block 34 and is intentionally left there with the landscape family.
+   Safe to delete to revert. */
+.matrix-table .col-scenario {
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 600px) {
+  .matrix-table .col-scenario {
+    min-width: 160px;
+  }
+}
+/* ===== Block 23 (trimmed) — This Run header/summary: stack + German wrap =====
+   Trimmed during cleanup. Original Block 23 had two halves: a This-Run-header
+   half (.tr-* rows) and an experiment-log half (.run-* rows). The log half is
+   superseded by the container-query run-card blocks (Block 6 + 24), which fully
+   own .run-desc / .run-attribution wrapping inside @container simframe — so the
+   old viewport-query .run-* duplicate is dropped here. This keeps ONLY the
+   This-Run-header behaviour, unchanged:
+     - stack .tr-summary / .tr-header-row to a column so they don't pinch side
+       by side on phones;
+     - min-width:0 + overflow-wrap:anywhere across the .tr-* elements so long
+       German compounds wrap instead of overflowing.
+   Phone-only (max-width:600px). No JS, no marker, no scoring touched.
+   Safe to delete to revert. */
+@media (max-width: 600px) {
+  .tr-summary,
+  .tr-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .tr-summary,
+  .tr-header-row,
+  .tr-meta,
+  .tr-summary > *,
+  .tr-header-row > *,
+  .tr-meta > *,
+  .tr-card,
+  .tr-card-header,
+  .tr-scenario,
+  .tr-harm,
+  .tr-attribution {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
 }
