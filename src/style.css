@@ -3256,3 +3256,10 @@ html {
     overflow-wrap: anywhere;
   }
 }
+.footer-license a {
+  color: var(--cyan);
+  text-decoration: none;
+}
+.footer-license a:hover {
+  text-decoration: underline;
+}

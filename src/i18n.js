@@ -272,6 +272,7 @@ const TRANSLATIONS = {
     footer: {
       credit: 'Bounded Autonomy Research · Master in Design for Responsible Artificial Intelligence · Elisava School of Design and Engineering · 2026',
       note:   'Proof of concept. No real AI decision-making',
+      license: 'This work is licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">Creative Commons Attribution 4.0 International</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;vertical-align:middle;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;vertical-align:middle;">',
     },
   },
 
@@ -526,7 +527,8 @@ const TRANSLATIONS = {
 
     footer: {
       credit: 'Recherche Autonomie Bornée · Master en Design pour l\'IA Responsable · Elisava École de Design et d\'Ingénierie · 2026',
-      note:   'Preuve de concept; aucune prise de décision IA réelle',
+      note:   'Preuve de concept. Aucune prise de décision IA réelle',
+      license: 'Cette œuvre est mise à disposition selon les termes de la licence <a href="https://creativecommons.org/licenses/by/4.0/deed.fr" target="_blank" rel="noopener">Creative Commons Attribution 4.0 International</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;vertical-align:middle;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;vertical-align:middle;">',
     },
   },
 
@@ -781,7 +783,8 @@ const TRANSLATIONS = {
     
     footer: {
       credit: 'Forschung Begrenzte Autonomie · Master in Design für verantwortungsvolle KI · Elisava Schule für Design und Ingenieurwesen · 2026',
-      note:   'Machbarkeitsnachweis - keine echte KI-Entscheidungsfindung',
+      note:   'Machbarkeitsnachweis. Keine echte KI-Entscheidungsfindung',
+      license: 'Dieses Werk ist lizenziert unter einer <a href="https://creativecommons.org/licenses/by/4.0/deed.de" target="_blank" rel="noopener">Creative Commons Namensnennung 4.0 International Lizenz</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;vertical-align:middle;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;vertical-align:middle;">',
     },
   },
 
@@ -1037,6 +1040,7 @@ const TRANSLATIONS = {
     footer: {
       credit: 'Investigación Autonomía Acotada · Máster en Diseño para la IA Responsable · Elisava Escuela de Diseño e Ingeniería · 2026',
       note:   'Prueba de concepto. Sin toma de decisiones IA real',
+      license: 'Esta obra está bajo una <a href="https://creativecommons.org/licenses/by/4.0/deed.es" target="_blank" rel="noopener">licencia de Creative Commons Atribución 4.0 Internacional</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;vertical-align:middle;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width:1em;max-height:1em;margin-left:.2em;vertical-align:middle;">',
     },
   },
 }
